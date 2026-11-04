@@ -138,6 +138,14 @@ C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /nologo /target:winexe ^
 - [PCL2](https://github.com/Meloong-Git/PCL) — 设置里可填的启动器路径指向它
 - [Aikar G1GC 参数](https://docs.papermc.io/paper/aikars-flags) — 服务端内存参数采用的 JVM 旗标方案
 
+## 支持作者
+
+这个工具免费开源。如果它帮你省下了折腾联机的时间，欢迎请作者喝杯奶茶 🧋
+
+<img src="donate_wechat.jpg" alt="微信赞赏码" width="260">
+
+（微信扫一扫即可赞赏，金额随意。你的支持是持续更新的动力。）
+
 ## 版本
 
 当前版本 **v6.19**。单文件源码 `Program.cs` 即完整程序。英文界面版源码为 `Program_EN.cs`（用同一套编译命令、把源文件换成它即可编译），界面文案为英文，功能与中文版完全一致。

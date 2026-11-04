@@ -138,6 +138,14 @@ This tool was designed around, and works together with, these projects:
 - [PCL2](https://github.com/Meloong-Git/PCL) — the launcher path in Settings points to it
 - [Aikar's G1GC flags](https://docs.papermc.io/paper/aikars-flags) — the JVM flag set used for the server memory parameters
 
+## Support
+
+MCLauncherApp is free and open source. If it saved you some multiplayer setup pain, consider buying the author a milk tea 🧋 — scan the WeChat Reward Code below:
+
+<img src="donate_wechat.jpg" alt="WeChat Reward Code" width="260">
+
+(Any amount is appreciated. Thank you for keeping the project going.)
+
 ## Version
 
 Current version **v6.19**. The single source file `Program.cs` is the complete program. An English-UI source, `Program_EN.cs`, is included as well — build it with the same command, swapping in that file name; it is identical in features, with English interface text.
