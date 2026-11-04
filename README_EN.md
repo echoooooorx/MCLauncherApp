@@ -8,6 +8,10 @@ Built for 1.20.1 Fabric offline multiplayer: the server runs with `online-mode=f
 
 > Note: This project was developed with AI assistance — requirements, testing, and acceptance were done by the author in person; the code was written by AI and verified by the author on a real machine.
 
+## Preview
+
+![Launcher UI](screenshot.png)
+
 ## Features
 
 - **One-click start/stop**: launches the server process together with the SakuraFrp game tunnel and voice tunnel (Simple Voice Chat), and shuts everything down cleanly
