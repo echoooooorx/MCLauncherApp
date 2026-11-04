@@ -8,6 +8,8 @@ Built for 1.20.1 Fabric offline multiplayer: the server runs with `online-mode=f
 
 > Note: This project was developed with AI assistance — requirements, testing, and acceptance were done by the author in person; the code was written by AI and verified by the author on a real machine.
 
+> 🤖 Want an AI to deploy this for you? Send [AI_DEPLOY.md](AI_DEPLOY.md) to your AI assistant (ideally one that can operate your PC) — it walks through the full deployment, server, SakuraFrp tunnels and voice chat, with verification criteria and a troubleshooting table for every step.
+
 ## Preview
 
 ![Launcher UI](screenshot.png)
@@ -45,6 +47,78 @@ C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /nologo /target:winexe ^
 ## Configuration
 
 All settings live in `config.json` next to the executable, read and written through the Settings page. **This file contains your SakuraFrp access key — never commit it to any repository.** This repo's `.gitignore` already excludes it.
+
+## Tutorial
+
+The full flow for a local server + SakuraFrp NAT traversal + in-game voice chat, from zero. If you'd rather not follow it by hand, see the AI deployment section at the end.
+
+### Step 1: Prepare the Minecraft server
+
+1. Install **Java 17** (required by 1.20.1).
+2. Prepare a server folder (this tutorial uses `D:\MCServer`): download the Fabric server from [fabricmc.net](https://fabricmc.net/use/server/), or use a vanilla `server.jar` with the Fabric Loader, and name the server jar `server.jar` inside the folder.
+3. Start it once so it generates its files, then set `eula=true` in `eula.txt`.
+4. In `server.properties`, confirm two settings:
+   - `online-mode=false` (**critical**: offline accounts can only join with online-mode off)
+   - `server-port=25565` (already the default)
+5. Mods go into the `mods` folder; a Fabric server needs Fabric API. See Step 6 for voice chat. Mind client/server sidedness — a both-sides mod such as Farmer's Delight must be installed by **every player**, or they can't join.
+
+### Step 2: Create two tunnels on SakuraFrp
+
+1. Register at [SakuraFrp](https://www.natfrp.com/) and complete the **real-name verification** (required for tunnels on China nodes).
+2. Create the **game tunnel**: type **TCP**, local address `127.0.0.1`, local port `25565`, pick a node near you and your friends. Note down its **tunnel ID** and the assigned **public address** (looks like `xxx.natfrp.com:12345`).
+3. Create the **voice tunnel**: type **UDP**, local address `127.0.0.1`, local port `24454`. Note its tunnel ID and public address too.
+4. Find your **access key** in the SakuraFrp user center. **Only ever type it into this program's Settings page — never send it to anyone or put it in a public file.**
+
+### Step 3: Get the standalone frpc
+
+- Download the **standalone frpc** from the SakuraFrp website. Do **not** use the frpc bundled inside the SakuraFrp Launcher's install folder — that bundled build can only be started by SakuraFrp's own service, and this program exits immediately if you point it there (it detects this case and tells you).
+- Put `frpc.exe` somewhere stable, e.g. a `frpc\` subfolder next to this program.
+
+### Step 4: Fill in the launcher settings
+
+Open the program → Settings:
+
+| Field | What to enter |
+|---|---|
+| Server directory | Your server folder, e.g. `D:\MCServer` |
+| Java path | Leave empty to use the system Java, or give the full path to `java.exe` |
+| Server jar | `server.jar` (must match the file in the server folder) |
+| Memory parameters | Default `-Xms1G -Xmx2G`; raise it if you have RAM to spare (e.g. `-Xms2G -Xmx2G`), or use Aikar's G1GC flags |
+| frpc.exe path | The standalone frpc from Step 3 |
+| Access key | Your SakuraFrp access key from Step 2 |
+| Tunnel ID | The game tunnel's ID |
+| Voice tunnel ID | The voice tunnel's ID (leave empty to skip voice; the program skips it automatically) |
+| PCL2 path | Your PCL2 launcher exe (used by the "Open PCL2" button; optional) |
+| Tunnel mode | Choose "frpc command line (preferred)". The official-launcher mode is a fallback that needs you to start the tunnel manually in the SakuraFrp Launcher |
+
+Settings are saved to `config.json` next to the executable.
+
+### Step 5: One-click start, invite your friends
+
+1. Click the big start button: the program launches the server and both tunnels (and backs up the world first, if you enabled that option).
+2. When the tunnel log shows the proxy started successfully, the main window displays the **public address** — use the copy button to send it to your friends.
+3. On your friends' side: in PCL2 choose **offline login** (any username — that's who they'll be in game) → Multiplayer → Add Server or Direct Connect → paste the public address → join.
+4. To stop, use the program's safe-shutdown button rather than killing processes — it lets the server save first.
+
+### Step 6: Voice chat (Simple Voice Chat)
+
+1. Put the **Fabric 1.20.1 server** build of Simple Voice Chat into the server's `mods`; **every player** also needs the same version of the voicechat mod client-side.
+2. After the server has started once, edit `config\voicechat\voicechat-server.properties`, then restart the server:
+   - `port=24454` (matches the voice tunnel's local port)
+   - `voice_host=` set to the **voice tunnel's public address** (the one from Step 2, e.g. `xxx.natfrp.com:23456`)
+3. In game, press **V** for voice settings: pick the right microphone/playback devices and levels; voice activation is the default, push-to-talk is available.
+4. Test: two players stand close in game and talk — hearing each other, with a voice icon next to the name, means it works. No audio? Check `voice_host` first, then that the voice tunnel is UDP.
+
+### FAQ
+
+- **frpc exits immediately**: usually the bundled frpc, a wrong access key/tunnel ID, or missing real-name verification. The tunnel log tells you which.
+- **Friends can't connect (timeout / refused)**: check the game tunnel is TCP on local port 25565, the server log shows `Done`, and the public address was copied exactly.
+- **"Failed to verify username" on join**: `online-mode` isn't `false` in `server.properties`; fix it and restart the server.
+- **No voice**: almost always a missing/wrong `voice_host`; next suspects are a voice tunnel created as TCP (it must be UDP) and a friend missing the client mod.
+
+### Let an AI deploy it for you
+
+Send the whole of [AI_DEPLOY.md](AI_DEPLOY.md) to your AI assistant. It is written as a staged runbook — actions, verification criteria, and failure handling for every step. The only thing you must do in person is type the access key into the Settings page.
 
 ## Known issues
 
