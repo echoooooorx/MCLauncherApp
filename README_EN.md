@@ -4,7 +4,7 @@
 
 A small Windows desktop tool that folds the whole routine of "start the Minecraft server + open the SakuraFrp tunnel + voice tunnel" — the steps you repeat every time you play with friends — into a single window and a single click.
 
-Built for 1.20.1 Fabric offline multiplayer: the server runs with `online-mode=false`, and friends join through the tunnel address with offline accounts.
+Built for Minecraft offline multiplayer (the author's own setup is 1.20.1 Fabric; other versions work too — see the version note in the Tutorial): the server runs with `online-mode=false`, and friends join through the tunnel address with offline accounts.
 
 > Note: This project was developed with AI assistance — requirements, testing, and acceptance were done by the author in person; the code was written by AI and verified by the author on a real machine.
 
@@ -52,15 +52,17 @@ All settings live in `config.json` next to the executable, read and written thro
 
 The full flow for a local server + SakuraFrp NAT traversal + in-game voice chat, from zero. If you'd rather not follow it by hand, see the AI deployment section at the end.
 
+> Version note: this tutorial uses **1.20.1 Fabric** as the example, but the launcher itself is version-agnostic — it simply starts whatever Java, server jar and ports you point it at. For another version (e.g. 1.21.x), only three things change — **the Java version, the server jar, and the mod builds** — each flagged where it appears; every other step is identical. Vanilla, Paper, Forge and NeoForge servers work the same way, with mods sourced for their own loader.
+
 ### Step 1: Prepare the Minecraft server
 
-1. Install **Java 17** (required by 1.20.1).
-2. Prepare a server folder (this tutorial uses `D:\MCServer`): download the Fabric server from [fabricmc.net](https://fabricmc.net/use/server/), or use a vanilla `server.jar` with the Fabric Loader, and name the server jar `server.jar` inside the folder.
+1. Install the **Java** matching your Minecraft version: **Java 17** for 1.18–1.20.4, **Java 21** for 1.20.5 and later (including 1.21.x). Below, 1.20.1 + Java 17 is the running example.
+2. Prepare a server folder (this tutorial uses `D:\MCServer`; any folder works): download the Fabric server from [fabricmc.net](https://fabricmc.net/use/server/), or use a vanilla `server.jar` with the Fabric Loader, and name the server jar `server.jar` inside the folder (any jar name works, as long as Settings matches it).
 3. Start it once so it generates its files, then set `eula=true` in `eula.txt`.
 4. In `server.properties`, confirm two settings:
    - `online-mode=false` (**critical**: offline accounts can only join with online-mode off)
    - `server-port=25565` (already the default)
-5. Mods go into the `mods` folder; a Fabric server needs Fabric API. See Step 6 for voice chat. Mind client/server sidedness — a both-sides mod such as Farmer's Delight must be installed by **every player**, or they can't join.
+5. Mods go into the `mods` folder; a Fabric server needs Fabric API. See Step 6 for voice chat. Mind client/server sidedness — a both-sides mod such as Farmer's Delight must be installed by **every player**, or they can't join. (On a vanilla or Paper server, skip the mod steps; on Forge/NeoForge, use that loader's builds.)
 
 ### Step 2: Create two tunnels on SakuraFrp
 
@@ -68,6 +70,8 @@ The full flow for a local server + SakuraFrp NAT traversal + in-game voice chat,
 2. Create the **game tunnel**: type **TCP**, local address `127.0.0.1`, local port `25565`, pick a node near you and your friends. Note down its **tunnel ID** and the assigned **public address** (looks like `xxx.natfrp.com:12345`).
 3. Create the **voice tunnel**: type **UDP**, local address `127.0.0.1`, local port `24454`. Note its tunnel ID and public address too.
 4. Find your **access key** in the SakuraFrp user center. **Only ever type it into this program's Settings page — never send it to anyone or put it in a public file.**
+
+Both local ports must match the ports your server actually uses: the game port is `server-port` in `server.properties` (default 25565) and the voice port is the `port` in the voicechat config from Step 6 (default 24454); if you changed them, create the tunnels with your values.
 
 ### Step 3: Get the standalone frpc
 
@@ -97,12 +101,12 @@ Settings are saved to `config.json` next to the executable.
 
 1. Click the big start button: the program launches the server and both tunnels (and backs up the world first, if you enabled that option).
 2. When the tunnel log shows the proxy started successfully, the main window displays the **public address** — use the copy button to send it to your friends.
-3. On your friends' side: in PCL2 choose **offline login** (any username — that's who they'll be in game) → Multiplayer → Add Server or Direct Connect → paste the public address → join.
+3. On your friends' side: in PCL2 or any other launcher (HMCL, the official launcher, …) choose **offline login** (any username — that's who they'll be in game) → Multiplayer → Add Server or Direct Connect → paste the public address → join.
 4. To stop, use the program's safe-shutdown button rather than killing processes — it lets the server save first.
 
 ### Step 6: Voice chat (Simple Voice Chat)
 
-1. Put the **Fabric 1.20.1 server** build of Simple Voice Chat into the server's `mods`; **every player** also needs the same version of the voicechat mod client-side.
+1. Put the Simple Voice Chat server build **matching your MC version and loader** (Fabric 1.20.1 in this example; pick the matching file on the mod's page for other versions/loaders) into the server's `mods`; **every player** also needs the same version of the voicechat mod client-side.
 2. After the server has started once, edit `config\voicechat\voicechat-server.properties`, then restart the server:
    - `port=24454` (matches the voice tunnel's local port)
    - `voice_host=` set to the **voice tunnel's public address** (the one from Step 2, e.g. `xxx.natfrp.com:23456`)

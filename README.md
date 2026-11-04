@@ -4,7 +4,7 @@
 
 一个 Windows 桌面小工具：把「启动 Minecraft 服务端 + 打开 SakuraFrp 内网穿透隧道 + 语音隧道」这套每次联机都要重复的操作，收进一个窗口、一键完成。
 
-为 1.20.1 Fabric 离线联机场景做的：服务端 `online-mode=false`，朋友用离线账号直连隧道地址即可进服。
+为 Minecraft 离线联机场景做的（作者自用的是 1.20.1 Fabric，其他版本同样适用，见下方教程的版本说明）：服务端 `online-mode=false`，朋友用离线账号直连隧道地址即可进服。
 
 > 说明：本项目在 AI 辅助下开发——需求、测试与验收由作者本人完成，代码由 AI 编写并经作者实机验证。
 
@@ -52,15 +52,17 @@ C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /nologo /target:winexe ^
 
 从零搭一套「本地服务端 + SakuraFrp 内网穿透 + 语音聊天」的完整流程。嫌一步步看麻烦的，可以直接跳到最后用 AI 部署。
 
+> 版本说明：本教程以 **1.20.1 Fabric** 为例，但启动器本身不绑定任何版本——它只是按你填的 Java 路径、服务端 jar 和端口来拉起服务端。换其他版本（比如 1.21.x）时，只有 **Java 版本、服务端 jar、mod 版本**这三样要跟着换，文中相关处都做了标注，其余步骤完全相同。原版、Paper、Forge、NeoForge 服务端也同理，只是 mod 的来源和放法按各自加载器来。
+
 ### 第一步：准备 Minecraft 服务端
 
-1. 安装 **Java 17**（1.20.1 需要 Java 17）。
-2. 准备服务端文件夹（本教程以 `D:\MCServer` 为例）：到 [fabricmc.net](https://fabricmc.net/use/server/) 下载 Fabric 服务端，或用原版 `server.jar` 加 Fabric Loader，把服务端 jar 命名为 `server.jar` 放进文件夹。
+1. 安装与你的 Minecraft 版本匹配的 **Java**：1.18–1.20.4 用 **Java 17**，1.20.5 起（含 1.21.x）用 **Java 21**。下文以 1.20.1 + Java 17 为例。
+2. 准备服务端文件夹（本教程以 `D:\MCServer` 为例，目录可自定）：到 [fabricmc.net](https://fabricmc.net/use/server/) 下载 Fabric 服务端，或用原版 `server.jar` 加 Fabric Loader，把服务端 jar 命名为 `server.jar` 放进文件夹（jar 文件名也可自定，只要和第四步设置里填的一致）。
 3. 先启动一次让它生成文件，然后把 `eula.txt` 里的 `eula=false` 改成 `eula=true`。
 4. 打开 `server.properties`，确认两项：
    - `online-mode=false`（**关键**：朋友用离线账号进服，必须关闭正版验证）
    - `server-port=25565`（默认就是 25565，不用改）
-5. 要装的 mod 放进 `mods` 文件夹：Fabric 服务端必须有 Fabric API；语音聊天见第六步。注意区分单端/双端 mod——像 Farmer's Delight 这类双端 mod，**每个玩家的客户端也要装同一个 jar**，否则进不了服。
+5. 要装的 mod 放进 `mods` 文件夹：Fabric 服务端必须有 Fabric API；语音聊天见第六步。注意区分单端/双端 mod——像 Farmer's Delight 这类双端 mod，**每个玩家的客户端也要装同一个 jar**，否则进不了服。（用原版或 Paper 服务端的可以跳过 mod 相关步骤；Forge / NeoForge 则换成对应加载器的 mod。）
 
 ### 第二步：在 SakuraFrp 建两条隧道
 
@@ -68,6 +70,8 @@ C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /nologo /target:winexe ^
 2. 建**游戏隧道**：类型 **TCP**，本地地址 `127.0.0.1`，本地端口 `25565`，节点选离你和朋友近的。建好后记下**隧道 ID** 和分配的**公网地址**（形如 `xxx.natfrp.com:12345`）。
 3. 建**语音隧道**：类型 **UDP**，本地地址 `127.0.0.1`，本地端口 `24454`。同样记下隧道 ID 和公网地址。
 4. 拿**访问密钥**：在 SakuraFrp 网站的用户中心里可以找到。**密钥只填进本程序的设置页，不要发给任何人、不要写进任何公开文件。**
+
+两个本地端口要和你服务端实际用的端口一致：游戏端口就是 `server.properties` 里的 `server-port`（默认 25565），语音端口是第六步 voicechat 配置里的 `port`（默认 24454）；你改过就按你自己的实际值建隧道。
 
 ### 第三步：准备独立版 frpc
 
@@ -83,7 +87,7 @@ C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /nologo /target:winexe ^
 | 服务端目录 | 服务端文件夹，如 `D:\MCServer` |
 | Java 路径 | 可留空（用系统 Java），或填 `java.exe` 的完整路径 |
 | 服务端 jar | `server.jar`（与服务端目录里的文件名一致） |
-| 内存参数 | 默认 `-Xms1G -Xmx2G`；内存够可以调大（如 `-Xms2G -Xmx2G`），也可以换成 Aikar G1GC 参数 |
+| 内存参数 | 默认 `-Xms1G -Xmx2G`；内存够可以调大（如 `-Xms2G -Xmx2G`），也可以换成 Aikar G1GC 参数；大型整合包服务端可上调到 `-Xmx4G`–`6G`（注意给系统留余量） |
 | frpc.exe 路径 | 第三步放好的独立版 frpc 路径 |
 | 访问密钥 | 第二步拿到的 SakuraFrp 访问密钥 |
 | 隧道 ID | 游戏隧道的 ID |
@@ -97,12 +101,12 @@ C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /nologo /target:winexe ^
 
 1. 点「一键启动联机」：程序启动服务端和两条隧道（若开启了「开服前自动备份」，会先备份世界）。
 2. 看「隧道日志」出现「代理启动成功」，主界面会显示**公网地址**，点「复制地址发给朋友」把地址发出去。
-3. 朋友那边：PCL2 选**离线登录**（用户名随便起，进服后就是这个名字）→ 进游戏 → 多人游戏 → 添加服务器或直接连接 → 填公网地址 → 进入。
+3. 朋友那边：用 PCL2 或其他启动器（HMCL、官方启动器等）选**离线登录**（用户名随便起，进服后就是这个名字）→ 进游戏 → 多人游戏 → 添加服务器或直接连接 → 填公网地址 → 进入。
 4. 关服时用程序里的「安全关服」，不要直接杀进程——它会让服务端先存档再退出。
 
 ### 第六步：语音聊天（Simple Voice Chat）
 
-1. 服务端 `mods` 里放 Simple Voice Chat 的 **Fabric 1.20.1 服务端**版本；**每个玩家**的客户端也要装同版本 voicechat mod。
+1. 服务端 `mods` 里放与你的 **MC 版本和加载器对应**的 Simple Voice Chat 服务端版本（本例为 Fabric 1.20.1；其他版本/加载器到 mod 页面选对应文件）；**每个玩家**的客户端也要装同版本 voicechat mod。
 2. 服务端启动一次后会生成 `config\voicechat\voicechat-server.properties`，改两项、保存、重启服务端：
    - `port=24454`（与语音隧道的本地端口一致）
    - `voice_host=` 填**语音隧道的公网地址**（第二步记下的那个，如 `xxx.natfrp.com:23456`）

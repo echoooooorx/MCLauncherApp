@@ -1,6 +1,6 @@
 # AI 部署手册：Minecraft 联机助手（MCLauncherApp）全流程部署
 
-> **这份文件是写给 AI 助手看的。** 如果你是一个正在协助用户部署 Minecraft 联机环境的 AI（能读写文件、能执行命令、能操作这台 Windows 电脑），请通读全文后按阶段执行：每个阶段都有明确的操作、验证标准和失败处理。部署目标是让用户实现：**本地 Minecraft 1.20.1 Fabric 服务端 + SakuraFrp 内网穿透（游戏 + 语音两条隧道）+ 本启动器一键启停**，朋友用离线账号即可加入。
+> **这份文件是写给 AI 助手看的。** 如果你是一个正在协助用户部署 Minecraft 联机环境的 AI（能读写文件、能执行命令、能操作这台 Windows 电脑），请通读全文后按阶段执行：每个阶段都有明确的操作、验证标准和失败处理。部署目标是让用户实现：**本地 Minecraft 服务端（以 1.20.1 Fabric 为例，其他版本见第 2 节的版本对照）+ SakuraFrp 内网穿透（游戏 + 语音两条隧道）+ 本启动器一键启停**，朋友用离线账号即可加入。
 >
 > *Abstract (EN): This is a runbook for AI assistants. It deploys, step by step with verification gates, a local Minecraft 1.20.1 Fabric server (online-mode=false) behind two SakuraFrp tunnels (TCP 25565 for the game, UDP 24454 for Simple Voice Chat), driven by the MCLauncherApp one-click launcher in this repository. The SakuraFrp access key must only ever be typed by the user into the app's Settings page — never ask the user to paste it into a chat, and never write it into any file that leaves this machine.*
 
@@ -42,7 +42,7 @@ SakuraFrp 节点（公网）
 在用户的 Windows 电脑上逐项确认：
 
 - [ ] Windows 10/11，.NET Framework 4.x 可用（系统自带，一般无需处理）
-- [ ] Java 17 已安装：命令行 `java -version` 应显示 17.x。没有就装一个 Java 17（Temurin / 微软 OpenJDK 均可），并记下 `java.exe` 路径
+- [ ] Java 已安装且**版本与用户的 MC 版本匹配**：1.18–1.20.4 → **Java 17**；1.20.5 起（含 1.21.x）→ **Java 21**。用 `java -version` 核对；没有就装对应版本（Temurin / 微软 OpenJDK 均可）并记下 `java.exe` 路径。本手册以 1.20.1 + Java 17 为例——换其他版本时只有 **Java 版本、服务端 jar、mod 版本**三处不同，流程不变
 - [ ] 磁盘空间足够：服务端 + 存档备份建议预留 5 GB 以上
 - [ ] 用户已有（或愿意注册）SakuraFrp 账号；建隧道需要**实名认证**，这一步只能用户本人完成
 - [ ] 约定目录（可按用户习惯调整，下文按此写）：
@@ -53,7 +53,7 @@ SakuraFrp 节点（公网）
 
 ## 3. 阶段一：准备 Minecraft 服务端
 
-1. 从 [fabricmc.net](https://fabricmc.net/use/server/) 获取 Fabric 1.20.1 服务端，或用原版 server.jar + Fabric Loader 安装器生成服务端；把服务端 jar 命名为 `server.jar` 放进服务端目录。
+1. 按用户的版本与加载器获取服务端（以 Fabric 1.20.1 为例：从 [fabricmc.net](https://fabricmc.net/use/server/) 获取，或用原版 server.jar + Fabric Loader 安装器生成；原版 / Paper / Forge / NeoForge 同理替换来源）；把服务端 jar 命名为 `server.jar` 放进服务端目录（jar 名可自定，与第 6 阶段设置一致即可）。
 2. 在服务端目录手动启动一次：`java -Xms1G -Xmx2G -jar server.jar nogui`，等它生成文件并因 eula 停下。
 3. 编辑 `eula.txt`：`eula=true`。
 4. 编辑 `server.properties`，确认：
@@ -62,7 +62,7 @@ SakuraFrp 节点（公网）
    - （可选）`view-distance`、`simulation-distance` 按机器性能调；2–4 人联机默认即可
 5. 把服务端 mod 放进 `mods\`：
    - 必备：Fabric API
-   - 语音：Simple Voice Chat 的 **Fabric 1.20.1 服务端版**（阶段五细说）
+   - 语音：与用户版本/加载器对应的 Simple Voice Chat 服务端版（阶段五细说）
    - 注意每个 mod 的环境要求：纯服务端 mod 只放服务端；**双端 mod（如 Farmer's Delight）必须同时发给每个玩家放进他们客户端的 `mods\`**，版本要一字不差，否则对方进服会被踢
 6. **验证**：再次手动启动服务端，日志出现 `Done (x.xxx s)! For help, type "help"` 且无 ERROR 级报错；在控制台输入 `stop` 正常关服。若这一步不过，先修服务端，不要继续。
 
@@ -139,8 +139,8 @@ AI 需要回收并记录的只有四项（都不敏感）：**游戏隧道 ID、
 
 ## 7. 阶段五：语音聊天（Simple Voice Chat）
 
-1. **安装矩阵**（版本必须全员一致，认准 Minecraft 1.20.1 + Fabric）：
-   - 服务端 `mods\`：Simple Voice Chat 服务端版
+1. **安装矩阵**（版本必须全员一致：同一个 MC 版本 + 同一个加载器 + 同一个 SVC 版本；本例为 1.20.1 + Fabric）：
+   - 服务端 `mods\`：与用户 MC 版本和加载器对应的 Simple Voice Chat 服务端版
    - **每一个玩家**（含房主自己）的客户端 `mods\`：同版本 voicechat
    - 只装一端是没声/进不去的最常见原因
 2. 服务端启动一次后，编辑 `服务端目录\config\voicechat\voicechat-server.properties`：
@@ -183,7 +183,7 @@ AI 需要回收并记录的只有四项（都不敏感）：**游戏隧道 ID、
 | 语音有声但断断续续 / 朋友游戏卡 | 服务端日志有没有 `Can't keep up` | 没有 = 服务端没问题，是隧道节点/网络丢包：换 SakuraFrp 节点或错峰；不要去改服务端参数 |
 | 启动报端口被占用 | 25565 是否被另一个服务端/程序占着 | 关掉残留 java 进程再启动 |
 | 服务端内存溢出崩溃 | 机器物理内存与 `MemParams` 是否匹配 | 16 GB 机器给服务端 `-Xmx2G` 足够；整合包级别的服务端再上调，并留足系统余量，**不要把 -Xmx 设到接近物理内存** |
-| Java 版本报错 | `java -version` 与设置页 Java 路径 | 装 Java 17 并在设置里指到它 |
+| Java 版本报错 | `java -version` 与设置页 Java 路径 | 按 MC 版本装对应 Java（1.18–1.20.4 → 17；1.20.5 起 → 21）并在设置里指到它 |
 
 ---
 
