@@ -1,0 +1,28 @@
+name: build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile Chinese UI (Program.cs)
+        shell: cmd
+        run: C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /nologo /target:winexe /win32manifest:app.manifest /out:MCLauncherApp.exe /reference:System.dll /reference:System.Drawing.dll /reference:System.Windows.Forms.dll /reference:System.IO.Compression.dll Program.cs
+
+      - name: Compile English UI (Program_EN.cs)
+        shell: cmd
+        run: C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /nologo /target:winexe /win32manifest:app.manifest /out:MCLauncherApp_EN.exe /reference:System.dll /reference:System.Drawing.dll /reference:System.Windows.Forms.dll /reference:System.IO.Compression.dll Program_EN.cs
+
+      - name: Upload compiled exes
+        uses: actions/upload-artifact@v4
+        with:
+          name: MCLauncherApp-exe
+          path: |
+            MCLauncherApp.exe
+            MCLauncherApp_EN.exe
