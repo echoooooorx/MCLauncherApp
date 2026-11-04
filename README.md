@@ -1,5 +1,7 @@
 # Minecraft 联机助手（MCLauncherApp）
 
+[中文](README.md) | [English](README_EN.md)
+
 一个 Windows 桌面小工具：把「启动 Minecraft 服务端 + 打开 SakuraFrp 内网穿透隧道 + 语音隧道」这套每次联机都要重复的操作，收进一个窗口、一键完成。
 
 为 1.20.1 Fabric 离线联机场景做的：服务端 `online-mode=false`，朋友用离线账号直连隧道地址即可进服。
