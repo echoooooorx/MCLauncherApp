@@ -46,6 +46,16 @@ All settings live in `config.json` next to the executable, read and written thro
 
 - Fixed in v6.19: a horizontal stripe flashed across the log area while expanding, and the log flickered while scrolling (see the version note below). The stripe survived three fix rounds in v6.14–v6.17; in v6.19, a slowed-down animation was scanned frame by frame and the root cause turned out to be the window class missing the CS_VREDRAW/CS_HREDRAW styles — on every resize step, only the newly exposed strip waited for a later paint. The fix adds both redraw styles so every step repaints the whole window, plus WS_EX_COMPOSITED so each frame is presented atomically; log appends are batched under WM_SETREDRAW into a single repaint.
 
+## References & related projects
+
+This tool was designed around, and works together with, these projects:
+
+- [SakuraFrp](https://www.natfrp.com/) — the NAT-traversal service; the frpc the launcher drives comes from it (built on the open-source [frp](https://github.com/fatedier/frp))
+- [Simple Voice Chat](https://github.com/henkelmax/simple-voice-chat) — the voice-chat mod behind the voice tunnel
+- [spark](https://github.com/lucko/spark) — server profiler; the Status page's diagnostics follow its conventions
+- [PCL2](https://github.com/Meloong-Git/PCL) — the launcher path in Settings points to it
+- [Aikar's G1GC flags](https://docs.papermc.io/paper/aikars-flags) — the JVM flag set used for the server memory parameters
+
 ## Version
 
 Current version **v6.19**. The single source file `Program.cs` is the complete program.

@@ -46,6 +46,16 @@ C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /nologo /target:winexe ^
 
 - v6.19 已修复：日志区展开时闪过一条横纹、日志滚动刷新闪烁（见下方版本说明）。这个条纹在 v6.14–v6.17 修了三轮都没根除，v6.19 通过慢速动画逐帧定位后确认根源是窗口类缺少 CS_VREDRAW/CS_HREDRAW 重绘样式——每次改高只有新露出的窄条等下一帧绘制。修复方式：补上两个重绘样式让每步整窗重绘，再加 WS_EX_COMPOSITED 让整帧原子呈现；日志追加改用 WM_SETREDRAW 批量成一次重绘。
 
+## 参考与相关项目
+
+本工具在设计与使用中参考、配合了这些项目：
+
+- [SakuraFrp](https://www.natfrp.com/) — 内网穿透服务，启动器驱动的 frpc 来自它（其底层是开源的 [frp](https://github.com/fatedier/frp)）
+- [Simple Voice Chat](https://github.com/henkelmax/simple-voice-chat) — 语音隧道对应的语音聊天 mod
+- [spark](https://github.com/lucko/spark) — 服务端性能分析工具，状态页的诊断信息按它的用法设计
+- [PCL2](https://github.com/Meloong-Git/PCL) — 设置里可填的启动器路径指向它
+- [Aikar G1GC 参数](https://docs.papermc.io/paper/aikars-flags) — 服务端内存参数采用的 JVM 旗标方案
+
 ## 版本
 
 当前版本 **v6.19**。单文件源码 `Program.cs` 即完整程序。
