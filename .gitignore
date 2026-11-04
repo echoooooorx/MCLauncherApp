@@ -1,0 +1,14 @@
+# Local runtime config - contains your SakuraFrp access key and tunnel IDs.
+# NEVER commit this file.
+config.json
+config.json.bak
+config.json.*
+
+# Build output
+*.exe
+bin/
+obj/
+
+# Logs
+logs/
+*.log
