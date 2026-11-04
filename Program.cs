@@ -44,9 +44,9 @@ namespace MinecraftLauncher
         public string JarName = "server.jar";
         public string MemParams = "-Xms1G -Xmx2G";
         public int Port = 25565;
-        public string FrpcPath = "C:\\Program Files\\SakuraFrpLauncher\\frpc.exe";
+        public string FrpcPath = "frpc\\frpc.exe";
         public string FrpKey = "";
-        public string TunnelId = "29620779";
+        public string TunnelId = "";
         public string VoiceTunnelId = "";
         public string PublicAddr = "";
         public string Pcl2Path = "";
