@@ -58,4 +58,4 @@ C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /nologo /target:winexe ^
 
 ## 版本
 
-当前版本 **v6.19**。单文件源码 `Program.cs` 即完整程序。
+当前版本 **v6.19**。单文件源码 `Program.cs` 即完整程序。英文界面版源码为 `Program_EN.cs`（用同一套编译命令、把源文件换成它即可编译），界面文案为英文，功能与中文版完全一致。

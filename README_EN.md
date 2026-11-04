@@ -58,4 +58,4 @@ This tool was designed around, and works together with, these projects:
 
 ## Version
 
-Current version **v6.19**. The single source file `Program.cs` is the complete program.
+Current version **v6.19**. The single source file `Program.cs` is the complete program. An English-UI source, `Program_EN.cs`, is included as well — build it with the same command, swapping in that file name; it is identical in features, with English interface text.
