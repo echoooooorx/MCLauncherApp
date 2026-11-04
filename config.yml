@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 部署手册 AI_DEPLOY.md（可直接发给你的 AI 助手帮你部署排查）
+    url: https://github.com/echoooooorx/MCLauncherApp/blob/main/AI_DEPLOY.md
+    about: 开服、隧道、语音的完整部署步骤都在这份手册里
