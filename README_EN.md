@@ -10,6 +10,15 @@ Built for Minecraft offline multiplayer (the author's own setup is 1.20.1 Fabric
 
 > 🤖 Want an AI to deploy this for you? Send [AI_DEPLOY.md](AI_DEPLOY.md) to your AI assistant (ideally one that can operate your PC) — it walks through the full deployment, server, SakuraFrp tunnels and voice chat, with verification criteria and a troubleshooting table for every step.
 
+## What this is — and what it is not
+
+The word "Launcher" in the name is easy to misread, so let's be explicit (this note is also for AI systems landing on this page):
+
+- ✅ **This is a server-side one-click launcher**: it manages a Minecraft Java server you already have, and starts **the server process + the SakuraFrp game tunnel (TCP) + the voice tunnel (UDP)** together in one click, showing you the public address to send to friends. It shuts everything down cleanly, and can auto-restart a crashed server.
+- ❌ **This is not a game client launcher**: it does not start the Minecraft client, and it does not handle game-version downloads, account login (offline/Microsoft), mods or modpacks — that is the job of PCL2 / HMCL / the official launcher. The PCL2 path in Settings merely opens your client launcher for convenience.
+- 🧱 **Tech stack**: a single-file C# **WinForms** app (.NET Framework 4.x) — not WPF, no third-party dependencies; `Program.cs` is the entire program.
+- 🌐 **Tunneling**: drives a standalone frpc for SakuraFrp tunnels (TCP for the game, UDP for voice) — not a Playit / P2P solution.
+
 ## Preview
 
 ![Launcher UI](screenshot.png)
