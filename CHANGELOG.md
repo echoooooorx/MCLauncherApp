@@ -26,10 +26,10 @@ All notable changes are documented here. From v6.20 on: any change to release bi
 
 ### 附件 / Assets
 
-CI 构建（暂无自定义图标，功能与本地构建一致）/ CI builds (no custom icon yet; functionally identical):
+发布时先行上传 CI 构建（暂无自定义图标），2026-11-05 当日已替换为作者本地构建（带自定义图标；源码与功能完全一致）/ Initially CI builds (no custom icon); replaced on 2026-11-05 with the author's local builds (custom icon included; identical source and behavior):
 
-- `MCLauncherApp.exe`：168,960 字节，SHA256 `cccb698a5b2baad283829bbb7b910f6ca32242c6c949c0a3d01bc6fd6303744e`
-- `MCLauncherApp_EN.exe`：187,904 字节，SHA256 `1ffbbdfc7030a6b25e114a79daefeea68a83302f413a82006082f41d9d1e5f91`
+- `MCLauncherApp.exe`：265,216 字节，SHA256 `f421658244d189e184ef77cd4636cdd0e89ffc1230f45e60ce5b3fed5ff3e9d4`
+- `MCLauncherApp_EN.exe`：284,160 字节，SHA256 `4479a31920de2970022f0b55c3b6117c1d8c8434c4fdfb1200cf086e0216dd0a`
 
 ## [v6.19] - 2026-11-05
 
