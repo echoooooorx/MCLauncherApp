@@ -4,6 +4,33 @@
 
 All notable changes are documented here. From v6.20 on: any change to release binaries requires a version bump, an entry in this file, and SHA256 checksums in the release notes — no more silent asset replacement under the same tag.
 
+## [v6.20] - 2026-11-05
+
+### 新增 / Added
+
+- **启动前 Java 版本校验**：开服前核对服务端 jar 所需 Java 版本与实际 Java 版本，不匹配时弹窗说明并可选择仍然启动，不再让服务端直接崩溃。
+  Pre-start Java check: verifies the Java in use against the version the server jar requires; on mismatch it explains and offers a start-anyway override.
+- **首次设置向导**（设置页内置）：从零准备服务端——按所选 MC 版本自动下载匹配的 Java 与服务端 jar（原版 / Fabric / Paper；原版与 Paper 验哈希，Fabric 官方无哈希、向导会明示），写 eula 需手动勾选同意，并生成 `online-mode=false` 配置。
+  First-run wizard (Settings page): prepares a server from scratch — downloads the matching Java and server jar (Vanilla / Fabric / Paper, hash-verified where upstream publishes hashes) and writes the eula (explicit consent checkbox) plus `online-mode=false` defaults.
+
+### 修复 / Fixed
+
+- 安全关服改走后台线程：服务端迟迟不退出时窗口不再假死 60 秒。
+  Safe stop now runs on a background thread; the window no longer freezes for up to 60 s.
+- 备份恢复的 zip 解压补齐完整路径穿越校验（与向导解压一致）。
+  Backup-restore extraction gained the same full path-traversal guard as the wizard.
+- 配置默认值清理：隧道 ID 默认值为空、frpc 路径默认为相对路径 `frpc\frpc.exe`（同 v6.19 的 347763d 修复）。
+  Config defaults scrubbed: empty tunnel ID, relative frpc path.
+- 状态页内存条旁去掉「上限 x GB」小字（应作者要求）。
+  Removed the heap-cap caption next to the status page memory bar.
+
+### 附件 / Assets
+
+CI 构建（暂无自定义图标，功能与本地构建一致）/ CI builds (no custom icon yet; functionally identical):
+
+- `MCLauncherApp.exe`：168,960 字节，SHA256 `cccb698a5b2baad283829bbb7b910f6ca32242c6c949c0a3d01bc6fd6303744e`
+- `MCLauncherApp_EN.exe`：187,904 字节，SHA256 `1ffbbdfc7030a6b25e114a79daefeea68a83302f413a82006082f41d9d1e5f91`
+
 ## [v6.19] - 2026-11-05
 
 首个公开发布版本（本地迭代至 v6.19 后一次性公开）。
