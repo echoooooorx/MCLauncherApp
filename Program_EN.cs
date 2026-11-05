@@ -6,6 +6,9 @@ using System.Drawing.Drawing2D;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.IO.Compression;
+using System.Net;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -384,12 +387,32 @@ namespace MinecraftLauncher
             };
             Controls.Add(btnProps);
 
+            var btnWizard = new RoundButton();
+            btnWizard.Text = "First-run wizard";
+            btnWizard.BackColor = Pal.Surface;
+            btnWizard.ForeColor = Color.White;
+            btnWizard.SetBounds(212, y + 52, 150, 38);
+            btnWizard.Click += (s, e) =>
+            {
+                using (var wf = new WizardForm(_cfg, tbServerDir.Text.Trim()))
+                {
+                    if (wf.ShowDialog(this) == DialogResult.OK)
+                    {
+                        tbServerDir.Text = _cfg.ServerDir;
+                        tbJava.Text = _cfg.JavaPath;
+                        tbJar.Text = _cfg.JarName;
+                        _errLbl.Caption = "";
+                    }
+                }
+            };
+            Controls.Add(btnWizard);
+
             var btnSave = new RoundButton();
             btnSave.Primary = true;
             btnSave.Text = "Save";
             btnSave.BackColor = Pal.Green;
             btnSave.ForeColor = Color.White;
-            btnSave.SetBounds(230, y + 52, 140, 38);
+            btnSave.SetBounds(374, y + 52, 100, 38);
             btnSave.Click += (s, e) => { if (Save()) DialogResult = DialogResult.OK; };
             Controls.Add(btnSave);
 
@@ -397,7 +420,7 @@ namespace MinecraftLauncher
             btnCancel.Text = "Cancel";
             btnCancel.BackColor = Pal.Surface;
             btnCancel.ForeColor = Color.White;
-            btnCancel.SetBounds(390, y + 52, 100, 38);
+            btnCancel.SetBounds(486, y + 52, 100, 38);
             btnCancel.Click += (s, e) => { DialogResult = DialogResult.Cancel; };
             Controls.Add(btnCancel);
 
@@ -822,7 +845,7 @@ namespace MinecraftLauncher
         public event EventHandler DragRequested;
         // v6.6: reusable on dialogs — zones are width-relative (identical
         // geometry on the 560-wide main form), title/subtitle/min are settable.
-        public string TitleText = "Minecraft Multiplayer Helper v6.19";
+        public string TitleText = "Minecraft Multiplayer Helper v6.20";
         public string SubText = "Dual tunnel · Game + Voice";
         public bool ShowMin = true;
         Image _icon;
@@ -2305,6 +2328,820 @@ namespace MinecraftLauncher
         }
     }
 
+    // ---------- v6.20: MC / Java version helpers ----------
+    static class McJava
+    {
+        // The java.exe a check should look at: the configured one first,
+        // then PATH. Returns null when nothing is found. Never throws.
+        public static string ResolveJavaExe(Config cfg)
+        {
+            try
+            {
+                if (cfg != null && !string.IsNullOrEmpty(cfg.JavaPath) && File.Exists(cfg.JavaPath)) return cfg.JavaPath;
+                string pathEnv = Environment.GetEnvironmentVariable("PATH") ?? "";
+                foreach (string dir in pathEnv.Split(';'))
+                {
+                    string d = dir.Trim().Trim('"');
+                    if (d.Length == 0) continue;
+                    string cand = Path.Combine(d, "java.exe");
+                    if (File.Exists(cand)) return cand;
+                }
+            }
+            catch { }
+            return null;
+        }
+
+        // Run `java -version` and parse the major version (17, 21; a
+        // "1.8.0_x" banner means 8). 0 = unknown. 5 s timeout, never throws.
+        public static int GetJavaMajor(string javaExe)
+        {
+            if (string.IsNullOrEmpty(javaExe)) return 0;
+            try
+            {
+                var psi = new ProcessStartInfo();
+                psi.FileName = javaExe;
+                psi.Arguments = "-version";
+                psi.UseShellExecute = false;
+                psi.CreateNoWindow = true;
+                psi.RedirectStandardError = true;
+                psi.RedirectStandardOutput = true;
+                using (var p = Process.Start(psi))
+                {
+                    if (p == null) return 0;
+                    // The banner goes to stderr; drain stdout on a side
+                    // thread so a chatty JVM can never fill the pipe.
+                    var drain = new Thread(() => { try { p.StandardOutput.ReadToEnd(); } catch { } });
+                    drain.IsBackground = true;
+                    drain.Start();
+                    string err = "";
+                    var reader = new Thread(() => { try { err = p.StandardError.ReadToEnd(); } catch { } });
+                    reader.IsBackground = true;
+                    reader.Start();
+                    if (!p.WaitForExit(5000)) { try { p.Kill(); } catch { } return 0; }
+                    reader.Join(1500);
+                    return ParseJavaVersionText(err);
+                }
+            }
+            catch { return 0; }
+        }
+
+        public static int ParseJavaVersionText(string text)
+        {
+            if (string.IsNullOrEmpty(text)) return 0;
+            var m = Regex.Match(text, "version\\s+\"(\\d+)(?:\\.(\\d+))?");
+            if (!m.Success) return 0;
+            int a, b = 0;
+            if (!int.TryParse(m.Groups[1].Value, out a)) return 0;
+            if (m.Groups[2].Success) int.TryParse(m.Groups[2].Value, out b);
+            return a == 1 ? b : a; // 1.8.0_xxx is Java 8
+        }
+
+        // Minecraft version from a server jar's version.json ("name").
+        // Vanilla / Paper / Fabric launch jars all carry one. Null when
+        // unreadable. Never throws, never blocks on a corrupt jar.
+        public static string ReadMcVersion(string jarPath)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(jarPath) || !File.Exists(jarPath)) return null;
+                using (var fs = new FileStream(jarPath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                using (var za = new ZipArchive(fs, ZipArchiveMode.Read))
+                {
+                    var entry = za.GetEntry("version.json");
+                    if (entry == null) return null;
+                    using (var es = entry.Open())
+                    using (var sr = new StreamReader(es, Encoding.UTF8))
+                    {
+                        string json = sr.ReadToEnd();
+                        var m = Regex.Match(json, "\"name\"\\s*:\\s*\"([^\"]+)\"");
+                        if (m.Success) return m.Groups[1].Value.Trim();
+                        var m2 = Regex.Match(json, "\"id\"\\s*:\\s*\"([^\"]+)\"");
+                        if (m2.Success) return m2.Groups[1].Value.Trim();
+                    }
+                }
+            }
+            catch { }
+            return null;
+        }
+
+        // Required Java major for an MC version name; 0 = unknown.
+        public static int RequiredJava(string mcVersion)
+        {
+            int[] v = ParseMcVersion(mcVersion);
+            if (v == null) return 0;
+            if (v[0] >= 26) return 21; // year-based versions: best known estimate, see DESIGN_v620.md
+            if (v[0] != 1) return 0;
+            if (v[1] > 20) return 21;
+            if (v[1] == 20) return v[2] >= 5 ? 21 : 17;
+            if (v[1] >= 18) return 17;
+            if (v[1] == 17) return 16;
+            return 8;
+        }
+
+        // "1.20.1" -> [1,20,1]; snapshots / junk -> null.
+        public static int[] ParseMcVersion(string s)
+        {
+            if (string.IsNullOrEmpty(s)) return null;
+            var m = Regex.Match(s.Trim(), "^(\\d+)\\.(\\d+)(?:\\.(\\d+))?$");
+            if (!m.Success) return null;
+            int a, b, c = 0;
+            if (!int.TryParse(m.Groups[1].Value, out a)) return null;
+            if (!int.TryParse(m.Groups[2].Value, out b)) return null;
+            if (m.Groups[3].Success) int.TryParse(m.Groups[3].Value, out c);
+            return new int[] { a, b, c };
+        }
+    }
+
+    // ---------- v6.20: download / hash / zip helpers ----------
+    static class DlUtil
+    {
+        public static WebClient NewClient()
+        {
+            try { ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12; } catch { }
+            var wc = new WebClient();
+            wc.Headers[HttpRequestHeader.UserAgent] = "MCLauncherApp/6.20";
+            wc.Encoding = Encoding.UTF8;
+            return wc;
+        }
+
+        // Small JSON GET with a hard timeout (WebClient has none of its
+        // own for string downloads, so race it against a timer).
+        public static string DownloadStringTimed(string url, int timeoutSec, out string err)
+        {
+            err = null;
+            string result = null;
+            string errLocal = null;
+            var done = new ManualResetEvent(false);
+            using (var wc = NewClient())
+            {
+                wc.DownloadStringCompleted += (s, e) =>
+                {
+                    if (e.Error != null) errLocal = e.Error.Message;
+                    else if (!e.Cancelled) result = e.Result;
+                    done.Set();
+                };
+                try { wc.DownloadStringAsync(new Uri(url)); }
+                catch (Exception ex) { err = ex.Message; return null; }
+                if (!done.WaitOne(timeoutSec * 1000))
+                {
+                    try { wc.CancelAsync(); } catch { }
+                    err = "request timed out after " + timeoutSec + " s: " + url;
+                    return null;
+                }
+            }
+            err = errLocal;
+            return result;
+        }
+
+        // Big-file download with progress. Lands in "<dest>.part" first and
+        // is only renamed to destPath after a clean finish - the "safe
+        // promotion" rule; partial files are deleted on error/cancel.
+        // Returns null on success, "cancelled" on cancel, else the error.
+        public static string DownloadFile(WebClient wc, string url, string destPath, Action<int> progress, Func<bool> isCancelled)
+        {
+            string part = destPath + ".part";
+            TryDelete(part);
+            var done = new ManualResetEvent(false);
+            Exception error = null;
+            bool cancelled = false;
+            DownloadProgressChangedEventHandler ph = (s, e) => { if (progress != null) { try { progress(e.ProgressPercentage); } catch { } } };
+            System.ComponentModel.AsyncCompletedEventHandler ch = (s, e) => { error = e.Error; cancelled = e.Cancelled; done.Set(); };
+            wc.DownloadProgressChanged += ph;
+            wc.DownloadFileCompleted += ch;
+            try
+            {
+                wc.DownloadFileAsync(new Uri(url), part);
+                while (!done.WaitOne(200))
+                {
+                    if (isCancelled != null && isCancelled()) { try { wc.CancelAsync(); } catch { } }
+                }
+            }
+            catch (Exception ex) { TryDelete(part); return ex.Message; }
+            finally
+            {
+                wc.DownloadProgressChanged -= ph;
+                wc.DownloadFileCompleted -= ch;
+            }
+            if (cancelled || (isCancelled != null && isCancelled())) { TryDelete(part); return "cancelled"; }
+            if (error != null) { TryDelete(part); return error.Message; }
+            try
+            {
+                if (File.Exists(destPath)) File.Delete(destPath);
+                File.Move(part, destPath);
+            }
+            catch (Exception ex) { TryDelete(part); return ex.Message; }
+            return null;
+        }
+
+        public static void TryDelete(string path)
+        {
+            try { if (File.Exists(path)) File.Delete(path); } catch { }
+        }
+
+        public static string Sha256File(string path) { return HashFile(path, SHA256.Create()); }
+        public static string Sha1File(string path) { return HashFile(path, SHA1.Create()); }
+
+        static string HashFile(string path, HashAlgorithm alg)
+        {
+            using (alg)
+            using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                byte[] h = alg.ComputeHash(fs);
+                var sb = new StringBuilder();
+                foreach (byte b in h) sb.Append(b.ToString("x2"));
+                return sb.ToString();
+            }
+        }
+
+        // Value of "key" (a quoted string) appearing after startIndex in a
+        // JSON text. Hand-rolled on purpose: no JSON library may be added.
+        public static string JsonStrAfter(string json, int startIndex, string key)
+        {
+            if (json == null || startIndex < 0) return null;
+            var m = Regex.Match(json.Substring(startIndex), "\"" + Regex.Escape(key) + "\"\\s*:\\s*\"([^\"]*)\"");
+            return m.Success ? m.Groups[1].Value : null;
+        }
+
+        public static int JsonIndexOf(string json, string pattern)
+        {
+            if (json == null) return -1;
+            var m = Regex.Match(json, pattern);
+            return m.Success ? m.Index : -1;
+        }
+
+        // Fabric meta lists put "version" right before "stable" in each
+        // entry, newest first: the first "stable": true match is the
+        // newest stable build (loader list / installer list alike).
+        public static string FirstStableVersion(string json)
+        {
+            if (json == null) return null;
+            var m = Regex.Match(json, "\"version\"\\s*:\\s*\"([^\"]+)\"\\s*,\\s*\"stable\"\\s*:\\s*true");
+            return m.Success ? m.Groups[1].Value : null;
+        }
+
+        // Zip extraction with a path-traversal guard. Returns error or null.
+        public static string ExtractZip(string zipPath, string destDir)
+        {
+            try
+            {
+                string fullDest = Path.GetFullPath(destDir);
+                using (var fs = new FileStream(zipPath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                using (var za = new ZipArchive(fs, ZipArchiveMode.Read))
+                {
+                    foreach (var entry in za.Entries)
+                    {
+                        string rel = entry.FullName.Replace('/', Path.DirectorySeparatorChar);
+                        string target = Path.GetFullPath(Path.Combine(fullDest, rel));
+                        if (!target.Equals(fullDest, StringComparison.OrdinalIgnoreCase) &&
+                            !target.StartsWith(fullDest + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)) continue;
+                        if (entry.FullName.EndsWith("/")) { Directory.CreateDirectory(target); continue; }
+                        string parent = Path.GetDirectoryName(target);
+                        if (parent != null && parent.Length > 0) Directory.CreateDirectory(parent);
+                        using (var es = entry.Open())
+                        using (var os = new FileStream(target, FileMode.Create, FileAccess.Write))
+                        {
+                            es.CopyTo(os);
+                        }
+                    }
+                }
+                return null;
+            }
+            catch (Exception ex) { return ex.Message; }
+        }
+
+        // Find bin\java.exe under root (depth-limited). Null when absent.
+        public static string FindJavaExe(string root)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(root) || !Directory.Exists(root)) return null;
+                string direct = Path.Combine(root, "bin\\java.exe");
+                if (File.Exists(direct)) return direct;
+                foreach (string sub in Directory.GetDirectories(root))
+                {
+                    string cand = Path.Combine(sub, "bin\\java.exe");
+                    if (File.Exists(cand)) return cand;
+                    foreach (string sub2 in Directory.GetDirectories(sub))
+                    {
+                        string cand2 = Path.Combine(sub2, "bin\\java.exe");
+                        if (File.Exists(cand2)) return cand2;
+                    }
+                }
+            }
+            catch { }
+            return null;
+        }
+    }
+
+    // ---------- v6.20: first-run setup wizard ----------
+    // Downloads a matching Java runtime (Adoptium) and a server jar
+    // (Vanilla / Fabric / Paper), verifies hashes where upstream publishes
+    // them, writes eula.txt only with explicit consent, and saves the
+    // resulting paths back into the shared Config.
+    class WizardForm : DarkDialog
+    {
+        readonly Config _cfg;
+        ComboBox cbVersion;
+        RadioButton rbVanilla, rbFabric, rbPaper;
+        TextBox tbDir, tbLog;
+        CheckBox chkEula;
+        ProgressBar pb;
+        TextLabel lblStep;
+        RoundButton btnStart, btnCancelDl, btnClose;
+        volatile bool _cancel;
+        WebClient _wc;
+        bool _running;
+        public bool InstalledOk = false;
+
+        // captured on the UI thread when Start is clicked
+        string _ver, _dir;
+        int _type; // 0 vanilla, 1 fabric, 2 paper
+        bool _eulaAgreed;
+
+        public WizardForm(Config cfg, string initialDir)
+        {
+            _cfg = cfg;
+            InitChrome("First-run setup wizard", 660, 612);
+
+            int lx = 20, tx = 170;
+            AddLabel("Minecraft version", lx, 18);
+            cbVersion = new ComboBox();
+            cbVersion.DropDownStyle = ComboBoxStyle.DropDown;
+            cbVersion.Items.AddRange(new object[] { "1.20.1", "1.21.1", "1.21.11", "1.21.4", "1.20.4", "1.20.6", "1.19.4", "1.18.2" });
+            cbVersion.Text = "1.20.1";
+            cbVersion.SetBounds(tx, 14, 300, 26);
+            cbVersion.FlatStyle = FlatStyle.Flat;
+            cbVersion.BackColor = Pal.Surface;
+            cbVersion.ForeColor = Color.White;
+            Controls.Add(cbVersion);
+            ThemedCombo.Attach(cbVersion);
+            AddHint("Any release version works", tx + 308, 18);
+
+            AddLabel("Server type", lx, 56);
+            rbVanilla = AddRadio("Vanilla", tx, 54);
+            rbFabric = AddRadio("Fabric", tx + 90, 54);
+            rbPaper = AddRadio("Paper", tx + 180, 54);
+            rbFabric.Checked = true;
+
+            AddLabel("Server folder", lx, 94);
+            tbDir = new TextBox();
+            tbDir.SetBounds(tx, 90, 340, 26);
+            tbDir.BackColor = Pal.Surface;
+            tbDir.ForeColor = Color.White;
+            tbDir.BorderStyle = BorderStyle.FixedSingle;
+            tbDir.Text = string.IsNullOrEmpty(initialDir) ? "D:\\MCServer" : initialDir;
+            Controls.Add(tbDir);
+            var btnBrowse = new RoundButton();
+            btnBrowse.Text = "Browse...";
+            btnBrowse.BackColor = Pal.Surface;
+            btnBrowse.ForeColor = Color.White;
+            btnBrowse.BackdropColor = Pal.Bg;
+            btnBrowse.SetBounds(520, 88, 110, 30);
+            btnBrowse.Click += (s, e) =>
+            {
+                using (var fbd = new FolderBrowserDialog())
+                {
+                    fbd.Description = "Pick the server folder (it does not need to exist yet - pick a parent and edit the path text)";
+                    if (Directory.Exists(tbDir.Text.Trim())) fbd.SelectedPath = tbDir.Text.Trim();
+                    if (fbd.ShowDialog(this) == DialogResult.OK) tbDir.Text = fbd.SelectedPath;
+                }
+            };
+            Controls.Add(btnBrowse);
+
+            chkEula = new CheckBox();
+            chkEula.Text = "I agree to the Minecraft EULA";
+            chkEula.ForeColor = Color.White;
+            chkEula.BackColor = Color.Transparent;
+            chkEula.SetBounds(tx, 128, 230, 24);
+            Controls.Add(chkEula);
+            var lnkEula = new LinkLabel();
+            lnkEula.Text = "Read the EULA";
+            lnkEula.LinkColor = Color.FromArgb(120, 180, 255);
+            lnkEula.ActiveLinkColor = Color.FromArgb(160, 200, 255);
+            lnkEula.BackColor = Color.Transparent;
+            lnkEula.SetBounds(tx + 232, 130, 120, 24);
+            lnkEula.LinkClicked += (s, e) => { try { Process.Start("https://www.minecraft.net/en-us/eula"); } catch { } };
+            Controls.Add(lnkEula);
+            AddHint("Without the tick you must set eula=true in eula.txt yourself before the first start", tx, 154);
+
+            lblStep = new TextLabel();
+            lblStep.TopAlign = true;
+            lblStep.Caption = "Fill in the three items above and click Start install. Java and the server are downloaded and verified automatically.";
+            lblStep.TextShiftX = 2f; lblStep.TextShiftY = -0.67f;
+            lblStep.SetBounds(20, 186, 620, 24);
+            lblStep.BackColor = Color.Transparent; lblStep.BackdropColor = Pal.Bg; lblStep.ForeColor = Pal.Sub;
+            Controls.Add(lblStep);
+
+            pb = new ProgressBar();
+            pb.SetBounds(20, 212, 620, 16);
+            pb.Minimum = 0; pb.Maximum = 100; pb.Value = 0;
+            Controls.Add(pb);
+
+            tbLog = new TextBox();
+            tbLog.Multiline = true;
+            tbLog.ReadOnly = true;
+            tbLog.ScrollBars = ScrollBars.Vertical;
+            tbLog.SetBounds(20, 238, 620, 300);
+            tbLog.BackColor = Pal.Surface;
+            tbLog.ForeColor = Color.White;
+            tbLog.BorderStyle = BorderStyle.FixedSingle;
+            Controls.Add(tbLog);
+
+            btnStart = new RoundButton();
+            btnStart.Primary = true;
+            btnStart.Text = "Start install";
+            btnStart.BackColor = Pal.Green;
+            btnStart.ForeColor = Color.White;
+            btnStart.BackdropColor = Pal.Bg;
+            btnStart.SetBounds(20, 552, 140, 36);
+            btnStart.Click += (s, e) => StartInstall();
+            Controls.Add(btnStart);
+
+            btnCancelDl = new RoundButton();
+            btnCancelDl.Text = "Cancel";
+            btnCancelDl.BackColor = Pal.Surface;
+            btnCancelDl.ForeColor = Color.White;
+            btnCancelDl.BackdropColor = Pal.Bg;
+            btnCancelDl.SetBounds(172, 552, 100, 36);
+            btnCancelDl.Enabled = false;
+            btnCancelDl.Click += (s, e) =>
+            {
+                _cancel = true;
+                try { if (_wc != null) _wc.CancelAsync(); } catch { }
+                WizLog("Cancelling...");
+            };
+            Controls.Add(btnCancelDl);
+
+            btnClose = new RoundButton();
+            btnClose.Text = "Close";
+            btnClose.BackColor = Pal.Surface;
+            btnClose.ForeColor = Color.White;
+            btnClose.BackdropColor = Pal.Bg;
+            btnClose.SetBounds(520, 552, 120, 36);
+            btnClose.Click += (s, e) => { DialogResult = InstalledOk ? DialogResult.OK : DialogResult.Cancel; };
+            Controls.Add(btnClose);
+
+            FinishChrome();
+        }
+
+        void AddLabel(string text, int x, int y)
+        {
+            var lb = new TextLabel();
+            lb.TopAlign = true;
+            lb.Caption = text;
+            lb.TextShiftX = 2f; lb.TextShiftY = -0.67f;
+            lb.SetBounds(x, y, 140, 26);
+            lb.BackColor = Color.Transparent; lb.BackdropColor = Pal.Bg; lb.ForeColor = Pal.Sub;
+            Controls.Add(lb);
+        }
+
+        void AddHint(string text, int x, int y)
+        {
+            var lb = new TextLabel();
+            lb.TopAlign = true;
+            lb.Caption = text;
+            lb.TextShiftX = 2f; lb.TextShiftY = -0.67f;
+            lb.SetBounds(x, y, 300, 24);
+            lb.BackColor = Color.Transparent; lb.BackdropColor = Pal.Bg; lb.ForeColor = Pal.Sub;
+            Controls.Add(lb);
+        }
+
+        RadioButton AddRadio(string text, int x, int y)
+        {
+            var rb = new RadioButton();
+            rb.Text = text;
+            rb.ForeColor = Color.White;
+            rb.BackColor = Color.Transparent;
+            rb.SetBounds(x, y, 84, 26);
+            Controls.Add(rb);
+            return rb;
+        }
+
+        void WizUi(Action a)
+        {
+            if (IsDisposed) return;
+            try { if (InvokeRequired) BeginInvoke(a); else a(); } catch { }
+        }
+
+        void WizLog(string s)
+        {
+            WizUi(() =>
+            {
+                tbLog.AppendText(s + "\r\n");
+                tbLog.SelectionStart = tbLog.Text.Length;
+                tbLog.ScrollToCaret();
+            });
+        }
+
+        void WizStep(string s) { WizUi(() => { lblStep.Caption = s; }); }
+
+        void WizProgress(int pct)
+        {
+            WizUi(() =>
+            {
+                if (pct >= 0) { pb.Style = ProgressBarStyle.Continuous; pb.Value = Math.Min(100, pct); }
+                else pb.Style = ProgressBarStyle.Marquee;
+            });
+        }
+
+        void SetRunningUi(bool running)
+        {
+            WizUi(() =>
+            {
+                _running = running;
+                btnStart.Enabled = !running;
+                btnCancelDl.Enabled = running;
+                cbVersion.Enabled = !running;
+                tbDir.Enabled = !running;
+                rbVanilla.Enabled = !running;
+                rbFabric.Enabled = !running;
+                rbPaper.Enabled = !running;
+                chkEula.Enabled = !running;
+                if (!running) { pb.Style = ProgressBarStyle.Continuous; }
+            });
+        }
+
+        void StartInstall()
+        {
+            if (_running) return;
+            _ver = cbVersion.Text.Trim();
+            _dir = tbDir.Text.Trim();
+            _type = rbPaper.Checked ? 2 : (rbFabric.Checked ? 1 : 0);
+            _eulaAgreed = chkEula.Checked;
+            if (_ver.Length == 0) { InfoBox.Show("Enter a Minecraft version first.", "First-run setup wizard"); return; }
+            if (McJava.ParseMcVersion(_ver) == null) { InfoBox.Show("That does not look like a release version number. Enter something like 1.20.1 (snapshots are not supported by the wizard).", "First-run setup wizard"); return; }
+            if (_dir.Length == 0) { InfoBox.Show("Enter a server folder first.", "First-run setup wizard"); return; }
+            string existingJar = Path.Combine(_dir, "server.jar");
+            if (File.Exists(existingJar))
+            {
+                var r = InfoBox.Show("The target folder already contains a server.jar. Continuing will overwrite it.\n\nYour world and mods are not touched (the wizard only replaces the jar and adds missing files). Continue?", "First-run setup wizard", "Overwrite", "Cancel");
+                if (r != DialogResult.OK) return;
+            }
+            _cancel = false;
+            SetRunningUi(true);
+            WizLog("-- Install started: Minecraft " + _ver + " / " + (_type == 2 ? "Paper" : (_type == 1 ? "Fabric" : "Vanilla")) + " -> " + _dir);
+            var t = new Thread(Run);
+            t.IsBackground = true;
+            t.Start();
+        }
+
+        void Run()
+        {
+            try
+            {
+                int[] vp = McJava.ParseMcVersion(_ver);
+                int required = McJava.RequiredJava(_ver);
+                if (required <= 0) { Fail("Cannot determine which Java Minecraft " + _ver + " needs; wizard aborted (nothing was changed)."); return; }
+                if (vp != null && vp[0] >= 26) WizLog("Note: 26.x is Mojang's new year-based versioning; its official Java requirement may be higher than the Java 21 estimate used here - watch the server log after install.");
+
+                // ---- Step 1: a suitable Java ----
+                WizStep("Step 1: preparing Java " + required);
+                string javaExe = null;
+                int cfgMajor = 0;
+                if (!string.IsNullOrEmpty(_cfg.JavaPath) && File.Exists(_cfg.JavaPath)) cfgMajor = McJava.GetJavaMajor(_cfg.JavaPath);
+                if (cfgMajor >= required)
+                {
+                    javaExe = _cfg.JavaPath;
+                    WizLog("The configured Java is major version " + cfgMajor + " and meets the requirement; using it: " + javaExe);
+                }
+                if (javaExe == null)
+                {
+                    string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                    string localRoot = Path.Combine(baseDir, "java\\" + required);
+                    string found = DlUtil.FindJavaExe(localRoot);
+                    if (found != null && McJava.GetJavaMajor(found) >= required)
+                    {
+                        javaExe = found;
+                        WizLog("Using the previously downloaded Java next to the app: " + javaExe);
+                    }
+                }
+                if (javaExe == null)
+                {
+                    if (_cancel) { Cancelled(); return; }
+                    if (required != 17 && required != 21)
+                    {
+                        Fail("Minecraft " + _ver + " needs Java " + required + ", but this wizard can only auto-download Java 17 / 21. Install Java " + required + " manually, point Settings at its java.exe, then start the server.");
+                        return;
+                    }
+                    string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                    string javaRoot = Path.Combine(baseDir, "java");
+                    Directory.CreateDirectory(javaRoot);
+                    string zipPath = Path.Combine(javaRoot, "temurin" + required + ".zip");
+                    string link = null, checksum = null, metaErr;
+                    string meta = DlUtil.DownloadStringTimed("https://api.adoptium.net/v3/assets/latest/" + required + "/hotspot?os=windows&architecture=x64&image_type=jre&vendor=eclipse", 30, out metaErr);
+                    if (meta != null)
+                    {
+                        int pkg = DlUtil.JsonIndexOf(meta, "\"package\"\\s*:");
+                        if (pkg >= 0)
+                        {
+                            link = DlUtil.JsonStrAfter(meta, pkg, "link");
+                            checksum = DlUtil.JsonStrAfter(meta, pkg, "checksum");
+                        }
+                    }
+                    if (link == null)
+                    {
+                        link = "https://api.adoptium.net/v3/binary/latest/" + required + "/ga/windows/x64/jre/hotspot/normal/eclipse";
+                        checksum = null;
+                        WizLog("The Adoptium assets API gave no direct link (" + (metaErr ?? "no detail") + "); falling back to the official binary endpoint, which publishes no checksum - this Java download will not be hash-verified.");
+                    }
+                    WizLog("Downloading Java " + required + " (Eclipse Temurin JRE, about 40-50 MB)...");
+                    string dlErr = DownloadWithProgress(link, zipPath, "Java " + required);
+                    if (dlErr == "cancelled") { Cancelled(); return; }
+                    if (dlErr != null) { Fail("Java download failed: " + dlErr); return; }
+                    if (checksum != null)
+                    {
+                        WizLog("Verifying the Java zip SHA256...");
+                        string actual = DlUtil.Sha256File(zipPath);
+                        if (!string.Equals(actual, checksum, StringComparison.OrdinalIgnoreCase))
+                        {
+                            DlUtil.TryDelete(zipPath);
+                            Fail("Java zip SHA256 mismatch; the download was deleted. Expected " + checksum + ", got " + actual + ". Check your network and retry.");
+                            return;
+                        }
+                        WizLog("SHA256 verified.");
+                    }
+                    string destDir = Path.Combine(javaRoot, required.ToString());
+                    WizLog("Extracting Java to " + destDir + " ...");
+                    string exErr = DlUtil.ExtractZip(zipPath, destDir);
+                    DlUtil.TryDelete(zipPath);
+                    if (exErr != null) { Fail("Java extraction failed: " + exErr); return; }
+                    javaExe = DlUtil.FindJavaExe(destDir);
+                    if (javaExe == null) { Fail("Extraction finished but no bin\\java.exe was found - unexpected zip layout; aborted (config not saved)."); return; }
+                    int got = McJava.GetJavaMajor(javaExe);
+                    if (got < required) { Fail("The downloaded Java reports major version " + got + ", still below the required " + required + "; aborted (config not saved)."); return; }
+                    WizLog("Java ready: major version " + got + ", " + javaExe);
+                }
+                if (_cancel) { Cancelled(); return; }
+
+                // ---- Step 2: the server jar ----
+                WizStep("Step 2: downloading the server jar");
+                Directory.CreateDirectory(_dir);
+                string jarDest = Path.Combine(_dir, "server.jar");
+                if (_type == 0)
+                {
+                    string err;
+                    string manifest = DlUtil.DownloadStringTimed("https://piston-meta.mojang.com/mc/game/version_manifest_v2.json", 30, out err);
+                    if (manifest == null) { Fail("Cannot fetch the Mojang version manifest: " + err); return; }
+                    int vi = DlUtil.JsonIndexOf(manifest, "\"id\"\\s*:\\s*\"" + Regex.Escape(_ver) + "\"");
+                    string verUrl = vi >= 0 ? DlUtil.JsonStrAfter(manifest, vi, "url") : null;
+                    if (verUrl == null) { Fail("Minecraft " + _ver + " is not in the version manifest (check the number; releases only)."); return; }
+                    string verJson = DlUtil.DownloadStringTimed(verUrl, 30, out err);
+                    if (verJson == null) { Fail("Cannot fetch the version metadata for " + _ver + ": " + err); return; }
+                    int si = DlUtil.JsonIndexOf(verJson, "\"server\"\\s*:\\s*\\{");
+                    string jarUrl = si >= 0 ? DlUtil.JsonStrAfter(verJson, si, "url") : null;
+                    string sha1 = si >= 0 ? DlUtil.JsonStrAfter(verJson, si, "sha1") : null;
+                    if (jarUrl == null) { Fail("The version metadata has no server download."); return; }
+                    WizLog("Downloading the vanilla server (official Mojang)...");
+                    string dlErr = DownloadWithProgress(jarUrl, jarDest, "vanilla server");
+                    if (dlErr == "cancelled") { Cancelled(); return; }
+                    if (dlErr != null) { Fail("Server download failed: " + dlErr); return; }
+                    if (sha1 != null)
+                    {
+                        WizLog("Verifying the server SHA1...");
+                        string actual = DlUtil.Sha1File(jarDest);
+                        if (!string.Equals(actual, sha1, StringComparison.OrdinalIgnoreCase))
+                        {
+                            DlUtil.TryDelete(jarDest);
+                            Fail("Server SHA1 mismatch; the jar was deleted. Expected " + sha1 + ", got " + actual + ". Check your network and retry.");
+                            return;
+                        }
+                        WizLog("SHA1 verified.");
+                    }
+                }
+                else if (_type == 1)
+                {
+                    string err;
+                    string loaders = DlUtil.DownloadStringTimed("https://meta.fabricmc.net/v2/versions/loader/" + _ver, 30, out err);
+                    if (loaders == null) { Fail("Cannot fetch the Fabric loader list: " + err); return; }
+                    string loader = DlUtil.FirstStableVersion(loaders);
+                    if (loader == null) { Fail("Fabric has no stable loader for Minecraft " + _ver + " yet; pick another version."); return; }
+                    string installers = DlUtil.DownloadStringTimed("https://meta.fabricmc.net/v2/versions/installer", 30, out err);
+                    if (installers == null) { Fail("Cannot fetch the Fabric installer list: " + err); return; }
+                    string installer = DlUtil.FirstStableVersion(installers);
+                    if (installer == null) { Fail("The Fabric installer list looks wrong."); return; }
+                    string jarUrl = "https://meta.fabricmc.net/v2/versions/loader/" + _ver + "/" + loader + "/" + installer + "/server/jar";
+                    WizLog("Downloading the Fabric server launch jar (loader " + loader + ", installer " + installer + ")...");
+                    WizLog("Note: Fabric publishes no hash for this jar, so it is protected by HTTPS only and is not hash-verified. On first start it downloads the vanilla server and libraries itself.");
+                    string dlErr = DownloadWithProgress(jarUrl, jarDest, "Fabric server");
+                    if (dlErr == "cancelled") { Cancelled(); return; }
+                    if (dlErr != null) { Fail("Fabric server download failed: " + dlErr); return; }
+                    try { Directory.CreateDirectory(Path.Combine(_dir, "mods")); } catch { }
+                    WizLog("Created the mods folder. Reminder: Fabric servers usually also need the Fabric API mod in mods, and every player needs the same both-sides mods client-side.");
+                }
+                else
+                {
+                    string err;
+                    string builds = DlUtil.DownloadStringTimed("https://fill.papermc.io/v3/projects/paper/versions/" + _ver + "/builds", 30, out err);
+                    if (builds == null) { Fail("Cannot fetch the Paper build list (Fill API): " + err + ". Note: versions without Paper builds return an error here."); return; }
+                    int si = DlUtil.JsonIndexOf(builds, "\"server:default\"");
+                    string jarUrl = si >= 0 ? DlUtil.JsonStrAfter(builds, si, "url") : null;
+                    string sha256 = si >= 0 ? DlUtil.JsonStrAfter(builds, si, "sha256") : null;
+                    if (jarUrl == null) { Fail("No downloadable server found in the Paper build list."); return; }
+                    WizLog("Downloading the Paper server (latest build)...");
+                    string dlErr = DownloadWithProgress(jarUrl, jarDest, "Paper server");
+                    if (dlErr == "cancelled") { Cancelled(); return; }
+                    if (dlErr != null) { Fail("Paper server download failed: " + dlErr); return; }
+                    if (sha256 != null)
+                    {
+                        WizLog("Verifying the server SHA256...");
+                        string actual = DlUtil.Sha256File(jarDest);
+                        if (!string.Equals(actual, sha256, StringComparison.OrdinalIgnoreCase))
+                        {
+                            DlUtil.TryDelete(jarDest);
+                            Fail("Server SHA256 mismatch; the jar was deleted. Expected " + sha256 + ", got " + actual + ". Check your network and retry.");
+                            return;
+                        }
+                        WizLog("SHA256 verified.");
+                    }
+                }
+                if (_cancel) { Cancelled(); return; }
+
+                // ---- Step 3: starter files ----
+                WizStep("Step 3: writing starter files");
+                string eulaPath = Path.Combine(_dir, "eula.txt");
+                if (_eulaAgreed)
+                {
+                    File.WriteAllText(eulaPath,
+                        "#By changing the setting below to TRUE you are indicating your agreement to our EULA (https://aka.ms/MinecraftEULA).\r\n" +
+                        "#" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "\r\n" +
+                        "eula=true\r\n", Encoding.UTF8);
+                    WizLog("Wrote eula.txt (eula=true, as you agreed).");
+                }
+                else
+                {
+                    WizLog("EULA not agreed: eula.txt was not written. On first start the server will generate eula=false and exit; set it to eula=true to start.");
+                }
+                string propsPath = Path.Combine(_dir, "server.properties");
+                if (!File.Exists(propsPath))
+                {
+                    File.WriteAllText(propsPath,
+                        "#Minecraft server properties\r\n" +
+                        "#generated by MCLauncherApp first-run wizard\r\n" +
+                        "server-port=25565\r\n" +
+                        "online-mode=false\r\n", Encoding.UTF8);
+                    WizLog("Wrote server.properties: server-port=25565, online-mode=false (required for offline multiplayer).");
+                }
+                else
+                {
+                    WizLog("A server.properties already exists and was left untouched. Make sure online-mode=false yourself, or offline accounts cannot join.");
+                }
+
+                // ---- Step 4: save config ----
+                WizStep("Step 4: saving settings");
+                _cfg.ServerDir = _dir;
+                _cfg.JarName = "server.jar";
+                if (javaExe != null) _cfg.JavaPath = javaExe;
+                _cfg.Save();
+                InstalledOk = true;
+                WizLog("Done! Server folder: " + _dir + "; jar: server.jar; Java: " + (javaExe ?? "(previous setting kept)"));
+                WizLog("Close the wizard, fill in the SakuraFrp access key and tunnel IDs in Settings, then click the one-click start button.");
+                WizStep("Install complete");
+                SetRunningUi(false);
+            }
+            catch (Exception ex)
+            {
+                Fail("Wizard error: " + ex.Message);
+            }
+        }
+
+        string DownloadWithProgress(string url, string destPath, string label)
+        {
+            _wc = DlUtil.NewClient();
+            try
+            {
+                int lastPct = -2;
+                string err = DlUtil.DownloadFile(_wc, url, destPath,
+                    pct =>
+                    {
+                        if (pct != lastPct)
+                        {
+                            lastPct = pct;
+                            WizProgress(pct);
+                            if (pct >= 0) WizStep("Downloading " + label + "... " + pct + "%");
+                        }
+                    },
+                    () => _cancel);
+                WizProgress(100);
+                return err;
+            }
+            finally { try { _wc.Dispose(); } catch { } _wc = null; }
+        }
+
+        void Fail(string msg)
+        {
+            WizLog("Failed: " + msg);
+            WizStep("Stopped");
+            SetRunningUi(false);
+        }
+
+        void Cancelled()
+        {
+            WizLog("Cancelled. Settings were not saved; fully downloaded files stay in the target folder, partial files were cleaned up.");
+            WizStep("Cancelled");
+            SetRunningUi(false);
+        }
+    }
+
     class MainForm : Form
     {
         private Config _cfg;
@@ -2348,6 +3185,7 @@ namespace MinecraftLauncher
         private readonly System.Collections.Generic.List<double> _memHist = new System.Collections.Generic.List<double>();
         private SlpResult _slp;
         private volatile bool _stoppingIntentional = false;
+        private volatile bool _stopping = false;
         private readonly System.Collections.Generic.List<DateTime> _crashTimes = new System.Collections.Generic.List<DateTime>();
         private DateTime _slpAt = DateTime.MinValue;
         private volatile bool _slpBusy = false;
@@ -2625,7 +3463,7 @@ namespace MinecraftLauncher
 
         void BuildUi()
         {
-            Text = "Minecraft Multiplayer Helper v6.19";
+            Text = "Minecraft Multiplayer Helper v6.20";
             StartPosition = FormStartPosition.CenterScreen;
             BackColor = Pal.Bg;
             ForeColor = Pal.Text;
@@ -2715,7 +3553,14 @@ namespace MinecraftLauncher
             btnStop.SetBounds(196, 368, 168, 38);
             btnStop.BackColor = Pal.Surface;
             btnStop.ForeColor = Color.White;
-            btnStop.Click += (s, e) => SafeStop();
+            btnStop.Click += (s, e) =>
+            {
+                if (_stopping) return;
+                _stopping = true;
+                Thread tStop = new Thread(() => { try { SafeStop(); } finally { _stopping = false; } });
+                tStop.IsBackground = true;
+                tStop.Start();
+            };
             Controls.Add(btnStop);
 
             btnSettings = new RoundButton();
@@ -2894,6 +3739,7 @@ namespace MinecraftLauncher
 
             KeyPreview = true;
             Shown += (s, e) => { if (string.IsNullOrEmpty(_cfg.FrpKey)) { AppendState("First run: fill in the SakuraFrp access key and tunnel ID in Settings, and check the PCL2 path."); } };
+            Shown += (s, e) => { BeginInvoke(new Action(() => { try { OfferWizardIfNeeded(); } catch { } })); };
             // v6.6 trial: one full repaint right after the first frame settles,
             // to normalize any first-paint edge rasterization (QA measures it).
             Shown += (s, e) => { BeginInvoke(new Action(() => { try { Invalidate(true); Update(); } catch { } })); };
@@ -3132,7 +3978,7 @@ namespace MinecraftLauncher
                         if (xmx > 0)
                         {
                             statsPanel.SrvMemFrac = ws / (xmx * 1048576.0);
-                            statsPanel.SrvMemCap = "Limit " + (xmx >= 1024 ? (xmx / 1024.0).ToString("0.#") + " GB" : xmx + " MB");
+                            statsPanel.SrvMemCap = "";
                         }
                         else { statsPanel.SrvMemFrac = -1; statsPanel.SrvMemCap = ""; }
                         double pc = CpuRate(_server.TotalProcessorTime, now, ref _lastSrvCpu, ref _lastSrvCpuT);
@@ -3819,8 +4665,9 @@ namespace MinecraftLauncher
                         {
                             if (entry.FullName.EndsWith("/")) continue;
                             string rel = entry.FullName.Replace('/', '\\');
-                            if (rel.Contains("..")) continue;
-                            string dest = Path.Combine(world, rel);
+                            string fullWorld = Path.GetFullPath(world);
+                            string dest = Path.GetFullPath(Path.Combine(fullWorld, rel));
+                            if (!dest.StartsWith(fullWorld + "\\", StringComparison.OrdinalIgnoreCase)) continue;
                             Directory.CreateDirectory(Path.GetDirectoryName(dest));
                             using (var es = entry.Open())
                             using (var ds = new FileStream(dest, FileMode.Create, FileAccess.Write, FileShare.None))
@@ -4238,6 +5085,74 @@ namespace MinecraftLauncher
         }
 
         // ---------- 一键启动 ----------
+        // ---------- v6.20: first-run wizard entry ----------
+        bool _wizardOffered = false;
+
+        void OfferWizardIfNeeded()
+        {
+            if (_wizardOffered) return;
+            _wizardOffered = true;
+            bool need = !Directory.Exists(_cfg.ServerDir) || !File.Exists(Path.Combine(_cfg.ServerDir, _cfg.JarName));
+            if (!need) return;
+            var r = InfoBox.Show("There is no usable server yet: the configured server folder does not exist, or it contains no server jar.\n\nThe first-run setup wizard downloads a matching Java and server (Vanilla / Fabric / Paper) for you, writes the EULA and the server.properties needed for offline play, with a progress bar and hash verification throughout.", "First-run setup wizard", "Open wizard", "Later");
+            if (r == DialogResult.OK) OpenWizard();
+        }
+
+        void OpenWizard()
+        {
+            using (var wf = new WizardForm(_cfg, _cfg.ServerDir))
+            {
+                if (wf.ShowDialog(this) == DialogResult.OK)
+                {
+                    AppendState("First-run wizard finished: server and Java are ready.");
+                    RefreshStatus();
+                }
+            }
+        }
+
+        // ---------- v6.20: pre-start Java version check ----------
+        // Returns false only when the user cancels at the mismatch dialog.
+        // Every "unknown" outcome logs its reason and lets the start
+        // proceed - the check must never become a new way to break a
+        // working setup, and it must never crash on a bad jar.
+        bool CheckJavaVersion(string jarPath)
+        {
+            string mcVer = McJava.ReadMcVersion(jarPath);
+            int required = mcVer != null ? McJava.RequiredJava(mcVer) : 0;
+            string javaExe = McJava.ResolveJavaExe(_cfg);
+            int have = javaExe != null ? McJava.GetJavaMajor(javaExe) : 0;
+            string haveText = have > 0 ? have.ToString() : "unknown";
+            if (mcVer == null)
+            {
+                AppendServerLog("[Java check] Cannot read the server jar's version info (version.json); skipping the version check. Current Java major version: " + haveText + ".");
+                return true;
+            }
+            if (required <= 0)
+            {
+                AppendServerLog("[Java check] Server version " + mcVer + " is not in the version table; skipping the version check. Current Java major version: " + haveText + ".");
+                return true;
+            }
+            if (have <= 0)
+            {
+                AppendServerLog("[Java check] Server " + mcVer + " needs Java " + required + ", but the current Java version could not be measured; starting anyway (watch the server log).");
+                return true;
+            }
+            if (have >= required)
+            {
+                AppendServerLog("[Java check] Passed: server " + mcVer + " needs Java " + required + ", current Java is " + have + ".");
+                return true;
+            }
+            AppendServerLog("[Java check] Mismatch: server " + mcVer + " needs Java " + required + ", current Java is only " + have + "; waiting for the user's decision.");
+            bool proceed = false;
+            Ui(() =>
+            {
+                string msg = "The Java version is too old - the server will most likely fail to start.\n\nServer version: " + mcVer + ", which needs Java " + required + " or newer. The Java about to be used is major version " + have + ".\n\nSuggestion: pick a Java " + required + " java.exe in Settings, or let the first-run setup wizard download a matching Java automatically.\nChoosing Start anyway launches with the current Java regardless; see the server log for the resulting errors.";
+                proceed = InfoBox.Show(msg, "Java version mismatch", "Start anyway", "Cancel start") == DialogResult.OK;
+            });
+            AppendServerLog(proceed ? "[Java check] The user chose to start anyway." : "[Java check] The user cancelled the start.");
+            return proceed;
+        }
+
         void StartAll()
         {
             if (_starting) return;
@@ -4260,6 +5175,9 @@ namespace MinecraftLauncher
                 if (!Directory.Exists(_cfg.ServerDir)) { FailState("Server folder does not exist: " + _cfg.ServerDir + ". Check the server folder in Settings."); return; }
                 if (!File.Exists(Path.Combine(_cfg.ServerDir, _cfg.JarName))) { FailState("Server jar not found: " + _cfg.JarName + ". Check the jar file name in Settings."); return; }
                 if (string.IsNullOrEmpty(_cfg.JavaPath) || !File.Exists(_cfg.JavaPath)) { FailState("Java (java.exe) not found. Re-select the Java path in Settings — usually under .minecraft\\runtime or in the Java install folder."); return; }
+
+                // v6.20: Java version check (blocking dialog when too old; the user may still start)
+                if (!CheckJavaVersion(Path.Combine(_cfg.ServerDir, _cfg.JarName))) { FailState("Start cancelled: the Java version is below what the server needs. Switch to a matching Java, or let the first-run setup wizard download one, then try again."); return; }
 
                 // 2. 端口检查
                 if (!ProcAlive(_server))
@@ -4590,7 +5508,7 @@ namespace MinecraftLauncher
                 return;
             }
 
-            btnStop.Enabled = false;
+            Ui(() => { btnStop.Enabled = false; });
             AppendState("Stopping safely: sending stop to the server and waiting for the save…");
             try { _server.StandardInput.WriteLine("stop"); _server.StandardInput.Flush(); }
             catch { }
@@ -4614,7 +5532,8 @@ namespace MinecraftLauncher
             }
             else
             {
-                var res = InfoBox.Show("The server still has not exited after 60 seconds. Force-ending it may lose the last few minutes of progress. Force end it?", "Safe shutdown timed out", "Force end", "Wait longer");
+                DialogResult res = DialogResult.Cancel;
+                Ui(() => { res = InfoBox.Show("The server still has not exited after 60 seconds. Force-ending it may lose the last few minutes of progress. Force end it?", "Safe shutdown timed out", "Force end", "Wait longer"); });
                 if (res == DialogResult.OK)
                 {
                     try { _server.Kill(); } catch { }

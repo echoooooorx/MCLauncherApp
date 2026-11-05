@@ -26,6 +26,8 @@ The word "Launcher" in the name is easy to misread, so let's be explicit (this n
 ## Features
 
 - **One-click start/stop**: launches the server process together with the SakuraFrp game tunnel and voice tunnel (Simple Voice Chat), and shuts everything down cleanly
+- **Pre-start Java check** (new in v6.20): before starting, the app verifies that the Java version actually in use matches the version the server jar requires; on mismatch it explains the problem in a dialog and lets you start anyway, instead of the server crashing with a cryptic error
+- **First-run wizard** (new in v6.20): a wizard on the Settings page prepares a server from scratch — downloads the matching Java and server jar (Vanilla / Fabric / Paper, hash-verified) and writes the eula (only after an explicit consent checkbox) and the `online-mode=false` configuration
 - **Dual log panels**: server log and tunnel log shown separately, with search (Ctrl+F) and a command input that sends commands to the server console (Shift+Enter for multi-line)
 - **Expand/collapse animation**: the log area collapses into a compact window with an eased animation
 - **Automatic world backup** before the server starts, plus a manual backup manager (view / restore / delete)
@@ -157,4 +159,4 @@ MCLauncherApp is free and open source. If it saved you some multiplayer setup pa
 
 ## Version
 
-Current version **v6.19**. The single source file `Program.cs` is the complete program. An English-UI source, `Program_EN.cs`, is included as well — build it with the same command, swapping in that file name; it is identical in features, with English interface text.
+Current version **v6.20**. The single source file `Program.cs` is the complete program. An English-UI source, `Program_EN.cs`, is included as well — build it with the same command, swapping in that file name; it is identical in features, with English interface text. See [CHANGELOG.md](CHANGELOG.md) for version history.

@@ -6,6 +6,9 @@ using System.Drawing.Drawing2D;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.IO.Compression;
+using System.Net;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -384,12 +387,32 @@ namespace MinecraftLauncher
             };
             Controls.Add(btnProps);
 
+            var btnWizard = new RoundButton();
+            btnWizard.Text = "首次设置向导";
+            btnWizard.BackColor = Pal.Surface;
+            btnWizard.ForeColor = Color.White;
+            btnWizard.SetBounds(212, y + 52, 150, 38);
+            btnWizard.Click += (s, e) =>
+            {
+                using (var wf = new WizardForm(_cfg, tbServerDir.Text.Trim()))
+                {
+                    if (wf.ShowDialog(this) == DialogResult.OK)
+                    {
+                        tbServerDir.Text = _cfg.ServerDir;
+                        tbJava.Text = _cfg.JavaPath;
+                        tbJar.Text = _cfg.JarName;
+                        _errLbl.Caption = "";
+                    }
+                }
+            };
+            Controls.Add(btnWizard);
+
             var btnSave = new RoundButton();
             btnSave.Primary = true;
             btnSave.Text = "保存";
             btnSave.BackColor = Pal.Green;
             btnSave.ForeColor = Color.White;
-            btnSave.SetBounds(230, y + 52, 140, 38);
+            btnSave.SetBounds(374, y + 52, 100, 38);
             btnSave.Click += (s, e) => { if (Save()) DialogResult = DialogResult.OK; };
             Controls.Add(btnSave);
 
@@ -397,7 +420,7 @@ namespace MinecraftLauncher
             btnCancel.Text = "取消";
             btnCancel.BackColor = Pal.Surface;
             btnCancel.ForeColor = Color.White;
-            btnCancel.SetBounds(390, y + 52, 100, 38);
+            btnCancel.SetBounds(486, y + 52, 100, 38);
             btnCancel.Click += (s, e) => { DialogResult = DialogResult.Cancel; };
             Controls.Add(btnCancel);
 
@@ -822,7 +845,7 @@ namespace MinecraftLauncher
         public event EventHandler DragRequested;
         // v6.6: reusable on dialogs — zones are width-relative (identical
         // geometry on the 560-wide main form), title/subtitle/min are settable.
-        public string TitleText = "Minecraft 联机助手 v6.19";
+        public string TitleText = "Minecraft 联机助手 v6.20";
         public string SubText = "双隧道版 · 游戏 + 语音";
         public bool ShowMin = true;
         Image _icon;
@@ -2305,6 +2328,820 @@ namespace MinecraftLauncher
         }
     }
 
+    // ---------- v6.20: MC / Java version helpers ----------
+    static class McJava
+    {
+        // The java.exe a check should look at: the configured one first,
+        // then PATH. Returns null when nothing is found. Never throws.
+        public static string ResolveJavaExe(Config cfg)
+        {
+            try
+            {
+                if (cfg != null && !string.IsNullOrEmpty(cfg.JavaPath) && File.Exists(cfg.JavaPath)) return cfg.JavaPath;
+                string pathEnv = Environment.GetEnvironmentVariable("PATH") ?? "";
+                foreach (string dir in pathEnv.Split(';'))
+                {
+                    string d = dir.Trim().Trim('"');
+                    if (d.Length == 0) continue;
+                    string cand = Path.Combine(d, "java.exe");
+                    if (File.Exists(cand)) return cand;
+                }
+            }
+            catch { }
+            return null;
+        }
+
+        // Run `java -version` and parse the major version (17, 21; a
+        // "1.8.0_x" banner means 8). 0 = unknown. 5 s timeout, never throws.
+        public static int GetJavaMajor(string javaExe)
+        {
+            if (string.IsNullOrEmpty(javaExe)) return 0;
+            try
+            {
+                var psi = new ProcessStartInfo();
+                psi.FileName = javaExe;
+                psi.Arguments = "-version";
+                psi.UseShellExecute = false;
+                psi.CreateNoWindow = true;
+                psi.RedirectStandardError = true;
+                psi.RedirectStandardOutput = true;
+                using (var p = Process.Start(psi))
+                {
+                    if (p == null) return 0;
+                    // The banner goes to stderr; drain stdout on a side
+                    // thread so a chatty JVM can never fill the pipe.
+                    var drain = new Thread(() => { try { p.StandardOutput.ReadToEnd(); } catch { } });
+                    drain.IsBackground = true;
+                    drain.Start();
+                    string err = "";
+                    var reader = new Thread(() => { try { err = p.StandardError.ReadToEnd(); } catch { } });
+                    reader.IsBackground = true;
+                    reader.Start();
+                    if (!p.WaitForExit(5000)) { try { p.Kill(); } catch { } return 0; }
+                    reader.Join(1500);
+                    return ParseJavaVersionText(err);
+                }
+            }
+            catch { return 0; }
+        }
+
+        public static int ParseJavaVersionText(string text)
+        {
+            if (string.IsNullOrEmpty(text)) return 0;
+            var m = Regex.Match(text, "version\\s+\"(\\d+)(?:\\.(\\d+))?");
+            if (!m.Success) return 0;
+            int a, b = 0;
+            if (!int.TryParse(m.Groups[1].Value, out a)) return 0;
+            if (m.Groups[2].Success) int.TryParse(m.Groups[2].Value, out b);
+            return a == 1 ? b : a; // 1.8.0_xxx is Java 8
+        }
+
+        // Minecraft version from a server jar's version.json ("name").
+        // Vanilla / Paper / Fabric launch jars all carry one. Null when
+        // unreadable. Never throws, never blocks on a corrupt jar.
+        public static string ReadMcVersion(string jarPath)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(jarPath) || !File.Exists(jarPath)) return null;
+                using (var fs = new FileStream(jarPath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                using (var za = new ZipArchive(fs, ZipArchiveMode.Read))
+                {
+                    var entry = za.GetEntry("version.json");
+                    if (entry == null) return null;
+                    using (var es = entry.Open())
+                    using (var sr = new StreamReader(es, Encoding.UTF8))
+                    {
+                        string json = sr.ReadToEnd();
+                        var m = Regex.Match(json, "\"name\"\\s*:\\s*\"([^\"]+)\"");
+                        if (m.Success) return m.Groups[1].Value.Trim();
+                        var m2 = Regex.Match(json, "\"id\"\\s*:\\s*\"([^\"]+)\"");
+                        if (m2.Success) return m2.Groups[1].Value.Trim();
+                    }
+                }
+            }
+            catch { }
+            return null;
+        }
+
+        // Required Java major for an MC version name; 0 = unknown.
+        public static int RequiredJava(string mcVersion)
+        {
+            int[] v = ParseMcVersion(mcVersion);
+            if (v == null) return 0;
+            if (v[0] >= 26) return 21; // year-based versions: best known estimate, see DESIGN_v620.md
+            if (v[0] != 1) return 0;
+            if (v[1] > 20) return 21;
+            if (v[1] == 20) return v[2] >= 5 ? 21 : 17;
+            if (v[1] >= 18) return 17;
+            if (v[1] == 17) return 16;
+            return 8;
+        }
+
+        // "1.20.1" -> [1,20,1]; snapshots / junk -> null.
+        public static int[] ParseMcVersion(string s)
+        {
+            if (string.IsNullOrEmpty(s)) return null;
+            var m = Regex.Match(s.Trim(), "^(\\d+)\\.(\\d+)(?:\\.(\\d+))?$");
+            if (!m.Success) return null;
+            int a, b, c = 0;
+            if (!int.TryParse(m.Groups[1].Value, out a)) return null;
+            if (!int.TryParse(m.Groups[2].Value, out b)) return null;
+            if (m.Groups[3].Success) int.TryParse(m.Groups[3].Value, out c);
+            return new int[] { a, b, c };
+        }
+    }
+
+    // ---------- v6.20: download / hash / zip helpers ----------
+    static class DlUtil
+    {
+        public static WebClient NewClient()
+        {
+            try { ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12; } catch { }
+            var wc = new WebClient();
+            wc.Headers[HttpRequestHeader.UserAgent] = "MCLauncherApp/6.20";
+            wc.Encoding = Encoding.UTF8;
+            return wc;
+        }
+
+        // Small JSON GET with a hard timeout (WebClient has none of its
+        // own for string downloads, so race it against a timer).
+        public static string DownloadStringTimed(string url, int timeoutSec, out string err)
+        {
+            err = null;
+            string result = null;
+            string errLocal = null;
+            var done = new ManualResetEvent(false);
+            using (var wc = NewClient())
+            {
+                wc.DownloadStringCompleted += (s, e) =>
+                {
+                    if (e.Error != null) errLocal = e.Error.Message;
+                    else if (!e.Cancelled) result = e.Result;
+                    done.Set();
+                };
+                try { wc.DownloadStringAsync(new Uri(url)); }
+                catch (Exception ex) { err = ex.Message; return null; }
+                if (!done.WaitOne(timeoutSec * 1000))
+                {
+                    try { wc.CancelAsync(); } catch { }
+                    err = "request timed out after " + timeoutSec + " s: " + url;
+                    return null;
+                }
+            }
+            err = errLocal;
+            return result;
+        }
+
+        // Big-file download with progress. Lands in "<dest>.part" first and
+        // is only renamed to destPath after a clean finish - the "safe
+        // promotion" rule; partial files are deleted on error/cancel.
+        // Returns null on success, "cancelled" on cancel, else the error.
+        public static string DownloadFile(WebClient wc, string url, string destPath, Action<int> progress, Func<bool> isCancelled)
+        {
+            string part = destPath + ".part";
+            TryDelete(part);
+            var done = new ManualResetEvent(false);
+            Exception error = null;
+            bool cancelled = false;
+            DownloadProgressChangedEventHandler ph = (s, e) => { if (progress != null) { try { progress(e.ProgressPercentage); } catch { } } };
+            System.ComponentModel.AsyncCompletedEventHandler ch = (s, e) => { error = e.Error; cancelled = e.Cancelled; done.Set(); };
+            wc.DownloadProgressChanged += ph;
+            wc.DownloadFileCompleted += ch;
+            try
+            {
+                wc.DownloadFileAsync(new Uri(url), part);
+                while (!done.WaitOne(200))
+                {
+                    if (isCancelled != null && isCancelled()) { try { wc.CancelAsync(); } catch { } }
+                }
+            }
+            catch (Exception ex) { TryDelete(part); return ex.Message; }
+            finally
+            {
+                wc.DownloadProgressChanged -= ph;
+                wc.DownloadFileCompleted -= ch;
+            }
+            if (cancelled || (isCancelled != null && isCancelled())) { TryDelete(part); return "cancelled"; }
+            if (error != null) { TryDelete(part); return error.Message; }
+            try
+            {
+                if (File.Exists(destPath)) File.Delete(destPath);
+                File.Move(part, destPath);
+            }
+            catch (Exception ex) { TryDelete(part); return ex.Message; }
+            return null;
+        }
+
+        public static void TryDelete(string path)
+        {
+            try { if (File.Exists(path)) File.Delete(path); } catch { }
+        }
+
+        public static string Sha256File(string path) { return HashFile(path, SHA256.Create()); }
+        public static string Sha1File(string path) { return HashFile(path, SHA1.Create()); }
+
+        static string HashFile(string path, HashAlgorithm alg)
+        {
+            using (alg)
+            using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                byte[] h = alg.ComputeHash(fs);
+                var sb = new StringBuilder();
+                foreach (byte b in h) sb.Append(b.ToString("x2"));
+                return sb.ToString();
+            }
+        }
+
+        // Value of "key" (a quoted string) appearing after startIndex in a
+        // JSON text. Hand-rolled on purpose: no JSON library may be added.
+        public static string JsonStrAfter(string json, int startIndex, string key)
+        {
+            if (json == null || startIndex < 0) return null;
+            var m = Regex.Match(json.Substring(startIndex), "\"" + Regex.Escape(key) + "\"\\s*:\\s*\"([^\"]*)\"");
+            return m.Success ? m.Groups[1].Value : null;
+        }
+
+        public static int JsonIndexOf(string json, string pattern)
+        {
+            if (json == null) return -1;
+            var m = Regex.Match(json, pattern);
+            return m.Success ? m.Index : -1;
+        }
+
+        // Fabric meta lists put "version" right before "stable" in each
+        // entry, newest first: the first "stable": true match is the
+        // newest stable build (loader list / installer list alike).
+        public static string FirstStableVersion(string json)
+        {
+            if (json == null) return null;
+            var m = Regex.Match(json, "\"version\"\\s*:\\s*\"([^\"]+)\"\\s*,\\s*\"stable\"\\s*:\\s*true");
+            return m.Success ? m.Groups[1].Value : null;
+        }
+
+        // Zip extraction with a path-traversal guard. Returns error or null.
+        public static string ExtractZip(string zipPath, string destDir)
+        {
+            try
+            {
+                string fullDest = Path.GetFullPath(destDir);
+                using (var fs = new FileStream(zipPath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                using (var za = new ZipArchive(fs, ZipArchiveMode.Read))
+                {
+                    foreach (var entry in za.Entries)
+                    {
+                        string rel = entry.FullName.Replace('/', Path.DirectorySeparatorChar);
+                        string target = Path.GetFullPath(Path.Combine(fullDest, rel));
+                        if (!target.Equals(fullDest, StringComparison.OrdinalIgnoreCase) &&
+                            !target.StartsWith(fullDest + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)) continue;
+                        if (entry.FullName.EndsWith("/")) { Directory.CreateDirectory(target); continue; }
+                        string parent = Path.GetDirectoryName(target);
+                        if (parent != null && parent.Length > 0) Directory.CreateDirectory(parent);
+                        using (var es = entry.Open())
+                        using (var os = new FileStream(target, FileMode.Create, FileAccess.Write))
+                        {
+                            es.CopyTo(os);
+                        }
+                    }
+                }
+                return null;
+            }
+            catch (Exception ex) { return ex.Message; }
+        }
+
+        // Find bin\java.exe under root (depth-limited). Null when absent.
+        public static string FindJavaExe(string root)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(root) || !Directory.Exists(root)) return null;
+                string direct = Path.Combine(root, "bin\\java.exe");
+                if (File.Exists(direct)) return direct;
+                foreach (string sub in Directory.GetDirectories(root))
+                {
+                    string cand = Path.Combine(sub, "bin\\java.exe");
+                    if (File.Exists(cand)) return cand;
+                    foreach (string sub2 in Directory.GetDirectories(sub))
+                    {
+                        string cand2 = Path.Combine(sub2, "bin\\java.exe");
+                        if (File.Exists(cand2)) return cand2;
+                    }
+                }
+            }
+            catch { }
+            return null;
+        }
+    }
+
+    // ---------- v6.20: first-run setup wizard ----------
+    // Downloads a matching Java runtime (Adoptium) and a server jar
+    // (Vanilla / Fabric / Paper), verifies hashes where upstream publishes
+    // them, writes eula.txt only with explicit consent, and saves the
+    // resulting paths back into the shared Config.
+    class WizardForm : DarkDialog
+    {
+        readonly Config _cfg;
+        ComboBox cbVersion;
+        RadioButton rbVanilla, rbFabric, rbPaper;
+        TextBox tbDir, tbLog;
+        CheckBox chkEula;
+        ProgressBar pb;
+        TextLabel lblStep;
+        RoundButton btnStart, btnCancelDl, btnClose;
+        volatile bool _cancel;
+        WebClient _wc;
+        bool _running;
+        public bool InstalledOk = false;
+
+        // captured on the UI thread when Start is clicked
+        string _ver, _dir;
+        int _type; // 0 vanilla, 1 fabric, 2 paper
+        bool _eulaAgreed;
+
+        public WizardForm(Config cfg, string initialDir)
+        {
+            _cfg = cfg;
+            InitChrome("首次设置向导", 660, 612);
+
+            int lx = 20, tx = 170;
+            AddLabel("Minecraft 版本", lx, 18);
+            cbVersion = new ComboBox();
+            cbVersion.DropDownStyle = ComboBoxStyle.DropDown;
+            cbVersion.Items.AddRange(new object[] { "1.20.1", "1.21.1", "1.21.11", "1.21.4", "1.20.4", "1.20.6", "1.19.4", "1.18.2" });
+            cbVersion.Text = "1.20.1";
+            cbVersion.SetBounds(tx, 14, 300, 26);
+            cbVersion.FlatStyle = FlatStyle.Flat;
+            cbVersion.BackColor = Pal.Surface;
+            cbVersion.ForeColor = Color.White;
+            Controls.Add(cbVersion);
+            ThemedCombo.Attach(cbVersion);
+            AddHint("可手填任意正式版版本号", tx + 308, 18);
+
+            AddLabel("服务端类型", lx, 56);
+            rbVanilla = AddRadio("原版", tx, 54);
+            rbFabric = AddRadio("Fabric", tx + 90, 54);
+            rbPaper = AddRadio("Paper", tx + 180, 54);
+            rbFabric.Checked = true;
+
+            AddLabel("服务端目录", lx, 94);
+            tbDir = new TextBox();
+            tbDir.SetBounds(tx, 90, 340, 26);
+            tbDir.BackColor = Pal.Surface;
+            tbDir.ForeColor = Color.White;
+            tbDir.BorderStyle = BorderStyle.FixedSingle;
+            tbDir.Text = string.IsNullOrEmpty(initialDir) ? "D:\\MCServer" : initialDir;
+            Controls.Add(tbDir);
+            var btnBrowse = new RoundButton();
+            btnBrowse.Text = "浏览…";
+            btnBrowse.BackColor = Pal.Surface;
+            btnBrowse.ForeColor = Color.White;
+            btnBrowse.BackdropColor = Pal.Bg;
+            btnBrowse.SetBounds(520, 88, 110, 30);
+            btnBrowse.Click += (s, e) =>
+            {
+                using (var fbd = new FolderBrowserDialog())
+                {
+                    fbd.Description = "选择服务端文件夹（不存在也可以，先选一个父目录再改路径文字）";
+                    if (Directory.Exists(tbDir.Text.Trim())) fbd.SelectedPath = tbDir.Text.Trim();
+                    if (fbd.ShowDialog(this) == DialogResult.OK) tbDir.Text = fbd.SelectedPath;
+                }
+            };
+            Controls.Add(btnBrowse);
+
+            chkEula = new CheckBox();
+            chkEula.Text = "我同意 Minecraft EULA";
+            chkEula.ForeColor = Color.White;
+            chkEula.BackColor = Color.Transparent;
+            chkEula.SetBounds(tx, 128, 190, 24);
+            Controls.Add(chkEula);
+            var lnkEula = new LinkLabel();
+            lnkEula.Text = "查看 EULA 全文";
+            lnkEula.LinkColor = Color.FromArgb(120, 180, 255);
+            lnkEula.ActiveLinkColor = Color.FromArgb(160, 200, 255);
+            lnkEula.BackColor = Color.Transparent;
+            lnkEula.SetBounds(tx + 190, 130, 120, 24);
+            lnkEula.LinkClicked += (s, e) => { try { Process.Start("https://www.minecraft.net/en-us/eula"); } catch { } };
+            Controls.Add(lnkEula);
+            AddHint("不勾选也能装，但首次开服前要自己把 eula.txt 改成 eula=true", tx, 154);
+
+            lblStep = new TextLabel();
+            lblStep.TopAlign = true;
+            lblStep.Caption = "填好上面三项，点「开始安装」。Java 和服务端都会自动下好并校验。";
+            lblStep.TextShiftX = 2f; lblStep.TextShiftY = -0.67f;
+            lblStep.SetBounds(20, 186, 620, 24);
+            lblStep.BackColor = Color.Transparent; lblStep.BackdropColor = Pal.Bg; lblStep.ForeColor = Pal.Sub;
+            Controls.Add(lblStep);
+
+            pb = new ProgressBar();
+            pb.SetBounds(20, 212, 620, 16);
+            pb.Minimum = 0; pb.Maximum = 100; pb.Value = 0;
+            Controls.Add(pb);
+
+            tbLog = new TextBox();
+            tbLog.Multiline = true;
+            tbLog.ReadOnly = true;
+            tbLog.ScrollBars = ScrollBars.Vertical;
+            tbLog.SetBounds(20, 238, 620, 300);
+            tbLog.BackColor = Pal.Surface;
+            tbLog.ForeColor = Color.White;
+            tbLog.BorderStyle = BorderStyle.FixedSingle;
+            Controls.Add(tbLog);
+
+            btnStart = new RoundButton();
+            btnStart.Primary = true;
+            btnStart.Text = "开始安装";
+            btnStart.BackColor = Pal.Green;
+            btnStart.ForeColor = Color.White;
+            btnStart.BackdropColor = Pal.Bg;
+            btnStart.SetBounds(20, 552, 140, 36);
+            btnStart.Click += (s, e) => StartInstall();
+            Controls.Add(btnStart);
+
+            btnCancelDl = new RoundButton();
+            btnCancelDl.Text = "取消";
+            btnCancelDl.BackColor = Pal.Surface;
+            btnCancelDl.ForeColor = Color.White;
+            btnCancelDl.BackdropColor = Pal.Bg;
+            btnCancelDl.SetBounds(172, 552, 100, 36);
+            btnCancelDl.Enabled = false;
+            btnCancelDl.Click += (s, e) =>
+            {
+                _cancel = true;
+                try { if (_wc != null) _wc.CancelAsync(); } catch { }
+                WizLog("正在取消…");
+            };
+            Controls.Add(btnCancelDl);
+
+            btnClose = new RoundButton();
+            btnClose.Text = "关闭";
+            btnClose.BackColor = Pal.Surface;
+            btnClose.ForeColor = Color.White;
+            btnClose.BackdropColor = Pal.Bg;
+            btnClose.SetBounds(520, 552, 120, 36);
+            btnClose.Click += (s, e) => { DialogResult = InstalledOk ? DialogResult.OK : DialogResult.Cancel; };
+            Controls.Add(btnClose);
+
+            FinishChrome();
+        }
+
+        void AddLabel(string text, int x, int y)
+        {
+            var lb = new TextLabel();
+            lb.TopAlign = true;
+            lb.Caption = text;
+            lb.TextShiftX = 2f; lb.TextShiftY = -0.67f;
+            lb.SetBounds(x, y, 140, 26);
+            lb.BackColor = Color.Transparent; lb.BackdropColor = Pal.Bg; lb.ForeColor = Pal.Sub;
+            Controls.Add(lb);
+        }
+
+        void AddHint(string text, int x, int y)
+        {
+            var lb = new TextLabel();
+            lb.TopAlign = true;
+            lb.Caption = text;
+            lb.TextShiftX = 2f; lb.TextShiftY = -0.67f;
+            lb.SetBounds(x, y, 300, 24);
+            lb.BackColor = Color.Transparent; lb.BackdropColor = Pal.Bg; lb.ForeColor = Pal.Sub;
+            Controls.Add(lb);
+        }
+
+        RadioButton AddRadio(string text, int x, int y)
+        {
+            var rb = new RadioButton();
+            rb.Text = text;
+            rb.ForeColor = Color.White;
+            rb.BackColor = Color.Transparent;
+            rb.SetBounds(x, y, 84, 26);
+            Controls.Add(rb);
+            return rb;
+        }
+
+        void WizUi(Action a)
+        {
+            if (IsDisposed) return;
+            try { if (InvokeRequired) BeginInvoke(a); else a(); } catch { }
+        }
+
+        void WizLog(string s)
+        {
+            WizUi(() =>
+            {
+                tbLog.AppendText(s + "\r\n");
+                tbLog.SelectionStart = tbLog.Text.Length;
+                tbLog.ScrollToCaret();
+            });
+        }
+
+        void WizStep(string s) { WizUi(() => { lblStep.Caption = s; }); }
+
+        void WizProgress(int pct)
+        {
+            WizUi(() =>
+            {
+                if (pct >= 0) { pb.Style = ProgressBarStyle.Continuous; pb.Value = Math.Min(100, pct); }
+                else pb.Style = ProgressBarStyle.Marquee;
+            });
+        }
+
+        void SetRunningUi(bool running)
+        {
+            WizUi(() =>
+            {
+                _running = running;
+                btnStart.Enabled = !running;
+                btnCancelDl.Enabled = running;
+                cbVersion.Enabled = !running;
+                tbDir.Enabled = !running;
+                rbVanilla.Enabled = !running;
+                rbFabric.Enabled = !running;
+                rbPaper.Enabled = !running;
+                chkEula.Enabled = !running;
+                if (!running) { pb.Style = ProgressBarStyle.Continuous; }
+            });
+        }
+
+        void StartInstall()
+        {
+            if (_running) return;
+            _ver = cbVersion.Text.Trim();
+            _dir = tbDir.Text.Trim();
+            _type = rbPaper.Checked ? 2 : (rbFabric.Checked ? 1 : 0);
+            _eulaAgreed = chkEula.Checked;
+            if (_ver.Length == 0) { InfoBox.Show("先填 Minecraft 版本。", "首次设置向导"); return; }
+            if (McJava.ParseMcVersion(_ver) == null) { InfoBox.Show("版本号格式不对，请填正式版版本号，例如 1.20.1（快照版暂不支持向导）。", "首次设置向导"); return; }
+            if (_dir.Length == 0) { InfoBox.Show("先填服务端目录。", "首次设置向导"); return; }
+            string existingJar = Path.Combine(_dir, "server.jar");
+            if (File.Exists(existingJar))
+            {
+                var r = InfoBox.Show("目标目录里已经有 server.jar，继续会覆盖它。\n\n存档和 mods 不受影响（向导只换 jar 并补缺失文件）。确定继续？", "首次设置向导", "覆盖并继续", "取消");
+                if (r != DialogResult.OK) return;
+            }
+            _cancel = false;
+            SetRunningUi(true);
+            WizLog("—— 开始安装：Minecraft " + _ver + " / " + (_type == 2 ? "Paper" : (_type == 1 ? "Fabric" : "原版")) + " → " + _dir);
+            var t = new Thread(Run);
+            t.IsBackground = true;
+            t.Start();
+        }
+
+        void Run()
+        {
+            try
+            {
+                int[] vp = McJava.ParseMcVersion(_ver);
+                int required = McJava.RequiredJava(_ver);
+                if (required <= 0) { Fail("无法判断 Minecraft " + _ver + " 需要的 Java 版本，向导中止（没有改动任何文件）。"); return; }
+                if (vp != null && vp[0] >= 26) WizLog("提示：26.x 是 Mojang 的新年份版本号，官方要求的 Java 可能高于本向导按 21 的估算，装好后请留意服务端日志。");
+
+                // ---- Step 1: a suitable Java ----
+                WizStep("第 1 步：准备 Java " + required);
+                string javaExe = null;
+                int cfgMajor = 0;
+                if (!string.IsNullOrEmpty(_cfg.JavaPath) && File.Exists(_cfg.JavaPath)) cfgMajor = McJava.GetJavaMajor(_cfg.JavaPath);
+                if (cfgMajor >= required)
+                {
+                    javaExe = _cfg.JavaPath;
+                    WizLog("已配置的 Java 大版本为 " + cfgMajor + "，满足要求，直接使用：" + javaExe);
+                }
+                if (javaExe == null)
+                {
+                    string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                    string localRoot = Path.Combine(baseDir, "java\\" + required);
+                    string found = DlUtil.FindJavaExe(localRoot);
+                    if (found != null && McJava.GetJavaMajor(found) >= required)
+                    {
+                        javaExe = found;
+                        WizLog("使用程序旁已下载的 Java：" + javaExe);
+                    }
+                }
+                if (javaExe == null)
+                {
+                    if (_cancel) { Cancelled(); return; }
+                    if (required != 17 && required != 21)
+                    {
+                        Fail("Minecraft " + _ver + " 需要 Java " + required + "，本向导只能自动下载 Java 17 / 21。请先手动安装 Java " + required + "，在「设置」里指定 java.exe 路径后再开服。");
+                        return;
+                    }
+                    string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                    string javaRoot = Path.Combine(baseDir, "java");
+                    Directory.CreateDirectory(javaRoot);
+                    string zipPath = Path.Combine(javaRoot, "temurin" + required + ".zip");
+                    string link = null, checksum = null, metaErr;
+                    string meta = DlUtil.DownloadStringTimed("https://api.adoptium.net/v3/assets/latest/" + required + "/hotspot?os=windows&architecture=x64&image_type=jre&vendor=eclipse", 30, out metaErr);
+                    if (meta != null)
+                    {
+                        int pkg = DlUtil.JsonIndexOf(meta, "\"package\"\\s*:");
+                        if (pkg >= 0)
+                        {
+                            link = DlUtil.JsonStrAfter(meta, pkg, "link");
+                            checksum = DlUtil.JsonStrAfter(meta, pkg, "checksum");
+                        }
+                    }
+                    if (link == null)
+                    {
+                        link = "https://api.adoptium.net/v3/binary/latest/" + required + "/ga/windows/x64/jre/hotspot/normal/eclipse";
+                        checksum = null;
+                        WizLog("Adoptium 资产接口没取到直链（" + (metaErr ?? "无详情") + "），改用官方二进制接口下载；该接口不提供哈希，本次 Java 下载不做哈希校验。");
+                    }
+                    WizLog("下载 Java " + required + "（Eclipse Temurin JRE，约 40–50 MB）…");
+                    string dlErr = DownloadWithProgress(link, zipPath, "Java " + required);
+                    if (dlErr == "cancelled") { Cancelled(); return; }
+                    if (dlErr != null) { Fail("Java 下载失败：" + dlErr); return; }
+                    if (checksum != null)
+                    {
+                        WizLog("校验 Java 压缩包 SHA256…");
+                        string actual = DlUtil.Sha256File(zipPath);
+                        if (!string.Equals(actual, checksum, StringComparison.OrdinalIgnoreCase))
+                        {
+                            DlUtil.TryDelete(zipPath);
+                            Fail("Java 压缩包 SHA256 校验不通过，已删除下载文件。期望 " + checksum + "，实际 " + actual + "。请检查网络后重试。");
+                            return;
+                        }
+                        WizLog("SHA256 校验通过。");
+                    }
+                    string destDir = Path.Combine(javaRoot, required.ToString());
+                    WizLog("解压 Java 到 " + destDir + " …");
+                    string exErr = DlUtil.ExtractZip(zipPath, destDir);
+                    DlUtil.TryDelete(zipPath);
+                    if (exErr != null) { Fail("Java 解压失败：" + exErr); return; }
+                    javaExe = DlUtil.FindJavaExe(destDir);
+                    if (javaExe == null) { Fail("Java 解压完成但没找到 bin\\java.exe，目录结构异常，已中止（未写入配置）。"); return; }
+                    int got = McJava.GetJavaMajor(javaExe);
+                    if (got < required) { Fail("下载到的 Java 大版本是 " + got + "，仍低于需要的 " + required + "，已中止（未写入配置）。"); return; }
+                    WizLog("Java 就绪：大版本 " + got + "，" + javaExe);
+                }
+                if (_cancel) { Cancelled(); return; }
+
+                // ---- Step 2: the server jar ----
+                WizStep("第 2 步：下载服务端 jar");
+                Directory.CreateDirectory(_dir);
+                string jarDest = Path.Combine(_dir, "server.jar");
+                if (_type == 0)
+                {
+                    string err;
+                    string manifest = DlUtil.DownloadStringTimed("https://piston-meta.mojang.com/mc/game/version_manifest_v2.json", 30, out err);
+                    if (manifest == null) { Fail("拿不到 Mojang 版本清单：" + err); return; }
+                    int vi = DlUtil.JsonIndexOf(manifest, "\"id\"\\s*:\\s*\"" + Regex.Escape(_ver) + "\"");
+                    string verUrl = vi >= 0 ? DlUtil.JsonStrAfter(manifest, vi, "url") : null;
+                    if (verUrl == null) { Fail("版本清单里没有 Minecraft " + _ver + "（请确认版本号无误、且是正式版）。"); return; }
+                    string verJson = DlUtil.DownloadStringTimed(verUrl, 30, out err);
+                    if (verJson == null) { Fail("拿不到 " + _ver + " 的版本元数据：" + err); return; }
+                    int si = DlUtil.JsonIndexOf(verJson, "\"server\"\\s*:\\s*\\{");
+                    string jarUrl = si >= 0 ? DlUtil.JsonStrAfter(verJson, si, "url") : null;
+                    string sha1 = si >= 0 ? DlUtil.JsonStrAfter(verJson, si, "sha1") : null;
+                    if (jarUrl == null) { Fail("版本元数据里没有服务端下载地址。"); return; }
+                    WizLog("下载原版服务端（Mojang 官方）…");
+                    string dlErr = DownloadWithProgress(jarUrl, jarDest, "原版服务端");
+                    if (dlErr == "cancelled") { Cancelled(); return; }
+                    if (dlErr != null) { Fail("服务端下载失败：" + dlErr); return; }
+                    if (sha1 != null)
+                    {
+                        WizLog("校验服务端 SHA1…");
+                        string actual = DlUtil.Sha1File(jarDest);
+                        if (!string.Equals(actual, sha1, StringComparison.OrdinalIgnoreCase))
+                        {
+                            DlUtil.TryDelete(jarDest);
+                            Fail("服务端 SHA1 校验不通过，已删除 jar。期望 " + sha1 + "，实际 " + actual + "。请检查网络后重试。");
+                            return;
+                        }
+                        WizLog("SHA1 校验通过。");
+                    }
+                }
+                else if (_type == 1)
+                {
+                    string err;
+                    string loaders = DlUtil.DownloadStringTimed("https://meta.fabricmc.net/v2/versions/loader/" + _ver, 30, out err);
+                    if (loaders == null) { Fail("拿不到 Fabric Loader 列表：" + err); return; }
+                    string loader = DlUtil.FirstStableVersion(loaders);
+                    if (loader == null) { Fail("Fabric 还没有适配 Minecraft " + _ver + " 的稳定版 Loader，请换一个版本。"); return; }
+                    string installers = DlUtil.DownloadStringTimed("https://meta.fabricmc.net/v2/versions/installer", 30, out err);
+                    if (installers == null) { Fail("拿不到 Fabric Installer 列表：" + err); return; }
+                    string installer = DlUtil.FirstStableVersion(installers);
+                    if (installer == null) { Fail("Fabric Installer 列表异常。"); return; }
+                    string jarUrl = "https://meta.fabricmc.net/v2/versions/loader/" + _ver + "/" + loader + "/" + installer + "/server/jar";
+                    WizLog("下载 Fabric 服务端启动 jar（Loader " + loader + "，Installer " + installer + "）…");
+                    WizLog("注意：Fabric 官方不发布该 jar 的哈希校验值，本文件只能靠 HTTPS 传输，未做哈希校验。首次开服时它还会再下载原版服务端与库文件。");
+                    string dlErr = DownloadWithProgress(jarUrl, jarDest, "Fabric 服务端");
+                    if (dlErr == "cancelled") { Cancelled(); return; }
+                    if (dlErr != null) { Fail("Fabric 服务端下载失败：" + dlErr); return; }
+                    try { Directory.CreateDirectory(Path.Combine(_dir, "mods")); } catch { }
+                    WizLog("已建 mods 文件夹。提醒：Fabric 服务端要装 mod 还需要 Fabric API（放进 mods），语音等双端 mod 每个玩家客户端也要装。");
+                }
+                else
+                {
+                    string err;
+                    string builds = DlUtil.DownloadStringTimed("https://fill.papermc.io/v3/projects/paper/versions/" + _ver + "/builds", 30, out err);
+                    if (builds == null) { Fail("拿不到 Paper 构建列表（Fill API）：" + err + "。注意：Paper 不支持的版本会返回错误，请确认该版本有 Paper。"); return; }
+                    int si = DlUtil.JsonIndexOf(builds, "\"server:default\"");
+                    string jarUrl = si >= 0 ? DlUtil.JsonStrAfter(builds, si, "url") : null;
+                    string sha256 = si >= 0 ? DlUtil.JsonStrAfter(builds, si, "sha256") : null;
+                    if (jarUrl == null) { Fail("Paper 构建列表里没找到可下载的服务端。"); return; }
+                    WizLog("下载 Paper 服务端（最新构建）…");
+                    string dlErr = DownloadWithProgress(jarUrl, jarDest, "Paper 服务端");
+                    if (dlErr == "cancelled") { Cancelled(); return; }
+                    if (dlErr != null) { Fail("Paper 服务端下载失败：" + dlErr); return; }
+                    if (sha256 != null)
+                    {
+                        WizLog("校验服务端 SHA256…");
+                        string actual = DlUtil.Sha256File(jarDest);
+                        if (!string.Equals(actual, sha256, StringComparison.OrdinalIgnoreCase))
+                        {
+                            DlUtil.TryDelete(jarDest);
+                            Fail("服务端 SHA256 校验不通过，已删除 jar。期望 " + sha256 + "，实际 " + actual + "。请检查网络后重试。");
+                            return;
+                        }
+                        WizLog("SHA256 校验通过。");
+                    }
+                }
+                if (_cancel) { Cancelled(); return; }
+
+                // ---- Step 3: starter files ----
+                WizStep("第 3 步：写入初始文件");
+                string eulaPath = Path.Combine(_dir, "eula.txt");
+                if (_eulaAgreed)
+                {
+                    File.WriteAllText(eulaPath,
+                        "#By changing the setting below to TRUE you are indicating your agreement to our EULA (https://aka.ms/MinecraftEULA).\r\n" +
+                        "#" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "\r\n" +
+                        "eula=true\r\n", Encoding.UTF8);
+                    WizLog("已写入 eula.txt（eula=true，按你勾选的同意）。");
+                }
+                else
+                {
+                    WizLog("未勾选同意 EULA：没有写 eula.txt。首次开服时服务端会生成 eula=false 并自动退出，把它改成 eula=true 后再开服。");
+                }
+                string propsPath = Path.Combine(_dir, "server.properties");
+                if (!File.Exists(propsPath))
+                {
+                    File.WriteAllText(propsPath,
+                        "#Minecraft server properties\r\n" +
+                        "#generated by MCLauncherApp first-run wizard\r\n" +
+                        "server-port=25565\r\n" +
+                        "online-mode=false\r\n", Encoding.UTF8);
+                    WizLog("已写入 server.properties：server-port=25565，online-mode=false（离线联机必须关正版验证）。");
+                }
+                else
+                {
+                    WizLog("目录里已有 server.properties，未改动它。请自行确认 online-mode=false，否则离线账号进不来。");
+                }
+
+                // ---- Step 4: save config ----
+                WizStep("第 4 步：保存设置");
+                _cfg.ServerDir = _dir;
+                _cfg.JarName = "server.jar";
+                if (javaExe != null) _cfg.JavaPath = javaExe;
+                _cfg.Save();
+                InstalledOk = true;
+                WizLog("完成！服务端目录：" + _dir + "；jar：server.jar；Java：" + (javaExe ?? "（沿用原配置）"));
+                WizLog("关掉向导后，先到「设置」里填 SakuraFrp 访问密钥和隧道 ID，再点「一键启动联机」。");
+                WizStep("安装完成");
+                SetRunningUi(false);
+            }
+            catch (Exception ex)
+            {
+                Fail("向导出错：" + ex.Message);
+            }
+        }
+
+        string DownloadWithProgress(string url, string destPath, string label)
+        {
+            _wc = DlUtil.NewClient();
+            try
+            {
+                int lastPct = -2;
+                string err = DlUtil.DownloadFile(_wc, url, destPath,
+                    pct =>
+                    {
+                        if (pct != lastPct)
+                        {
+                            lastPct = pct;
+                            WizProgress(pct);
+                            if (pct >= 0) WizStep("下载" + label + "…" + pct + "%");
+                        }
+                    },
+                    () => _cancel);
+                WizProgress(100);
+                return err;
+            }
+            finally { try { _wc.Dispose(); } catch { } _wc = null; }
+        }
+
+        void Fail(string msg)
+        {
+            WizLog("失败：" + msg);
+            WizStep("已停止");
+            SetRunningUi(false);
+        }
+
+        void Cancelled()
+        {
+            WizLog("已取消。未写入配置；已完整下载好的文件保留在目标目录，半成品已清理。");
+            WizStep("已取消");
+            SetRunningUi(false);
+        }
+    }
+
     class MainForm : Form
     {
         private Config _cfg;
@@ -2348,6 +3185,7 @@ namespace MinecraftLauncher
         private readonly System.Collections.Generic.List<double> _memHist = new System.Collections.Generic.List<double>();
         private SlpResult _slp;
         private volatile bool _stoppingIntentional = false;
+        private volatile bool _stopping = false;
         private readonly System.Collections.Generic.List<DateTime> _crashTimes = new System.Collections.Generic.List<DateTime>();
         private DateTime _slpAt = DateTime.MinValue;
         private volatile bool _slpBusy = false;
@@ -2625,7 +3463,7 @@ namespace MinecraftLauncher
 
         void BuildUi()
         {
-            Text = "Minecraft 联机助手 v6.19";
+            Text = "Minecraft 联机助手 v6.20";
             StartPosition = FormStartPosition.CenterScreen;
             BackColor = Pal.Bg;
             ForeColor = Pal.Text;
@@ -2715,7 +3553,14 @@ namespace MinecraftLauncher
             btnStop.SetBounds(196, 368, 168, 38);
             btnStop.BackColor = Pal.Surface;
             btnStop.ForeColor = Color.White;
-            btnStop.Click += (s, e) => SafeStop();
+            btnStop.Click += (s, e) =>
+            {
+                if (_stopping) return;
+                _stopping = true;
+                Thread tStop = new Thread(() => { try { SafeStop(); } finally { _stopping = false; } });
+                tStop.IsBackground = true;
+                tStop.Start();
+            };
             Controls.Add(btnStop);
 
             btnSettings = new RoundButton();
@@ -2894,6 +3739,7 @@ namespace MinecraftLauncher
 
             KeyPreview = true;
             Shown += (s, e) => { if (string.IsNullOrEmpty(_cfg.FrpKey)) { AppendState("首次使用：请在「设置」里填 SakuraFrp 访问密钥、隧道 ID，检查 PCL2 路径。"); } };
+            Shown += (s, e) => { BeginInvoke(new Action(() => { try { OfferWizardIfNeeded(); } catch { } })); };
             // v6.6 trial: one full repaint right after the first frame settles,
             // to normalize any first-paint edge rasterization (QA measures it).
             Shown += (s, e) => { BeginInvoke(new Action(() => { try { Invalidate(true); Update(); } catch { } })); };
@@ -3132,7 +3978,7 @@ namespace MinecraftLauncher
                         if (xmx > 0)
                         {
                             statsPanel.SrvMemFrac = ws / (xmx * 1048576.0);
-                            statsPanel.SrvMemCap = "上限 " + (xmx >= 1024 ? (xmx / 1024.0).ToString("0.#") + " GB" : xmx + " MB");
+                            statsPanel.SrvMemCap = "";
                         }
                         else { statsPanel.SrvMemFrac = -1; statsPanel.SrvMemCap = ""; }
                         double pc = CpuRate(_server.TotalProcessorTime, now, ref _lastSrvCpu, ref _lastSrvCpuT);
@@ -3819,8 +4665,9 @@ namespace MinecraftLauncher
                         {
                             if (entry.FullName.EndsWith("/")) continue;
                             string rel = entry.FullName.Replace('/', '\\');
-                            if (rel.Contains("..")) continue;
-                            string dest = Path.Combine(world, rel);
+                            string fullWorld = Path.GetFullPath(world);
+                            string dest = Path.GetFullPath(Path.Combine(fullWorld, rel));
+                            if (!dest.StartsWith(fullWorld + "\\", StringComparison.OrdinalIgnoreCase)) continue;
                             Directory.CreateDirectory(Path.GetDirectoryName(dest));
                             using (var es = entry.Open())
                             using (var ds = new FileStream(dest, FileMode.Create, FileAccess.Write, FileShare.None))
@@ -4238,6 +5085,74 @@ namespace MinecraftLauncher
         }
 
         // ---------- 一键启动 ----------
+        // ---------- v6.20: 首次设置向导入口 ----------
+        bool _wizardOffered = false;
+
+        void OfferWizardIfNeeded()
+        {
+            if (_wizardOffered) return;
+            _wizardOffered = true;
+            bool need = !Directory.Exists(_cfg.ServerDir) || !File.Exists(Path.Combine(_cfg.ServerDir, _cfg.JarName));
+            if (!need) return;
+            var r = InfoBox.Show("还没有可用的服务端：设置里的服务端目录不存在，或里面没有服务端 jar。\n\n「首次设置向导」可以自动下载匹配的 Java 和服务端（原版 / Fabric / Paper），并写好 EULA 与离线开服所需的 server.properties，全程带下载进度和哈希校验。", "首次设置向导", "打开向导", "以后再说");
+            if (r == DialogResult.OK) OpenWizard();
+        }
+
+        void OpenWizard()
+        {
+            using (var wf = new WizardForm(_cfg, _cfg.ServerDir))
+            {
+                if (wf.ShowDialog(this) == DialogResult.OK)
+                {
+                    AppendState("首次设置向导已完成，服务端和 Java 都就绪了。");
+                    RefreshStatus();
+                }
+            }
+        }
+
+        // ---------- v6.20: 启动前 Java 版本校验 ----------
+        // Returns false only when the user cancels at the mismatch dialog.
+        // Every "unknown" outcome logs its reason and lets the start
+        // proceed - the check must never become a new way to break a
+        // working setup, and it must never crash on a bad jar.
+        bool CheckJavaVersion(string jarPath)
+        {
+            string mcVer = McJava.ReadMcVersion(jarPath);
+            int required = mcVer != null ? McJava.RequiredJava(mcVer) : 0;
+            string javaExe = McJava.ResolveJavaExe(_cfg);
+            int have = javaExe != null ? McJava.GetJavaMajor(javaExe) : 0;
+            string haveText = have > 0 ? have.ToString() : "未知";
+            if (mcVer == null)
+            {
+                AppendServerLog("[Java 检查] 读不到服务端 jar 的版本信息（version.json），跳过版本校验。当前 Java 大版本：" + haveText + "。");
+                return true;
+            }
+            if (required <= 0)
+            {
+                AppendServerLog("[Java 检查] 服务端版本 " + mcVer + " 不在对照表内，跳过版本校验。当前 Java 大版本：" + haveText + "。");
+                return true;
+            }
+            if (have <= 0)
+            {
+                AppendServerLog("[Java 检查] 服务端 " + mcVer + " 需要 Java " + required + "，但没测出当前 Java 的版本，放行启动（请留意服务端日志）。");
+                return true;
+            }
+            if (have >= required)
+            {
+                AppendServerLog("[Java 检查] 通过：服务端 " + mcVer + " 需要 Java " + required + "，当前 Java " + have + "。");
+                return true;
+            }
+            AppendServerLog("[Java 检查] 不匹配：服务端 " + mcVer + " 需要 Java " + required + "，当前 Java 只有 " + have + "，已弹出提示等待确认。");
+            bool proceed = false;
+            Ui(() =>
+            {
+                string msg = "Java 版本不够，服务端大概率起不来。\n\n服务端版本：" + mcVer + "，需要 Java " + required + " 或更高；当前将要使用的 Java 大版本是 " + have + "。\n\n建议：到「设置」里换一个 Java " + required + " 的 java.exe，或用「首次设置向导」自动下载匹配的 Java。\n选「仍然启动」会按现在的 Java 硬启动，报错请看服务端日志。";
+                proceed = InfoBox.Show(msg, "Java 版本不匹配", "仍然启动", "取消启动") == DialogResult.OK;
+            });
+            AppendServerLog(proceed ? "[Java 检查] 用户选择仍然启动。" : "[Java 检查] 用户取消了启动。");
+            return proceed;
+        }
+
         void StartAll()
         {
             if (_starting) return;
@@ -4260,6 +5175,9 @@ namespace MinecraftLauncher
                 if (!Directory.Exists(_cfg.ServerDir)) { FailState("服务端目录不存在：" + _cfg.ServerDir + "，请到「设置」里检查服务端目录。"); return; }
                 if (!File.Exists(Path.Combine(_cfg.ServerDir, _cfg.JarName))) { FailState("找不到服务端 jar：" + _cfg.JarName + "，请到「设置」里检查 jar 文件名。"); return; }
                 if (string.IsNullOrEmpty(_cfg.JavaPath) || !File.Exists(_cfg.JavaPath)) { FailState("找不到 Java（java.exe）。请到「设置」里重新选择 Java 路径，通常是 .minecraft\\runtime 下或安装目录里。"); return; }
+
+                // v6.20: Java 版本校验（版本过低会弹窗，用户可坚持启动）
+                if (!CheckJavaVersion(Path.Combine(_cfg.ServerDir, _cfg.JarName))) { FailState("已取消启动：Java 版本低于服务端要求。换匹配的 Java，或用「首次设置向导」自动下载后再试。"); return; }
 
                 // 2. 端口检查
                 if (!ProcAlive(_server))
@@ -4590,7 +5508,7 @@ namespace MinecraftLauncher
                 return;
             }
 
-            btnStop.Enabled = false;
+            Ui(() => { btnStop.Enabled = false; });
             AppendState("正在安全关服：向服务端发送 stop，等待存档保存…");
             try { _server.StandardInput.WriteLine("stop"); _server.StandardInput.Flush(); }
             catch { }
@@ -4614,7 +5532,8 @@ namespace MinecraftLauncher
             }
             else
             {
-                var res = InfoBox.Show("服务端 60 秒还没退出。强制结束可能丢失最近几分钟的进度。是否强制结束？", "安全关服超时", "强制结束", "再等等");
+                DialogResult res = DialogResult.Cancel;
+                Ui(() => { res = InfoBox.Show("服务端 60 秒还没退出。强制结束可能丢失最近几分钟的进度。是否强制结束？", "安全关服超时", "强制结束", "再等等"); });
                 if (res == DialogResult.OK)
                 {
                     try { _server.Kill(); } catch { }
