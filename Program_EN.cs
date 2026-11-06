@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -845,7 +845,7 @@ namespace MinecraftLauncher
         public event EventHandler DragRequested;
         // v6.6: reusable on dialogs — zones are width-relative (identical
         // geometry on the 560-wide main form), title/subtitle/min are settable.
-        public string TitleText = "Minecraft Multiplayer Helper v6.20";
+        public string TitleText = "Minecraft Multiplayer Helper v6.20.3";
         public string SubText = "Dual tunnel · Game + Voice";
         public bool ShowMin = true;
         Image _icon;
@@ -1991,7 +1991,7 @@ namespace MinecraftLauncher
         public PropsForm(string serverDir, bool serverRunning)
         {
             _dir = serverDir; _running = serverRunning;
-            InitChrome("Server Properties", 480, 428);
+            InitChrome("Server Properties", 480, 444);
             string pf = System.IO.Path.Combine(_dir, "server.properties");
             bool have = System.IO.File.Exists(pf);
             if (have)
@@ -2459,7 +2459,7 @@ namespace MinecraftLauncher
         {
             try { ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12; } catch { }
             var wc = new WebClient();
-            wc.Headers[HttpRequestHeader.UserAgent] = "MCLauncherApp/6.20";
+            wc.Headers[HttpRequestHeader.UserAgent] = "MCLauncherApp/6.20.3";
             wc.Encoding = Encoding.UTF8;
             return wc;
         }
@@ -3270,6 +3270,7 @@ namespace MinecraftLauncher
                 _tray.DoubleClick += (s2, e2) => { try { Show(); WindowState = FormWindowState.Normal; Activate(); } catch { } };
                 _tray.Visible = true;
                 FormClosed += (s2, e2) => { try { if (_tray != null) { _tray.Visible = false; _tray.Dispose(); } } catch { } };
+                Activated += (s2, e2) => { QueueHealPaint(); }; // v6.20.1: taskbar/tray restore lands here
             }
             catch { }
         }
@@ -3398,7 +3399,10 @@ namespace MinecraftLauncher
                 // before the panel and the native log TextBoxes painted
                 // the newly exposed strip. Compositing makes a
                 // half-painted frame undisplayable instead of racing it.
-                cp.ExStyle |= 0x02000000; // WS_EX_COMPOSITED
+                // v6.20.2: WS_EX_COMPOSITED removed - QaProbe49/50 proved it strands
+                // the DWM surface on Hide->Show (visible transparent flash until
+                // the +400ms heal); without it every capture is clean from +30ms.
+                // cp.ExStyle |= 0x02000000; // WS_EX_COMPOSITED
                 // v6.19: CS_VREDRAW | CS_HREDRAW - invalidate the whole
                 // client area on every resize step so no strip is left
                 // waiting for a late paint (live class style measured
@@ -3446,7 +3450,63 @@ namespace MinecraftLauncher
             if (m.Msg == 0x0005 || m.Msg == 0x0047) // WM_SIZE / WM_WINDOWPOSCHANGED: heal any phantom frame-inflation after the burst settles
             {
                 try { BeginInvoke(new Action(HealSize)); } catch { }
+                QueueHealPaint(); // v6.20.1
             }
+            if (m.Msg == 0x0018 && m.WParam != IntPtr.Zero) // v6.20.1: WM_SHOWWINDOW (shown) - same stranded-paint family
+            {
+                QueueHealPaint();
+            }
+        }
+
+        // v6.20.1: QaProbe45 reproduced the "ghost window" on the shipped
+        // v6.20 build: after a hide -> show transition, horizontal bands of
+        // the client area stay unpainted under WS_EX_COMPOSITED and the
+        // desktop shows through (worst band = the log panel). Size, opacity
+        // and data are all fine; one forced full repaint cures it. Queue a
+        // single coalesced repaint after any show/restore/activate burst.
+        // NOT gated on _animActive or size equality (unlike HealSize):
+        // stranded paint happens exactly when the size never changed.
+        private bool _healPaintQueued = false;
+        private System.Windows.Forms.Timer _healPaintTimer = null;
+        void QueueHealPaint()
+        {
+            // Delayed second pass (v6.20.1, QaProbe48): the stranded paint
+            // lands AFTER the transition's first message burst - a heal
+            // invoked at +0 ms does nothing, the same heal later cures
+            // 100%. (Re)arm a one-shot 400 ms timer on every trigger so
+            // the repaint lands after the burst settles.
+            try
+            {
+                if (_healPaintTimer == null)
+                {
+                    _healPaintTimer = new System.Windows.Forms.Timer();
+                    _healPaintTimer.Interval = 400;
+                    _healPaintTimer.Tick += (s, e) =>
+                    {
+                        _healPaintTimer.Stop();
+                        if (!Visible) return;
+                        if (WindowState != FormWindowState.Normal) return;
+                        try { Invalidate(true); Update(); } catch { }
+                    };
+                }
+                _healPaintTimer.Stop();
+                _healPaintTimer.Start();
+            }
+            catch { }
+            if (_healPaintQueued) return;
+            if (!IsHandleCreated) return;
+            _healPaintQueued = true;
+            try
+            {
+                BeginInvoke(new Action(() =>
+                {
+                    _healPaintQueued = false;
+                    if (!Visible) return;
+                    if (WindowState != FormWindowState.Normal) return;
+                    try { Invalidate(true); Update(); } catch { }
+                }));
+            }
+            catch { _healPaintQueued = false; }
         }
 
         // Restoring from minimized makes the framework re-apply the client size
@@ -3463,7 +3523,7 @@ namespace MinecraftLauncher
 
         void BuildUi()
         {
-            Text = "Minecraft Multiplayer Helper v6.20";
+            Text = "Minecraft Multiplayer Helper v6.20.3";
             StartPosition = FormStartPosition.CenterScreen;
             BackColor = Pal.Bg;
             ForeColor = Pal.Text;

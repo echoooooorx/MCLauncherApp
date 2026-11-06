@@ -4,6 +4,42 @@
 
 All notable changes are documented here. From v6.20 on: any change to release binaries requires a version bump, an entry in this file, and SHA256 checksums in the release notes — no more silent asset replacement under the same tag.
 
+## [v6.20.3] - 2026-11-07
+
+### 修复 / Fixed
+
+- **「服务器属性」对话框底部按钮被切掉一半**：对话框内容实际需要 432 px 高，窗口只给了 428 px，保存/取消按钮沉到窗口下边缘之外被裁。高度修正为 444 px（按钮回框内并留 12 px 余量）。同时用探针逐个打开审计了全部六个对话框（设置、玩家管理、首次设置向导、提示框、确认框）的控件底边，其余五个均有余量，仅此一处超高。
+  "Server Properties" dialog buttons clipped at the bottom: the dialog's content needs 432 px but the window was only given 428 px, sinking the Save/Cancel buttons past the lower edge. Height corrected to 444 px (buttons back inside with 12 px to spare). All six dialogs (Settings, Player Management, First-run Wizard, info and confirm boxes) were opened and measured with a UI probe; the other five have slack — this was the only overflow.
+
+### 附件 / Assets
+
+- `MCLauncherApp.exe` SHA256: `fd2c4d9f0d52b4437584930e9303dd23221b56cb40ceffd3d526efd587b4e2d3`
+- `MCLauncherApp_EN.exe` SHA256: `ebb2c73912c44a491435900897dfc8825bc74f74b1d1ebc34972f558f1a5c39ca2`
+
+## [v6.20.2] - 2026-11-06
+
+### 修复 / Fixed
+
+- **窗口打开时先透明闪一下（v6.20.1 未除根）**：v6.20.1 的延迟补刷能把鬼影最终刷掉，但真机上每次拉起窗口仍会先透出桌面约 0.4 秒再恢复。根源在 v6.19 引入的 WS_EX_COMPOSITED：隐藏→显示切换时合成层保留了旧表面，日志面板顶边一带的新画面迟迟不落定。现撤除该标志（治条纹真正依赖的 CS_VREDRAW/CS_HREDRAW 与日志批量刷新保留，400 ms 补刷保留作保险）。用用户的真实配置 + 模拟实时日志流量验证（QaProbe49–51）：隐藏→显示后 +30 ms 起逐帧残留 0.00%；最小化/恢复、日志收起/展开动画中途帧均无条纹复发。
+  Transparent flash on open (root cause left by v6.20.1): the delayed heal removed the ghost eventually, but on a real machine the window still showed the desktop through for ~0.4 s on every restore. The culprit was WS_EX_COMPOSITED (added in v6.19): on hide -> show the composited layer keeps a stale surface and bands near the log panel settle late. The flag is removed (the stripe fix rests on CS_VREDRAW/CS_HREDRAW plus batched log writes, both kept; the 400 ms heal stays as a backstop). Verified with the user's real config and simulated live log traffic (QaProbe49-51): 0.00% residual from +30 ms after show; no stripe regression in minimize/restore or the log expand/collapse animation.
+
+### 附件 / Assets
+
+- `MCLauncherApp.exe` SHA256: `386c8378592045519c9d8eaa33c7cc7c788c657468ceb8ec31740173e27006fb`
+- `MCLauncherApp_EN.exe` SHA256: `da5944fcebaf6013b2cdb6f55b966e89bdd983409f84fb82aa476e4cea259fc9`
+
+## [v6.20.1] - 2026-11-06
+
+### 修复 / Fixed
+
+- **窗口“鬼影”透明**：窗口被隐藏再显示（如从托盘拉起、锁屏唤醒）后，部分横带不重绘、透出桌面壁纸。定位结论：残留未绘区域在切换的消息风暴之后才落定，即时重绘无效；现改为每次触发后合并一次即时重绘 + 延迟 400 ms 的第二次全量重绘。经桌面探针（QaProbe45–48）在出厂构建上复现并验证：完整切换序列（最小化/恢复 ×2 → 隐藏/显示 ×2）的残留像素从 43.15% 降至 0.00%。
+  Ghost window: after a hide -> show transition (tray restore, session unlock), horizontal bands stayed unpainted and the desktop showed through. The stranded paint settles only after the transition's message burst, so an immediate repaint does not help; the heal now runs as a coalesced immediate pass plus a second full repaint 400 ms later. Reproduced and verified with desktop probes (QaProbe45-48): residual pixels across the full transition sequence dropped from 43.15% to 0.00%.
+
+### 附件 / Assets
+
+- `MCLauncherApp.exe` SHA256: `73c317aeb2dc13ec66d7a6c767d9d45423c83fcdb8e373555d9515b3ea58824e`
+- `MCLauncherApp_EN.exe` SHA256: `58f0f6eeafc2643f0888b850dbed1605cad6c432c27f8925940a306ec7d39b64`
+
 ## [v6.20] - 2026-11-05
 
 ### 新增 / Added
