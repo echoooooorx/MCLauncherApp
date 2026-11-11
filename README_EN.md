@@ -54,7 +54,7 @@ C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /nologo /target:winexe ^
 
 (The `assets\icon.ico` icon is not included in this repo; drop the `/win32icon` argument to build without an icon.)
 
-The English build shares the same source file: the same command plus `/define:EN`, with the output name changed to `MCLauncherApp_EN.exe`. Interface text lives in a bilingual string table inside the source and is selected by language at compile time.
+There is a single build output: the one source file `Program.cs` compiles to a single `MCLauncherApp.exe`, with no separate English build. The interface supports 10 languages; the text lives in string tables inside the source, the language is chosen on first launch and can be changed later in Settings, taking effect at runtime.
 
 ## Configuration
 
@@ -160,4 +160,4 @@ MCLauncherApp is free and open source. Donations toward maintenance are accepted
 
 ## Version
 
-Current version **v6.21**. The single source file `Program.cs` is the complete program, shared by both interface languages: the text lives in a bilingual string table in the source, and the English build adds `/define:EN` (see Building above). See [CHANGELOG.md](CHANGELOG.md) for version history.
+Current version **v6.22**. The single source file `Program.cs` is the complete program and compiles to a single `MCLauncherApp.exe`; the interface offers 10 languages, chosen on first launch and changeable later in Settings (see Building above). See [CHANGELOG.md](CHANGELOG.md) for version history.

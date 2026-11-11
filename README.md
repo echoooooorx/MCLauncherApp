@@ -55,7 +55,7 @@ C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /nologo /target:winexe ^
 
 （图标 `assets\icon.ico` 未包含在本仓库中，自行编译时去掉 `/win32icon` 参数即可无图标编译。）
 
-英文版与中文版共用同一份源码：同一条命令加上 `/define:EN`、输出名改为 `MCLauncherApp_EN.exe` 即为英文版。界面文案存放在源码内的双语字符串表中，编译时按语言选取。
+只有一个构建产物：同一份源码 `Program.cs` 编译出单个 `MCLauncherApp.exe`，没有单独的英文版。界面支持 10 种语言，文案存放在源码内的字符串表中，首次启动时选择语言，之后也可在设置中切换，运行时生效。
 
 ## 配置
 
@@ -161,4 +161,4 @@ C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /nologo /target:winexe ^
 
 ## 版本
 
-当前版本 **v6.21**。单文件源码 `Program.cs` 即完整程序，中英文界面共用这一份源码：界面文案在源码内的双语字符串表中，英文版编译时加 `/define:EN`（见上方「编译」一节）。版本变更见 [CHANGELOG.md](CHANGELOG.md)。
+当前版本 **v6.22**。单文件源码 `Program.cs` 即完整程序，编译出单个 `MCLauncherApp.exe`；界面语言共 10 种，首次启动时选择、之后可在设置中切换（见上方「编译」一节）。版本变更见 [CHANGELOG.md](CHANGELOG.md)。
