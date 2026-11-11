@@ -21,7 +21,7 @@ The word "Launcher" in the name is easy to misread, so the distinction is stated
 
 ## Preview
 
-![Launcher UI](screenshot.png)
+![Launcher UI](screenshot_en.png)
 
 ## Features
 
