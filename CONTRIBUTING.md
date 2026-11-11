@@ -1,8 +1,8 @@
 # 参与贡献 / Contributing
 
-感谢你对 MCLauncherApp 感兴趣。这个项目是一个单文件 C# WinForms 程序，贡献方式很简单。
+MCLauncherApp 是一个单文件 C# WinForms 程序，改起来不复杂。
 
-Thank you for your interest in MCLauncherApp. It is a single-file C# WinForms app, so contributing is straightforward.
+MCLauncherApp is a single-file C# WinForms app, so the contribution flow is short.
 
 ## 项目结构 / Layout
 

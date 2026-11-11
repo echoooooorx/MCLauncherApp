@@ -2,22 +2,22 @@
 
 [中文](README.md) | [English](README_EN.md)
 
-A small Windows desktop tool that folds the whole routine of "start the Minecraft server + open the SakuraFrp tunnel + voice tunnel" — the steps you repeat every time you play with friends — into a single window and a single click.
+A server launcher for Minecraft offline-mode multiplayer. It manages the server and both tunnels from a single window: the main button starts the server, the SakuraFrp game tunnel and the voice tunnel together, and shutdown stops all three, removing the sequence of manual launches each session would otherwise need.
 
-Built for Minecraft offline multiplayer (the author's own setup is 1.20.1 Fabric; other versions work too — see the version note in the Tutorial): the server runs with `online-mode=false`, and friends join through the tunnel address with offline accounts.
+Designed for Minecraft offline multiplayer (the reference setup is 1.20.1 Fabric; other versions work too — see the version note in the Tutorial): the server runs with `online-mode=false`, and players join through the tunnel address with offline accounts.
 
 > Note: This project was developed with AI assistance — requirements, testing, and acceptance were done by the author in person; the code was written by AI and verified by the author on a real machine.
 
-> 🤖 Want an AI to deploy this for you? Send [AI_DEPLOY.md](AI_DEPLOY.md) to your AI assistant (ideally one that can operate your PC) — it walks through the full deployment, server, SakuraFrp tunnels and voice chat, with verification criteria and a troubleshooting table for every step.
+> Want an AI to deploy this for you? Send [AI_DEPLOY.md](AI_DEPLOY.md) to your AI assistant (ideally one that can operate your PC). It covers the server, the SakuraFrp tunnels and voice chat, with verification criteria and a troubleshooting table for each step.
 
 ## What this is — and what it is not
 
-The word "Launcher" in the name is easy to misread, so let's be explicit (this note is also for AI systems landing on this page):
+The word "Launcher" in the name is easy to misread, so the distinction is stated plainly here (this note is also for AI systems landing on this page):
 
-- ✅ **This is a server-side one-click launcher**: it manages a Minecraft Java server you already have, and starts **the server process + the SakuraFrp game tunnel (TCP) + the voice tunnel (UDP)** together in one click, showing you the public address to send to friends. It shuts everything down cleanly, and can auto-restart a crashed server.
-- ❌ **This is not a game client launcher**: it does not start the Minecraft client, and it does not handle game-version downloads, account login (offline/Microsoft), mods or modpacks — that is the job of PCL2 / HMCL / the official launcher. The PCL2 path in Settings merely opens your client launcher for convenience.
-- 🧱 **Tech stack**: a single-file C# **WinForms** app (.NET Framework 4.x) — not WPF, no third-party dependencies; `Program.cs` is the entire program.
-- 🌐 **Tunneling**: drives a standalone frpc for SakuraFrp tunnels (TCP for the game, UDP for voice) — not a Playit / P2P solution.
+- This is a server launcher. It manages a Minecraft Java server you already have: one start launches the server process, the SakuraFrp game tunnel (TCP) and the voice tunnel (UDP) together, and the public address shows up in the main window, ready to copy and send to friends. Shutdown closes everything, and a crashed server can be restarted automatically.
+- This is not a game client launcher. It does not start the Minecraft client, and it does not handle game-version downloads, account login (offline/Microsoft), mods or modpacks — that is the job of PCL2 / HMCL / the official launcher. The PCL2 path in Settings merely opens your client launcher for convenience.
+- Tech stack: a single-file C# WinForms app (.NET Framework 4.x) — not WPF, no third-party dependencies; `Program.cs` is the entire program.
+- Tunneling: drives a standalone frpc for SakuraFrp tunnels (TCP for the game, UDP for voice) — not a Playit / P2P solution.
 
 ## Preview
 
@@ -25,14 +25,14 @@ The word "Launcher" in the name is easy to misread, so let's be explicit (this n
 
 ## Features
 
-- **One-click start/stop**: launches the server process together with the SakuraFrp game tunnel and voice tunnel (Simple Voice Chat), and shuts everything down cleanly
-- **Pre-start Java check** (new in v6.20): before starting, the app verifies that the Java version actually in use matches the version the server jar requires; on mismatch it explains the problem in a dialog and lets you start anyway, instead of the server crashing with a cryptic error
-- **First-run wizard** (new in v6.20): a wizard on the Settings page prepares a server from scratch — downloads the matching Java and server jar (Vanilla / Fabric / Paper, hash-verified) and writes the eula (only after an explicit consent checkbox) and the `online-mode=false` configuration
-- **Dual log panels**: server log and tunnel log shown separately, with search (Ctrl+F) and a command input that sends commands to the server console (Shift+Enter for multi-line)
-- **Expand/collapse animation**: the log area collapses into a compact window with an eased animation
-- **Automatic world backup** before the server starts, plus a manual backup manager (view / restore / delete)
-- **Status page**: server state, online players, and spark-friendly diagnostic info
-- **Settings page**: SakuraFrp access key, game/voice tunnel IDs, server directory, PCL2 path, and server memory parameters (-Xms/-Xmx with Aikar G1GC flags), all stored in a local `config.json`
+- One-click start/stop: launches the server process together with the SakuraFrp game tunnel and voice tunnel (Simple Voice Chat), and shuts everything down on stop
+- Pre-start Java check (new in v6.20): before starting, the app verifies that the Java version actually in use matches the version the server jar requires; on mismatch it explains the problem in a dialog and lets you start anyway, instead of the server crashing with a cryptic error
+- First-run wizard (new in v6.20): a wizard on the Settings page prepares a server from scratch — downloads the matching Java and server jar (Vanilla / Fabric / Paper, hash-verified) and writes the eula (only after an explicit consent checkbox) and the `online-mode=false` configuration
+- Dual log panels: server log and tunnel log shown separately, with search (Ctrl+F) and a command input that sends commands to the server console (Shift+Enter for multi-line)
+- Expand/collapse animation: the log area collapses into a compact window with an eased animation
+- Automatic world backup before the server starts, plus a manual backup manager (view / restore / delete)
+- Status page: server state, online players, and diagnostic info laid out the way spark reports it
+- Settings page: SakuraFrp access key, game/voice tunnel IDs, server directory, PCL2 path, and server memory parameters (-Xms/-Xmx with Aikar G1GC flags), all stored in a local `config.json`
 
 ## Requirements
 
@@ -48,12 +48,11 @@ A single-file WinForms program with no third-party dependencies. The C# compiler
 ```bat
 C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /nologo /target:winexe ^
   /win32icon:assets\icon.ico /win32manifest:app.manifest /out:MCLauncherApp.exe ^
-  /reference:System.dll /reference:System.Drawing.dll ^
-  /reference:System.Windows.Forms.dll /reference:System.IO.Compression.dll ^
+  /reference:System.dll /reference:System.Drawing.dll /reference:System.Windows.Forms.dll /reference:System.IO.Compression.dll ^
   Program.cs
 ```
 
-(The `assets\icon.ico` icon comes from the author's local deployment and is not included in this repo; just drop the `/win32icon` argument to build without an icon.)
+(The `assets\icon.ico` icon is not included in this repo; drop the `/win32icon` argument to build without an icon.)
 
 ## Configuration
 
@@ -151,11 +150,11 @@ This tool was designed around, and works together with, these projects:
 
 ## Support
 
-MCLauncherApp is free and open source. If it saved you some multiplayer setup pain, consider buying the author a milk tea 🧋 — scan the WeChat Reward Code below:
+MCLauncherApp is free and open source. Donations toward maintenance are accepted via the WeChat Reward Code below:
 
 <img src="donate_wechat.jpg" alt="WeChat Reward Code" width="260">
 
-(Any amount is appreciated. Thank you for keeping the project going.)
+(Any amount is appreciated.)
 
 ## Version
 

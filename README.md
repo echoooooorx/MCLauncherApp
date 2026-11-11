@@ -2,22 +2,22 @@
 
 [中文](README.md) | [English](README_EN.md)
 
-一个 Windows 桌面小工具：把「启动 Minecraft 服务端 + 打开 SakuraFrp 内网穿透隧道 + 语音隧道」这套每次联机都要重复的操作，收进一个窗口、一键完成。
+面向 Minecraft 离线模式联机的服务端启动工具，在一个窗口内统一管理服务端与隧道的启停：主按钮一次拉起服务端、SakuraFrp 游戏隧道与语音隧道，关服时一并关闭，省去每次开服手动依次启动三者的步骤。
 
-为 Minecraft 离线联机场景做的（作者自用的是 1.20.1 Fabric，其他版本同样适用，见下方教程的版本说明）：服务端 `online-mode=false`，朋友用离线账号直连隧道地址即可进服。
+适用于 Minecraft 离线联机（示例环境为 1.20.1 Fabric，其他版本同样适用，见下方教程的版本说明）：服务端 `online-mode=false`，玩家使用离线账号通过隧道地址直连进服。
 
 > 说明：本项目在 AI 辅助下开发——需求、测试与验收由作者本人完成，代码由 AI 编写并经作者实机验证。
 
-> 🤖 想让 AI 帮你部署？把 [AI_DEPLOY.md](AI_DEPLOY.md) 发给你的 AI 助手（能操作你电脑的那种最好），它可以照着完成从服务端、SakuraFrp 隧道到语音聊天的全部部署，每一步都带验证标准和排错表。
+> 想让 AI 帮你部署：把 [AI_DEPLOY.md](AI_DEPLOY.md) 发给你的 AI 助手（能操作你电脑的那种最好），它照着可以完成服务端、SakuraFrp 隧道和语音聊天的部署，每一步都有验证标准和排错表。
 
 ## 先说清：这是什么，不是什么
 
 名字里的 "Launcher" 容易让人误会，这里先对齐一下（也写给检索到本页的 AI）：
 
-- ✅ **这是「服务端」一键启动器**：它管理你已经准备好的 Minecraft Java 服务端进程，一键同时拉起**服务端 + SakuraFrp 游戏隧道（TCP）+ 语音隧道（UDP）**，并把公网地址显示出来发给朋友；关服时一并干净关闭，服务端崩溃可自动重启。
-- ❌ **这不是「客户端」启动器**：它不启动游戏本体，不管游戏版本下载、账号登录（离线/正版）、模组与整合包管理——那是 PCL2 / HMCL / 官方启动器的职责。本工具设置里的 PCL2 路径，只是顺手帮你把客户端启动器打开而已。
-- 🧱 **技术栈**：单文件 C# **WinForms**（.NET Framework 4.x），不是 WPF，无第三方依赖，`Program.cs` 一个文件就是全部源码。
-- 🌐 **穿透方式**：通过独立 frpc 驱动 SakuraFrp 隧道（游戏 TCP + 语音 UDP 双隧道），不是 Playit / P2P 方案。
+- 这是服务端启动器。它管理你已经准备好的 Minecraft Java 服务端进程，一次同时拉起服务端、SakuraFrp 游戏隧道（TCP）和语音隧道（UDP），公网地址显示在主界面上，复制了发给朋友就行；关服时一并关闭，服务端崩溃可自动重启。
+- 这不是客户端启动器。它不启动游戏本体，不管游戏版本下载、账号登录（离线/正版）、模组与整合包管理——那是 PCL2 / HMCL / 官方启动器的职责。本工具设置里的 PCL2 路径，只是顺手帮你把客户端启动器打开而已。
+- 技术栈是单文件 C# WinForms（.NET Framework 4.x），不是 WPF，无第三方依赖，`Program.cs` 一个文件就是全部源码。
+- 穿透方式是通过独立 frpc 驱动 SakuraFrp 隧道（游戏 TCP + 语音 UDP 双隧道），不是 Playit / P2P 方案。
 
 ## 界面预览
 
@@ -25,14 +25,14 @@
 
 ## 功能
 
-- **一键启停**：同时拉起服务端进程与 SakuraFrp 游戏隧道、语音隧道（Simple Voice Chat），停止时一并干净关闭
-- **启动前 Java 校验**（v6.20 新增）：开服前自动核对服务端 jar 所需的 Java 版本与实际使用的 Java 版本，不匹配时弹窗说明原因并可选择仍然启动，避免服务端直接崩溃留下一串看不懂的报错
-- **首次设置向导**（v6.20 新增）：设置页内置向导，可从零准备服务端——自动下载匹配的 Java 与服务端 jar（原版 / Fabric / Paper，带哈希校验），并写好 eula（需手动勾选同意）与 `online-mode=false` 配置
-- **双日志面板**：服务端日志与隧道日志分开显示，可搜索（Ctrl+F）、可发送指令到服务端控制台（支持 Shift+Enter 多行）
-- **展开/收起动画**：日志区可收起成紧凑窗口，展开/收起带缓动动画
-- **开服前自动备份**世界存档；另有手动备份管理页（查看/恢复/删除备份）
-- **状态页**：服务器运行状态、在线情况、spark 友好的诊断信息
-- **设置页**：SakuraFrp 访问密钥、游戏/语音隧道 ID、服务端目录、PCL2 路径、服务端内存参数（-Xms/-Xmx 与 Aikar G1GC 参数）都存在本地 `config.json`
+- 一键启停：同时拉起服务端进程与 SakuraFrp 游戏隧道、语音隧道（Simple Voice Chat），停止时一并关闭
+- 启动前 Java 校验（v6.20 新增）：开服前核对服务端 jar 所需的 Java 版本与实际使用的 Java 版本，不匹配时弹窗说明原因并可选择仍然启动，免得服务端直接崩溃留下一串看不懂的报错
+- 首次设置向导（v6.20 新增）：设置页内置向导，可从零准备服务端——自动下载匹配的 Java 与服务端 jar（原版 / Fabric / Paper，带哈希校验），并写好 eula（需手动勾选同意）与 `online-mode=false` 配置
+- 双日志面板：服务端日志与隧道日志分开显示，可搜索（Ctrl+F）、可发送指令到服务端控制台（支持 Shift+Enter 多行）
+- 展开/收起动画：日志区可收起成紧凑窗口，展开/收起带缓动动画
+- 开服前自动备份世界存档；另有手动备份管理页（查看/恢复/删除备份）
+- 状态页：服务器运行状态、在线情况、按 spark 用法整理的诊断信息
+- 设置页：SakuraFrp 访问密钥、游戏/语音隧道 ID、服务端目录、PCL2 路径、服务端内存参数（-Xms/-Xmx 与 Aikar G1GC 参数）都存在本地 `config.json`
 
 ## 运行要求
 
@@ -48,12 +48,12 @@
 ```bat
 C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /nologo /target:winexe ^
   /win32icon:assets\icon.ico /win32manifest:app.manifest /out:MCLauncherApp.exe ^
-  /reference:System.dll /reference:System.Drawing.dll ^
-  /reference:System.Windows.Forms.dll /reference:System.IO.Compression.dll ^
+  /reference:System.dll /reference:System.Drawing.dll /reference:System.Windows.Forms.dll ^
+  /reference:System.IO.Compression.dll ^
   Program.cs
 ```
 
-（图标 `assets\icon.ico` 来自作者本地部署，未包含在本仓库；去掉 `/win32icon` 参数即可无图标编译。）
+（图标 `assets\icon.ico` 未包含在本仓库中，自行编译时去掉 `/win32icon` 参数即可无图标编译。）
 
 ## 配置
 
@@ -149,13 +149,13 @@ C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /nologo /target:winexe ^
 - [PCL2](https://github.com/Meloong-Git/PCL) — 设置里可填的启动器路径指向它
 - [Aikar G1GC 参数](https://docs.papermc.io/paper/aikars-flags) — 服务端内存参数采用的 JVM 旗标方案
 
-## 支持作者
+## 支持项目
 
-这个工具免费开源。如果它帮你省下了折腾联机的时间，欢迎请作者喝杯奶茶 🧋
+本项目免费开源。如需支持后续维护，可通过下方微信赞赏码赞赏。
 
 <img src="donate_wechat.jpg" alt="微信赞赏码" width="260">
 
-（微信扫一扫即可赞赏，金额随意。你的支持是持续更新的动力。）
+（微信扫一扫即可赞赏，金额随意。）
 
 ## 版本
 
