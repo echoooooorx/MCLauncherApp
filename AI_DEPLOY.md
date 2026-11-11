@@ -97,7 +97,7 @@ AI 需要回收并记录的只有四项（都不敏感）：**游戏隧道 ID、
 ### 6.1 拿到程序
 
 - 首选：到本仓库的 **Releases** 下载 `MCLauncherApp.exe`（中文界面）或 `MCLauncherApp_EN.exe`（英文界面）；
-- 或自行编译：用仓库的 `Program.cs`（英文版用 `Program_EN.cs`）按 README 的「编译」一节命令构建，无第三方依赖。
+- 或自行编译：用仓库的 `Program.cs`（英文版在同一条命令上加 `/define:EN`）按 README 的「编译」一节命令构建，无第三方依赖。
 
 把 exe 放进约定目录（如 `D:\MCLauncherApp\`）。
 

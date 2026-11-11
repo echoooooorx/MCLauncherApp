@@ -55,6 +55,8 @@ C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /nologo /target:winexe ^
 
 （图标 `assets\icon.ico` 未包含在本仓库中，自行编译时去掉 `/win32icon` 参数即可无图标编译。）
 
+英文版与中文版共用同一份源码：同一条命令加上 `/define:EN`、输出名改为 `MCLauncherApp_EN.exe` 即为英文版。界面文案存放在源码内的双语字符串表中，编译时按语言选取。
+
 ## 配置
 
 程序同目录的 `config.json` 保存全部设置，由程序在设置页里读写。**这个文件里有你的 SakuraFrp 访问密钥，绝对不要提交到任何仓库**——本仓库的 `.gitignore` 已经排除它。
@@ -159,4 +161,4 @@ C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /nologo /target:winexe ^
 
 ## 版本
 
-当前版本 **v6.20**。单文件源码 `Program.cs` 即完整程序。英文界面版源码为 `Program_EN.cs`（用同一套编译命令、把源文件换成它即可编译），界面文案为英文，功能与中文版完全一致。版本变更见 [CHANGELOG.md](CHANGELOG.md)。
+当前版本 **v6.21**。单文件源码 `Program.cs` 即完整程序，中英文界面共用这一份源码：界面文案在源码内的双语字符串表中，英文版编译时加 `/define:EN`（见上方「编译」一节）。版本变更见 [CHANGELOG.md](CHANGELOG.md)。

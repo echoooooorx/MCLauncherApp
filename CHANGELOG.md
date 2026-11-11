@@ -4,6 +4,27 @@
 
 All notable changes are documented here. From v6.20 on: any change to release binaries requires a version bump, an entry in this file, and SHA256 checksums in the release notes — no more silent asset replacement under the same tag.
 
+## [v6.21] - 2026-11-12
+
+### 新增 / Added
+
+- **日志页 spark 性能诊断入口**：日志页在日志框与指令行之间新增「性能诊断」一行，提供「TPS 报告」与「诊断 30 秒」两个按钮，经既有的服务端指令通道调用服务端已安装的 spark（`spark tps`、30 秒 profiler 采样），输出直接回显在日志中，不另开窗口。
+  Spark diagnostics on the log page: a new "Performance diagnostics" row between the log view and the command row adds "TPS report" and "Diagnose 30 s" buttons. They drive the spark mod already installed on the server through the existing server-command channel (`spark tps`, a 30-second profiler run), with output shown in the log — no separate window.
+
+### 变更 / Changed
+
+- **应用图标重新制作**：图标的圆角方形底板改为透明背景重新抠制，边缘平滑无毛刺；`.ico` 包含 16 / 24 / 32 / 48 / 64 / 128 / 256 px 全套尺寸。
+  Application icon redone: the rounded-square plate is now cut out on a transparent background with a clean, smooth edge; the `.ico` carries the full 16 / 24 / 32 / 48 / 64 / 128 / 256 px size set.
+- **文案修订**：应用内文案与仓库文档统一修订，去除冗余与口号式表述（如主按钮「一键启动联机」改为「启动联机」），改为平实表述；功能与布局不变。
+  Copy pass: in-app text and the repository documents were revised to remove redundant and slogan-style wording (e.g. the main button now reads "启动联机" / "Start Multiplayer"), in a plainer tone; features and layout are unchanged.
+- **内部：中英文版合并为单一源码**：原先的 `Program.cs` 与 `Program_EN.cs` 两份源码合并为一份，全部界面文案收进文件内的双语字符串表；中文版照常编译，英文版在同一条命令上加 `/define:EN`。构建方式变更，功能与行为不变。
+  Internals: the Chinese and English sources are merged into a single file — the former `Program.cs` / `Program_EN.cs` pair is now one `Program.cs` with all interface text in an in-file bilingual string table; the English build is the same command plus `/define:EN`. A build change only; features and behavior are unchanged.
+
+### 附件 / Assets
+
+- `MCLauncherApp.exe` SHA256: `a0a5d3b837b2f5661eab1b3b0c98046777343018f502c55c6f4b1e11e21ee4a8`
+- `MCLauncherApp_EN.exe` SHA256: `a1095d1067525f9df64a8508396a6aea9d5f7209e3483a28d0135c21a690da72`
+
 ## [v6.20.3] - 2026-11-07
 
 ### 修复 / Fixed

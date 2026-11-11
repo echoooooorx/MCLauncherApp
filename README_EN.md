@@ -54,6 +54,8 @@ C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /nologo /target:winexe ^
 
 (The `assets\icon.ico` icon is not included in this repo; drop the `/win32icon` argument to build without an icon.)
 
+The English build shares the same source file: the same command plus `/define:EN`, with the output name changed to `MCLauncherApp_EN.exe`. Interface text lives in a bilingual string table inside the source and is selected by language at compile time.
+
 ## Configuration
 
 All settings live in `config.json` next to the executable, read and written through the Settings page. **This file contains your SakuraFrp access key — never commit it to any repository.** This repo's `.gitignore` already excludes it.
@@ -158,4 +160,4 @@ MCLauncherApp is free and open source. Donations toward maintenance are accepted
 
 ## Version
 
-Current version **v6.20**. The single source file `Program.cs` is the complete program. An English-UI source, `Program_EN.cs`, is included as well — build it with the same command, swapping in that file name; it is identical in features, with English interface text. See [CHANGELOG.md](CHANGELOG.md) for version history.
+Current version **v6.21**. The single source file `Program.cs` is the complete program, shared by both interface languages: the text lives in a bilingual string table in the source, and the English build adds `/define:EN` (see Building above). See [CHANGELOG.md](CHANGELOG.md) for version history.

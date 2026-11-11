@@ -14,6 +14,853 @@ using System.Windows.Forms;
 
 namespace MinecraftLauncher
 {
+    // ---------- UI string table (v6.21 single-source bilingual) ----------
+    // One entry per row pair: #if EN selects the English column, otherwise
+    // the Chinese column. Add new UI text here in BOTH columns; a missing
+    // entry fails that variant's compile (CS0117) on purpose.
+    // Non-UI literals (paths, URLs, the frpc success regex matching
+    // SakuraFrp's own Chinese log output, ...) stay inline in the code.
+    static class Txt
+    {
+#if EN
+        public const string Msg = "Something went wrong";
+        public const string ShowFriendlyErrorStr = ", and the program needs to close.";
+        public const string ShowFriendlyErrorStr2 = ", and the program will keep running.";
+        public const string ShowFriendlyErrorPart = "\n\nIf it keeps happening, just send this info to Naiwa.";
+        public const string ShowFriendlyErrorShow = "Minecraft Multiplayer Helper";
+        public const string YesText = "Stop the server safely before exiting";
+        public const string NoText = "Cancel";
+        public const string SettingsFormInitChrome = "Settings";
+        public const string SettingsFormAddField = "Server folder D:\\MCServer";
+        public const string SettingsFormAddField2 = "Full Java path (java.exe)";
+        public const string SettingsFormAddField3 = "jar file name";
+        public const string SettingsFormAddField4 = "Memory arguments";
+        public const string SettingsFormAddField5 = "Port";
+        public const string SettingsFormAddField6 = "frpc.exe path";
+        public const string LbModeCaption = "Tunnel mode";
+        public const string SettingsFormAdd = "frpc command line (preferred)";
+        public const string SettingsFormAdd2 = "Open the official SakuraFrp launcher (fallback)";
+        public const string LbKeyCaption = "SakuraFrp access key";
+        public const string SettingsFormAddField7 = "Tunnel ID";
+        public const string SettingsFormAddField8 = "Voice tunnel ID (optional)";
+        public const string SettingsFormAddField9 = "Public address (optional)";
+        public const string SettingsFormAddField10 = "PCL2 exe path";
+        public const string BtnPropsText = "Server Properties…";
+        public const string SettingsFormShow = "Set the correct server folder above first, then edit server properties.";
+        public const string SettingsFormShow2 = "Server Properties";
+        public const string BtnWizardText = "First-run wizard";
+        public const string BtnSaveText = "Save";
+        public const string ValidateSettingsMarkInvalid = "The server folder does not exist. Check the path.";
+        public const string ValidateSettingsMarkInvalid2 = "The Java path does not exist. Check it.";
+        public const string ValidateSettingsMarkInvalid3 = "The jar file name cannot be empty.";
+        public const string ValidateSettingsMarkInvalid4 = "That jar file was not found in the server folder.";
+        public const string ValidateSettingsMarkInvalid5 = "The port must be a number between 1 and 65535.";
+        public const string ValidateSettingsMarkInvalid6 = "The frpc.exe path does not exist. Check it.";
+        public const string ValidateSettingsMarkInvalid7 = "In frpc mode, the tunnel ID cannot be empty.";
+        public const string ValidateSettingsMarkInvalid8 = "The PCL2 path does not exist. Check it.";
+        public const string TitleText = "Minecraft Multiplayer Helper v6.21";
+        public const string SubText = "Dual tunnel · Game + Voice";
+        public const string ServerText = "Server: Not running";
+        public const string TunnelText = "SakuraFrp tunnel: Not running";
+        public const string AddrText = "Public address: Not generated";
+        public const string SrvState = "Not running";
+        public const string MbText = "Players";
+        public const string OnPaintHeader = "Server process";
+        public const string OnPaintRow = "Status";
+        public const string OnPaintRow2 = "Memory usage";
+        public const string OnPaintRow3 = "Player connections";
+        public const string OnPaintDrawText = "Online players";
+        public const string OnPaintRow4 = "Version · Ping";
+        public const string OnPaintHeader2 = "Tunnel process (frpc)";
+        public const string OnPaintHeader3 = "Local";
+        public const string OnPaintDrawText2 = "Down";
+        public const string OnPaintDrawText3 = "Up";
+        public const string OnPaintRow5 = "System memory";
+        public const string OnHandleCreatedIndexOf = "Error";
+        public const string OnHandleCreatedStr = "Error";
+        public const string ShowMsg = "OK";
+        public const string PropsFormAddCombo = "Difficulty";
+        public const string PropsFormStr = "Peaceful";
+        public const string PropsFormStr2 = "Easy";
+        public const string PropsFormStr3 = "Normal";
+        public const string PropsFormStr4 = "Hard";
+        public const string PropsFormAddCombo2 = "Game mode";
+        public const string PropsFormStr5 = "Survival";
+        public const string PropsFormStr6 = "Creative";
+        public const string PropsFormStr7 = "Adventure";
+        public const string PropsFormStr8 = "Spectator";
+        public const string PropsFormAddNum = "Max players";
+        public const string PropsFormAddNum2 = "View distance (chunks)";
+        public const string PropsFormAddNum3 = "Simulation distance (chunks)";
+        public const string PropsFormAddNum4 = "Spawn protection radius";
+        public const string PropsFormAddText = "Server MOTD";
+        public const string PropsFormAddCheck = "Enable whitelist (white-list)";
+        public const string PropsFormAddCheck2 = "Allow PvP (pvp)";
+        public const string PropsFormAddCheck3 = "Allow flight (allow-flight)";
+        public const string LbOnCaption = "Online mode: Off (must stay off for offline multiplayer; cannot be changed here)";
+        public const string PropsFormShow = "server.properties was not found in the server folder. It is created the first time the server starts successfully.";
+        public const string SavePropsShow = "Max players must be a number between 1 and 9999.";
+        public const string SavePropsShow2 = "View distance must be a number between 2 and 32.";
+        public const string SavePropsShow3 = "Simulation distance must be a number between 2 and 32.";
+        public const string SavePropsShow4 = "Spawn protection radius must be a number between 0 and 9999.";
+        public const string SavePropsShow5 = "Save failed: ";
+        public const string SavePropsShow6 = "Saved. The server is running, so these settings take effect on the next start.";
+        public const string PlayerFormStr = "Online players (";
+        public const string PlayerFormStr2 = "No players online right now";
+        public const string PlayerFormAddBtn = "Teleport to me";
+        public const string PlayerFormAddBtn2 = "Kick from server";
+        public const string PlayerFormConfirmDo = "Kick ";
+        public const string PlayerFormConfirmDo2 = " from the server?";
+        public const string PlayerFormAddBtn3 = "Give OP";
+        public const string PlayerFormAddBtn4 = "Remove OP";
+        public const string PlayerFormAddBtn5 = "Ban";
+        public const string PlayerFormConfirmDo3 = "Ban ";
+        public const string PlayerFormConfirmDo4 = "? They will not be able to join (you can unban them later).";
+        public const string PlayerFormAddBtn6 = "Unban";
+        public const string PlayerFormStr3 = "Note: \"Teleport to me\" is unavailable while you are not online yourself.";
+        public const string PlayerFormStr4 = "Actions are sent to the server as console commands, just like typing them in the command box.";
+        public const string CloseText = "Close";
+        public const string LbOpsCaption = "OP list: ";
+        public const string RefreshListsStr = "(none)";
+        public const string LbBannedCaption = "Ban list: ";
+        public const string WizardFormInitChrome = "First-run setup wizard";
+        public const string WizardFormAddLabel = "Minecraft version";
+        public const string WizardFormAddHint = "Any release version works";
+        public const string WizardFormAddLabel2 = "Server type";
+        public const string WizardFormAddRadio = "Vanilla";
+        public const string WizardFormAddLabel3 = "Server folder";
+        public const string BtnBrowseText = "Browse...";
+        public const string Description = "Pick the server folder (it does not need to exist yet - pick a parent and edit the path text)";
+        public const string ChkEulaText = "I agree to the Minecraft EULA";
+        public const string LnkEulaText = "Read the EULA";
+        public const string WizardFormAddHint2 = "Without the tick you must set eula=true in eula.txt yourself before the first start";
+        public const string LblStepCaption = "Fill in the three items above and click Start install. Java and the server are downloaded and verified automatically.";
+        public const string BtnStartText = "Start install";
+        public const string WizardFormWizLog = "Cancelling...";
+        public const string StartInstallShow = "Enter a Minecraft version first.";
+        public const string StartInstallShow2 = "That does not look like a release version number. Enter something like 1.20.1 (snapshots are not supported by the wizard).";
+        public const string StartInstallShow3 = "Enter a server folder first.";
+        public const string StartInstallShow4 = "The target folder already contains a server.jar. Continuing will overwrite it.\n\nYour world and mods are not touched (the wizard only replaces the jar and adds missing files). Continue?";
+        public const string StartInstallShow5 = "Overwrite";
+        public const string StartInstallWizLog = "-- Install started: Minecraft ";
+        public const string StartInstallPart = " -> ";
+        public const string RunFail = "Cannot determine which Java Minecraft ";
+        public const string RunFail2 = " needs; wizard aborted (nothing was changed).";
+        public const string RunWizLog = "Note: 26.x is Mojang's new year-based versioning; its official Java requirement may be higher than the Java 21 estimate used here - watch the server log after install.";
+        public const string RunWizStep = "Step 1: preparing Java ";
+        public const string RunWizLog2 = "The configured Java is major version ";
+        public const string RunWizLog3 = " and meets the requirement; using it: ";
+        public const string RunWizLog4 = "Using the previously downloaded Java next to the app: ";
+        public const string RunFail3 = " needs Java ";
+        public const string RunFail4 = ", but this wizard can only auto-download Java 17 / 21. Install Java ";
+        public const string RunFail5 = " manually, point Settings at its java.exe, then start the server.";
+        public const string RunWizLog5 = "The Adoptium assets API gave no direct link (";
+        public const string RunStr = "no detail";
+        public const string RunPart = "); falling back to the official binary endpoint, which publishes no checksum - this Java download will not be hash-verified.";
+        public const string RunWizLog6 = "Downloading Java ";
+        public const string RunWizLog7 = " (Eclipse Temurin JRE, about 40-50 MB)...";
+        public const string RunFail6 = "Java download failed: ";
+        public const string RunWizLog8 = "Verifying the Java zip SHA256...";
+        public const string RunFail7 = "Java zip SHA256 mismatch; the download was deleted. Expected ";
+        public const string RunFail8 = ", got ";
+        public const string RunFail9 = ". Check your network and retry.";
+        public const string RunWizLog9 = "SHA256 verified.";
+        public const string RunWizLog10 = "Extracting Java to ";
+        public const string RunWizLog11 = " ...";
+        public const string RunFail10 = "Java extraction failed: ";
+        public const string RunFail11 = "Extraction finished but no bin\\java.exe was found - unexpected zip layout; aborted (config not saved).";
+        public const string RunFail12 = "The downloaded Java reports major version ";
+        public const string RunFail13 = ", still below the required ";
+        public const string RunFail14 = "; aborted (config not saved).";
+        public const string RunWizLog12 = "Java ready: major version ";
+        public const string RunWizLog13 = ", ";
+        public const string RunWizStep2 = "Step 2: downloading the server jar";
+        public const string RunFail15 = "Cannot fetch the Mojang version manifest: ";
+        public const string RunFail16 = "Minecraft ";
+        public const string RunFail17 = " is not in the version manifest (check the number; releases only).";
+        public const string RunFail18 = "Cannot fetch the version metadata for ";
+        public const string RunFail19 = ": ";
+        public const string RunFail20 = "The version metadata has no server download.";
+        public const string RunWizLog14 = "Downloading the vanilla server (official Mojang)...";
+        public const string RunDownloadWithProgress = "vanilla server";
+        public const string RunFail21 = "Server download failed: ";
+        public const string RunWizLog15 = "Verifying the server SHA1...";
+        public const string RunFail22 = "Server SHA1 mismatch; the jar was deleted. Expected ";
+        public const string RunWizLog16 = "SHA1 verified.";
+        public const string RunFail23 = "Cannot fetch the Fabric loader list: ";
+        public const string RunFail24 = "Fabric has no stable loader for Minecraft ";
+        public const string RunFail25 = " yet; pick another version.";
+        public const string RunFail26 = "Cannot fetch the Fabric installer list: ";
+        public const string RunFail27 = "The Fabric installer list looks wrong.";
+        public const string RunWizLog17 = "Downloading the Fabric server launch jar (loader ";
+        public const string RunWizLog18 = ", installer ";
+        public const string RunWizLog19 = ")...";
+        public const string RunWizLog20 = "Note: Fabric publishes no hash for this jar, so it is protected by HTTPS only and is not hash-verified. On first start it downloads the vanilla server and libraries itself.";
+        public const string RunDownloadWithProgress2 = "Fabric server";
+        public const string RunFail28 = "Fabric server download failed: ";
+        public const string RunWizLog21 = "Created the mods folder. Reminder: Fabric servers usually also need the Fabric API mod in mods, and every player needs the same both-sides mods client-side.";
+        public const string RunFail29 = "Cannot fetch the Paper build list (Fill API): ";
+        public const string RunFail30 = ". Note: versions without Paper builds return an error here.";
+        public const string RunFail31 = "No downloadable server found in the Paper build list.";
+        public const string RunWizLog22 = "Downloading the Paper server (latest build)...";
+        public const string RunDownloadWithProgress3 = "Paper server";
+        public const string RunFail32 = "Paper server download failed: ";
+        public const string RunWizLog23 = "Verifying the server SHA256...";
+        public const string RunFail33 = "Server SHA256 mismatch; the jar was deleted. Expected ";
+        public const string RunWizStep3 = "Step 3: writing starter files";
+        public const string RunWizLog24 = "Wrote eula.txt (eula=true, as you agreed).";
+        public const string RunWizLog25 = "EULA not agreed: eula.txt was not written. On first start the server will generate eula=false and exit; set it to eula=true to start.";
+        public const string RunWizLog26 = "Wrote server.properties: server-port=25565, online-mode=false (required for offline multiplayer).";
+        public const string RunWizLog27 = "A server.properties already exists and was left untouched. Make sure online-mode=false yourself, or offline accounts cannot join.";
+        public const string RunWizStep4 = "Step 4: saving settings";
+        public const string RunWizLog28 = "Done. Server folder: ";
+        public const string RunWizLog29 = "; jar: server.jar; Java: ";
+        public const string RunStr2 = "(previous setting kept)";
+        public const string RunWizLog30 = "Close the wizard, fill in the SakuraFrp access key and tunnel IDs in Settings, then click Start Multiplayer.";
+        public const string RunWizStep5 = "Install complete";
+        public const string RunFail34 = "Wizard error: ";
+        public const string DownloadWithProgressWizStep = "Downloading ";
+        public const string DownloadWithProgressWizStep2 = "... ";
+        public const string FailWizLog = "Failed: ";
+        public const string FailWizStep = "Stopped";
+        public const string CancelledWizLog = "Cancelled. Settings were not saved; fully downloaded files stay in the target folder, partial files were cleaned up.";
+        public const string CancelledWizStep = "Cancelled";
+        public const string MainFormAppendServerLog = "[Launcher] Started. Logs are also saved in the logs folder next to the program (kept for 14 days).";
+        public const string TrayText = "Minecraft Multiplayer Helper · Stopped";
+        public const string InitTray613ToolStripMenuItem = "Show main window";
+        public const string InitTray613ToolStripMenuItem2 = "Safe exit";
+        public const string BtnStartText2 = "Start Multiplayer";
+        public const string AddrLblCaption = "Public address (send to friends): ";
+        public const string Hint = "The public address will appear here once the tunnel starts";
+        public const string BtnCopyText = "Copy address for friends";
+        public const string BtnPcl2Text = "Open PCL2";
+        public const string BtnStopText = "Stop server safely";
+        public const string LogToggleLblCaption = "▾  Log";
+        public const string BuildUiStr = "Server Log";
+        public const string BuildUiStr2 = "Tunnel Log";
+        public const string BuildUiStr3 = "Status";
+        public const string BuildUiStr4 = "Backups";
+        public const string BuildUiMakeLogBox = "No logs yet · Server output will appear here";
+        public const string BuildUiMakeLogBox2 = "No logs yet · Tunnel output will appear here";
+        public const string BtnJumpBottomText = "↓ Back to bottom";
+        public const string Hint2 = "Search logs…";
+        public const string BuildUiSetToolTip = "Previous";
+        public const string BuildUiSetToolTip2 = "Next";
+        public const string BuildUiSetToolTip3 = "Search the log; press Enter to jump to the next match";
+        public const string ChkErrOnlyText = "Warnings/errors only";
+        public const string CmdLblCaption = "Server command";
+        public const string BtnCmdSendText = "Send";
+        public const string BuildUiAppendState = "First run: fill in the SakuraFrp access key and tunnel ID in Settings, and check the PCL2 path.";
+        public const string IsErrLineContains = "[Watchdog]";
+        public const string IsErrLineContains2 = "[Backup] Failed";
+        public const string LblFindCaption = "No results";
+        public const string SrvState2 = "Running · ";
+        public const string SampleStatsPart = " player(s)";
+        public const string SampleStatsPart2 = " player(s) online (list not public)";
+        public const string SampleStatsPart3 = "Ping ";
+        public const string ToggleLogStr = "▸  Log";
+        public const string AppendServerLogPersistLog613 = "Server";
+        public const string AppendTunnelLogPersistLog613 = "Tunnel";
+        public const string SendServerCommandAppendState = "The server is not running; the command cannot be sent.";
+        public const string SendServerCommandAppendState2 = "Failed to send command: the server process is gone.";
+        public const string SendServerCommandAppendState3 = "Failed to send command: ";
+        public const string OpenPlayerManagerShow = "The server is not running; player management is available after the server starts.";
+        public const string OpenPlayerManagerAppendState = "Command failed: the server process is gone.";
+        public const string DoBackupAppendState = "A backup is already in progress.";
+        public const string BackupCoreAppendState = "World folder not found: ";
+        public const string BackupCoreAppendState2 = ", cannot back up.";
+        public const string BackupCoreAppendServerLog = "[Backup] Server auto-save paused and flushed; packaging the world…";
+        public const string BackupCoreAppendServerLog2 = "[Backup] Done: ";
+        public const string BackupCorePart = " files";
+        public const string BackupCoreStr = ", skipped ";
+        public const string BackupCorePart2 = " file(s) in use";
+        public const string BackupCoreAppendState3 = "World backup complete (";
+        public const string BackupCoreAppendServerLog3 = "[Backup] Failed: ";
+        public const string BackupCoreAppendState4 = "Backup failed: ";
+        public const string BackupCoreAppendServerLog4 = "[Backup] Server auto-save resumed.";
+        public const string RestoreBackupShow = "You must stop the server before restoring: swapping world files while the server runs will corrupt the save.\n\nClick \"Stop server safely\" first, then restore.";
+        public const string RestoreBackupShow2 = "Restore Backup";
+        public const string RestoreBackupConfirmBox = "Restore the world to backup \"";
+        public const string RestoreBackupConfirmBox2 = "\"?\n\nThe current world will not be deleted: it is renamed and set aside first (world_prerestore_<time>); delete it yourself once everything checks out. If the restore was wrong, you can swap it back.";
+        public const string RestoreBackupAppendState = "A backup task is already in progress.";
+        public const string Result = "Restored to backup \"";
+        public const string RestoreBackupPart = "\". The old world was kept at ";
+        public const string RestoreBackupPart2 = "; once the new world checks out, you can delete it.";
+        public const string Result2 = "Restore failed: ";
+        public const string RestoreBackupPart3 = "(The old world may already have been renamed. Do not start the server yet; check the server folder.)";
+        public const string RestoreBackupAppendServerLog = "[Backup] ";
+        public const string BuildBackupPanelBkLabel = "World backups";
+        public const string BtnBackupNowText = "Back up now";
+        public const string BuildBackupPanelDoBackup = "Manual backup";
+        public const string BtnRestoreBackupText = "Restore selected";
+        public const string BuildBackupPanelShow = "Select a backup from the list above first.";
+        public const string BtnDeleteBackupText = "Delete selected";
+        public const string BuildBackupPanelShow2 = "Delete Backup";
+        public const string BuildBackupPanelConfirmBox = "Delete backup \"";
+        public const string BuildBackupPanelPart = "\"? It cannot be recovered after deletion.";
+        public const string BuildBackupPanelShow3 = "Delete failed: ";
+        public const string BuildBackupPanelBkLabel2 = "Keep the latest ";
+        public const string BuildBackupPanelBkLabel3 = " backups";
+        public const string BuildBackupPanelBkCheck = "Auto-restart on crash";
+        public const string BuildBackupPanelBkCheck2 = "Auto-backup before server start";
+        public const string BuildBackupPanelBkCheck3 = "Daily auto-backup";
+        public const string BuildBackupPanelBkLabel4 = "While the app is open, back up automatically at the set time";
+        public const string BuildBackupPanelBkCheck4 = "Scheduled command";
+        public const string LblBackupStateCaption = "Backing up… (large worlds may take a minute or two)";
+        public const string RefreshBackupListStr = "Total ";
+        public const string RefreshBackupListPart = " backups · ";
+        public const string RefreshBackupListStr2 = "No backups yet";
+        public const string RefreshBackupListStr3 = "Latest: ";
+        public const string RefreshBackupListStr4 = "Click \"Back up now\" to snapshot the world.";
+        public const string CheckSchedulesAppendServerLog = "[Schedule] Daily backup time reached; starting auto-backup.";
+        public const string CheckSchedulesAppendServerLog2 = "[Schedule] A scheduled command is due, but ";
+        public const string CheckSchedulesAppendServerLog3 = " player(s) are still online; postponing until the server is empty.";
+        public const string CheckSchedulesAppendServerLog4 = "[Schedule] Sent scheduled command: ";
+        public const string ServerText2 = "Server: Running";
+        public const string ServerText3 = "Server: Starting…";
+        public const string TunnelText2 = "SakuraFrp tunnel: Connected";
+        public const string TunnelText3 = "SakuraFrp tunnel: Starting…";
+        public const string AddrText2 = "Public address: Ready";
+        public const string AddrText3 = "Public address: Saved (tunnel not running)";
+        public const string Tt = "Minecraft Multiplayer Helper · ";
+        public const string RefreshStatusStr = "Running";
+        public const string RefreshStatusStr2 = "Starting";
+        public const string CopyAddrShow = "No public address yet. Start multiplayer first.";
+        public const string CopyAddrShow2 = "Notice";
+        public const string CopyAddrAppendState = "Public address copied to the clipboard; send it to your friends.";
+        public const string BtnCopyText2 = "Copied ✓";
+        public const string OpenPcl2Show = "PCL2 not found. Set PCL2's exe path in Settings.";
+        public const string OpenPcl2Show2 = "Failed to open PCL2: ";
+        public const string HandleServerCrashAppendServerLog = "[Watchdog] The server exited unexpectedly (exit code ";
+        public const string HandleServerCrashAppendServerLog2 = "); this was not a normal shutdown.";
+        public const string HandleServerCrashStr = "Possible cause: ";
+        public const string HandleServerCrashAppendState = "The server exited unexpectedly";
+        public const string HandleServerCrashStr2 = ", possible cause: ";
+        public const string HandleServerCrashStr3 = ". Check the bottom of the server log for the reason.";
+        public const string HandleServerCrashPart = "(Watchdog auto-restart is off)";
+        public const string HandleServerCrashAppendServerLog3 = "[Watchdog] Crashed ";
+        public const string HandleServerCrashAppendServerLog4 = " times within 10 minutes; auto-restart stopped. Most likely a save or mod problem.";
+        public const string HandleServerCrashAppendState2 = "The server kept crashing; auto-restart has stopped. Check the log.";
+        public const string HandleServerCrashStr4 = " Possible cause: ";
+        public const string HandleServerCrashAppendState3 = "The server exited unexpectedly; the watchdog will restart it in 5 seconds…";
+        public const string GuessCrash614Ret = "Port ";
+        public const string GuessCrash614Part = " is already in use — probably another server instance was not shut down cleanly";
+        public const string GuessCrash614Ret2 = "Out of memory, or a bad memory setting (-Xmx)";
+        public const string GuessCrash614Ret3 = "Wrong Java version — this server needs Java 17";
+        public const string GuessCrash614Ret4 = "The server froze for over 60 seconds and was stopped by the game's built-in watchdog";
+        public const string GuessCrash614Ret5 = "A mod failed to load; find the mod named in the log errors";
+        public const string GuessCrash614Ret6 = "The EULA has not been accepted";
+        public const string OfferWizardIfNeededShow = "There is no usable server yet: the configured server folder does not exist, or it contains no server jar.\n\nThe first-run setup wizard can download a matching Java and server (Vanilla / Fabric / Paper) and write the EULA and the server.properties needed for offline play. All downloads are hash-verified.";
+        public const string OfferWizardIfNeededShow2 = "Open wizard";
+        public const string OfferWizardIfNeededShow3 = "Later";
+        public const string OpenWizardAppendState = "First-run wizard finished: server and Java are ready.";
+        public const string CheckJavaVersionStr = "unknown";
+        public const string CheckJavaVersionAppendServerLog = "[Java check] Cannot read the server jar's version info (version.json); skipping the version check. Current Java major version: ";
+        public const string CheckJavaVersionAppendServerLog2 = ".";
+        public const string CheckJavaVersionAppendServerLog3 = "[Java check] Server version ";
+        public const string CheckJavaVersionAppendServerLog4 = " is not in the version table; skipping the version check. Current Java major version: ";
+        public const string CheckJavaVersionAppendServerLog5 = "[Java check] Server ";
+        public const string CheckJavaVersionAppendServerLog6 = ", but the current Java version could not be measured; starting anyway (watch the server log).";
+        public const string CheckJavaVersionAppendServerLog7 = "[Java check] Passed: server ";
+        public const string CheckJavaVersionAppendServerLog8 = ", current Java is ";
+        public const string CheckJavaVersionAppendServerLog9 = "[Java check] Mismatch: server ";
+        public const string CheckJavaVersionAppendServerLog10 = ", current Java is only ";
+        public const string CheckJavaVersionAppendServerLog11 = "; waiting for the user's decision.";
+        public const string Msg2 = "The Java version is too old - the server will most likely fail to start.\n\nServer version: ";
+        public const string CheckJavaVersionPart = ", which needs Java ";
+        public const string CheckJavaVersionPart2 = " or newer. The Java about to be used is major version ";
+        public const string CheckJavaVersionPart3 = ".\n\nSuggestion: pick a Java ";
+        public const string CheckJavaVersionPart4 = " java.exe in Settings, or let the first-run setup wizard download a matching Java automatically.\nChoosing Start anyway launches with the current Java regardless; see the server log for the resulting errors.";
+        public const string CheckJavaVersionShow = "Java version mismatch";
+        public const string CheckJavaVersionShow2 = "Start anyway";
+        public const string CheckJavaVersionShow3 = "Cancel start";
+        public const string CheckJavaVersionAppendServerLog12 = "[Java check] The user chose to start anyway.";
+        public const string CheckJavaVersionAppendServerLog13 = "[Java check] The user cancelled the start.";
+        public const string StartAllAppendState = "The server is already running; no need to start it again.";
+        public const string BtnStartText3 = "Multiplayer running";
+        public const string BtnStartText4 = "Starting…";
+        public const string DoStartFailState = "Server folder does not exist: ";
+        public const string DoStartFailState2 = ". Check the server folder in Settings.";
+        public const string DoStartFailState3 = "Server jar not found: ";
+        public const string DoStartFailState4 = ". Check the jar file name in Settings.";
+        public const string DoStartFailState5 = "Java (java.exe) not found. Re-select the Java path in Settings — usually under .minecraft\\runtime or in the Java install folder.";
+        public const string DoStartFailState6 = "Start cancelled: the Java version is below what the server needs. Switch to a matching Java, or let the first-run setup wizard download one, then try again.";
+        public const string DoStartFailState7 = " is already in use. The last server may not have shut down cleanly — click \"Stop server safely\" or restart this app; do not kill Java processes in Task Manager yourself.";
+        public const string DoStartAppendState = "Auto-backing up before server start…";
+        public const string DoStartAppendState2 = "Starting the Minecraft server…";
+        public const string DoStartAppendServerLog = "[Process exited]";
+        public const string DoStartFailState8 = "Cannot start the Java process. Check that the Java path is correct.";
+        public const string DoStartAppendState3 = "Waiting for the server to be ready (watching for \"Done\")…";
+        public const string DoStartFailState9 = "The server process exited before \"Done\" appeared. Most likely: 1) wrong Java path or memory arguments; 2) an error in the save/world or mods (check the bottom of the server log). Do not touch world or mods.";
+        public const string DoStartFailState10 = "No \"Done\" after 90 seconds. Possibly not enough memory, an oversized world, or a stuck start. Check the bottom of the server log; do not touch world or mods.";
+        public const string DoStartAppendState4 = "Ready. Click \"Copy address for friends\" and send the address to your friends.";
+        public const string DoStartFailState11 = "Start failed: ";
+        public const string StartTunnelAppendTunnelLog = "[Fallback] Opening the official SakuraFrp launcher — click Start Tunnel in it.";
+        public const string StartTunnelAppendTunnelLog2 = "Failed to open the SakuraFrp launcher: ";
+        public const string StartTunnelAppendTunnelLog3 = "frpc.exe not found: ";
+        public const string StartTunnelAppendTunnelLog4 = ". Check it in Settings, or switch the tunnel mode to the official launcher.";
+        public const string StartTunnelAppendTunnelLog5 = "The access key is empty. Fill in the SakuraFrp access key in Settings.";
+        public const string StartTunnelAppendTunnelLog6 = "The tunnel ID is empty. Fill it in in Settings.";
+        public const string StartTunnelAppendState = "Starting the SakuraFrp tunnel…";
+        public const string StartTunnelAppendTunnelLog7 = "[frpc exited]";
+        public const string StartTunnelAppendTunnelLog8 = "[Watchdog] The game tunnel exited unexpectedly; reconnecting in 5 seconds.";
+        public const string StartTunnelAppendTunnelLog9 = "frpc failed to start. Check the frpc.exe path.";
+        public const string StartTunnelAppendTunnelLog10 = "The current frpc.exe is the bundled build that ships with the SakuraFrp launcher. That build cannot be run directly by external programs (only via the SakuraFrp Service), so it exits immediately. This has nothing to do with your access key, tunnel ID, or node. In Settings, point the frpc path at a standalone frpc, or switch the tunnel mode to the official launcher.";
+        public const string StartTunnelAppendTunnelLog11 = "The frpc process exited. Possibly: 1) wrong access key or tunnel ID; 2) a node problem; 3) the account needs verification or check-in. Check the key and tunnel ID in Settings, or switch the tunnel mode to the official launcher.";
+        public const string StartTunnelAppendState2 = "This frpc is the launcher's bundled build and cannot run directly. In Settings, switch to a standalone frpc or the official launcher mode.";
+        public const string StartVoiceTunnelAppendTunnelLog = "[Voice] No voice tunnel ID set; skipping the voice tunnel.";
+        public const string StartVoiceTunnelAppendTunnelLog2 = "[Voice frpc exited]";
+        public const string StartVoiceTunnelAppendTunnelLog3 = "[Watchdog] The voice tunnel exited unexpectedly; reconnecting in 5 seconds.";
+        public const string StartVoiceTunnelAppendTunnelLog4 = "[Voice] frpc failed to start. Check the frpc.exe path.";
+        public const string StartVoiceTunnelAppendTunnelLog5 = "[Voice] The frpc process exited. Check that the voice tunnel ID is correct.";
+        public const string StartVoiceTunnelAppendState = "The voice tunnel is connected.";
+        public const string VoiceFrpcOutputAppendTunnelLog = "[Voice] ";
+        public const string VoiceFrpcErrorAppendTunnelLog = "[Voice][ERR] ";
+        public const string TryParseFrpcAppendState = "Public address obtained automatically: ";
+        public const string ServerText4 = "Server: Error";
+        public const string TunnelText4 = "SakuraFrp tunnel: Error";
+        public const string SafeStopAppendState = "The server is not running; the tunnel has been stopped.";
+        public const string SafeStopAppendState2 = "Stopping safely: sending stop to the server and waiting for the save…";
+        public const string SafeStopAppendServerLog = ">> stop sent; waiting for the save and exit (up to 60 seconds)";
+        public const string SafeStopAppendState3 = "The server stopped normally (save complete). Closing the tunnel…";
+        public const string SafeStopAppendServerLog2 = "[Server process exited normally]";
+        public const string SafeStopShow = "The server still has not exited after 60 seconds. Force-ending it may lose the last few minutes of progress. Force end it?";
+        public const string SafeStopShow2 = "Safe shutdown timed out";
+        public const string SafeStopShow3 = "Force end";
+        public const string SafeStopShow4 = "Wait longer";
+        public const string SafeStopAppendState4 = "The server process was force-ended (recent progress may be lost).";
+        public const string SafeStopAppendState5 = "Force end cancelled; the server is still running.";
+        public const string SafeStopAppendState6 = "All stopped: the server and the tunnel are closed.";
+        public const string OnClosingConfirmBox = "The server is still running. Closing directly may skip saving — stop it safely first?";
+        public const string BtnSparkTpsText = "TPS Report";
+        public const string BtnSparkProfileText = "Profile 30s";
+        public const string SparkLblCaption = "Diagnostics";
+        public const string SparkProfileStarted = "[Diagnostics] Started 30s profiling; keep the server running...";
+        public const string SparkProfileStopped = "[Diagnostics] Profiling finished; the spark report link appears in the server log above.";
+        public const string SparkProfileCancelled = "[Diagnostics] The server stopped; this profiling run was cancelled.";
+        public const int EulaAgreeWidth = 230;
+        public const int EulaLinkDx = 232;
+#else
+        public const string Msg = "出了点小问题";
+        public const string ShowFriendlyErrorStr = "，程序需要关闭。";
+        public const string ShowFriendlyErrorStr2 = "，程序会继续运行。";
+        public const string ShowFriendlyErrorPart = "\n\n如果反复出现，把这段信息告诉奶蛙就行。";
+        public const string ShowFriendlyErrorShow = "Minecraft 联机助手";
+        public const string YesText = "先安全关服再退出";
+        public const string NoText = "取消";
+        public const string SettingsFormInitChrome = "设置";
+        public const string SettingsFormAddField = "服务端目录 D:\\MCServer";
+        public const string SettingsFormAddField2 = "Java 完整路径 (java.exe)";
+        public const string SettingsFormAddField3 = "jar 文件名";
+        public const string SettingsFormAddField4 = "内存参数";
+        public const string SettingsFormAddField5 = "端口";
+        public const string SettingsFormAddField6 = "frpc.exe 路径";
+        public const string LbModeCaption = "隧道方式";
+        public const string SettingsFormAdd = "frpc 命令行（优先）";
+        public const string SettingsFormAdd2 = "打开官方 SakuraFrp 启动器（备用）";
+        public const string LbKeyCaption = "SakuraFrp 访问密钥";
+        public const string SettingsFormAddField7 = "隧道 ID";
+        public const string SettingsFormAddField8 = "语音隧道 ID（可空）";
+        public const string SettingsFormAddField9 = "公网地址（可空）";
+        public const string SettingsFormAddField10 = "PCL2 exe 路径";
+        public const string BtnPropsText = "服务器属性…";
+        public const string SettingsFormShow = "先把上面的服务端目录填对，再来改服务器属性。";
+        public const string SettingsFormShow2 = "服务器属性";
+        public const string BtnWizardText = "首次设置向导";
+        public const string BtnSaveText = "保存";
+        public const string ValidateSettingsMarkInvalid = "服务端目录不存在，请检查路径。";
+        public const string ValidateSettingsMarkInvalid2 = "Java 路径不存在，请检查。";
+        public const string ValidateSettingsMarkInvalid3 = "jar 文件名不能为空。";
+        public const string ValidateSettingsMarkInvalid4 = "服务端目录里找不到这个 jar 文件。";
+        public const string ValidateSettingsMarkInvalid5 = "端口必须是 1-65535 的数字。";
+        public const string ValidateSettingsMarkInvalid6 = "frpc.exe 路径不存在，请检查。";
+        public const string ValidateSettingsMarkInvalid7 = "frpc 模式下隧道 ID 不能为空。";
+        public const string ValidateSettingsMarkInvalid8 = "PCL2 路径不存在，请检查。";
+        public const string TitleText = "Minecraft 联机助手 v6.21";
+        public const string SubText = "双隧道版 · 游戏 + 语音";
+        public const string ServerText = "服务端：未启动";
+        public const string TunnelText = "SakuraFrp 隧道：未启动";
+        public const string AddrText = "公网地址：未生成";
+        public const string SrvState = "未启动";
+        public const string MbText = "玩家管理";
+        public const string OnPaintHeader = "服务端进程";
+        public const string OnPaintRow = "状态";
+        public const string OnPaintRow2 = "内存占用";
+        public const string OnPaintRow3 = "玩家连接";
+        public const string OnPaintDrawText = "在线玩家";
+        public const string OnPaintRow4 = "版本 · 延迟";
+        public const string OnPaintHeader2 = "隧道进程（frpc）";
+        public const string OnPaintHeader3 = "本机";
+        public const string OnPaintDrawText2 = "下行";
+        public const string OnPaintDrawText3 = "上行";
+        public const string OnPaintRow5 = "系统内存";
+        public const string OnHandleCreatedIndexOf = "错误";
+        public const string OnHandleCreatedStr = "出错";
+        public const string ShowMsg = "确定";
+        public const string PropsFormAddCombo = "难度";
+        public const string PropsFormStr = "和平";
+        public const string PropsFormStr2 = "简单";
+        public const string PropsFormStr3 = "普通";
+        public const string PropsFormStr4 = "困难";
+        public const string PropsFormAddCombo2 = "游戏模式";
+        public const string PropsFormStr5 = "生存";
+        public const string PropsFormStr6 = "创造";
+        public const string PropsFormStr7 = "冒险";
+        public const string PropsFormStr8 = "旁观";
+        public const string PropsFormAddNum = "最大玩家数";
+        public const string PropsFormAddNum2 = "视距（区块）";
+        public const string PropsFormAddNum3 = "模拟距离（区块）";
+        public const string PropsFormAddNum4 = "出生点保护半径";
+        public const string PropsFormAddText = "服务器标语 MOTD";
+        public const string PropsFormAddCheck = "启用白名单（white-list）";
+        public const string PropsFormAddCheck2 = "允许玩家互相攻击（pvp）";
+        public const string PropsFormAddCheck3 = "允许飞行（allow-flight）";
+        public const string LbOnCaption = "正版验证：关闭（离线联机必须保持关闭，这里不能改）";
+        public const string PropsFormShow = "在服务端目录里找不到 server.properties。服务端至少成功启动过一次才会生成这个文件。";
+        public const string SavePropsShow = "最大玩家数要是 1-9999 的数字。";
+        public const string SavePropsShow2 = "视距要是 2-32 的数字。";
+        public const string SavePropsShow3 = "模拟距离要是 2-32 的数字。";
+        public const string SavePropsShow4 = "出生点保护半径要是 0-9999 的数字。";
+        public const string SavePropsShow5 = "保存失败：";
+        public const string SavePropsShow6 = "已保存。服务端正在运行，这些设置会在下次开服时生效。";
+        public const string PlayerFormStr = "在线玩家（";
+        public const string PlayerFormStr2 = "现在没有玩家在线";
+        public const string PlayerFormAddBtn = "传送到我身边";
+        public const string PlayerFormAddBtn2 = "踢出服务器";
+        public const string PlayerFormConfirmDo = "把 ";
+        public const string PlayerFormConfirmDo2 = " 踢出服务器？";
+        public const string PlayerFormAddBtn3 = "给 OP";
+        public const string PlayerFormAddBtn4 = "取消 OP";
+        public const string PlayerFormAddBtn5 = "封禁";
+        public const string PlayerFormConfirmDo3 = "封禁 ";
+        public const string PlayerFormConfirmDo4 = "？封禁后他进不了服务器（可解封）。";
+        public const string PlayerFormAddBtn6 = "解封";
+        public const string PlayerFormStr3 = "提示：你自己不在线时，「传送到我身边」不可用。";
+        public const string PlayerFormStr4 = "动作会以控制台指令发给服务端，和在指令框输入一样。";
+        public const string CloseText = "关闭";
+        public const string LbOpsCaption = "OP 名单：";
+        public const string RefreshListsStr = "（无）";
+        public const string LbBannedCaption = "封禁名单：";
+        public const string WizardFormInitChrome = "首次设置向导";
+        public const string WizardFormAddLabel = "Minecraft 版本";
+        public const string WizardFormAddHint = "可手填任意正式版版本号";
+        public const string WizardFormAddLabel2 = "服务端类型";
+        public const string WizardFormAddRadio = "原版";
+        public const string WizardFormAddLabel3 = "服务端目录";
+        public const string BtnBrowseText = "浏览…";
+        public const string Description = "选择服务端文件夹（不存在也可以，先选一个父目录再改路径文字）";
+        public const string ChkEulaText = "我同意 Minecraft EULA";
+        public const string LnkEulaText = "查看 EULA 全文";
+        public const string WizardFormAddHint2 = "不勾选也能装，但首次开服前要自己把 eula.txt 改成 eula=true";
+        public const string LblStepCaption = "填好上面三项，点「开始安装」。Java 和服务端都会自动下好并校验。";
+        public const string BtnStartText = "开始安装";
+        public const string WizardFormWizLog = "正在取消…";
+        public const string StartInstallShow = "先填 Minecraft 版本。";
+        public const string StartInstallShow2 = "版本号格式不对，请填正式版版本号，例如 1.20.1（快照版暂不支持向导）。";
+        public const string StartInstallShow3 = "先填服务端目录。";
+        public const string StartInstallShow4 = "目标目录里已经有 server.jar，继续会覆盖它。\n\n存档和 mods 不受影响（向导只换 jar 并补缺失文件）。确定继续？";
+        public const string StartInstallShow5 = "覆盖并继续";
+        public const string StartInstallWizLog = "—— 开始安装：Minecraft ";
+        public const string StartInstallPart = " → ";
+        public const string RunFail = "无法判断 Minecraft ";
+        public const string RunFail2 = " 需要的 Java 版本，向导中止（没有改动任何文件）。";
+        public const string RunWizLog = "提示：26.x 是 Mojang 的新年份版本号，官方要求的 Java 可能高于本向导按 21 的估算，装好后请留意服务端日志。";
+        public const string RunWizStep = "第 1 步：准备 Java ";
+        public const string RunWizLog2 = "已配置的 Java 大版本为 ";
+        public const string RunWizLog3 = "，满足要求，直接使用：";
+        public const string RunWizLog4 = "使用程序旁已下载的 Java：";
+        public const string RunFail3 = " 需要 Java ";
+        public const string RunFail4 = "，本向导只能自动下载 Java 17 / 21。请先手动安装 Java ";
+        public const string RunFail5 = "，在「设置」里指定 java.exe 路径后再开服。";
+        public const string RunWizLog5 = "Adoptium 资产接口没取到直链（";
+        public const string RunStr = "无详情";
+        public const string RunPart = "），改用官方二进制接口下载；该接口不提供哈希，本次 Java 下载不做哈希校验。";
+        public const string RunWizLog6 = "下载 Java ";
+        public const string RunWizLog7 = "（Eclipse Temurin JRE，约 40–50 MB）…";
+        public const string RunFail6 = "Java 下载失败：";
+        public const string RunWizLog8 = "校验 Java 压缩包 SHA256…";
+        public const string RunFail7 = "Java 压缩包 SHA256 校验不通过，已删除下载文件。期望 ";
+        public const string RunFail8 = "，实际 ";
+        public const string RunFail9 = "。请检查网络后重试。";
+        public const string RunWizLog9 = "SHA256 校验通过。";
+        public const string RunWizLog10 = "解压 Java 到 ";
+        public const string RunWizLog11 = " …";
+        public const string RunFail10 = "Java 解压失败：";
+        public const string RunFail11 = "Java 解压完成但没找到 bin\\java.exe，目录结构异常，已中止（未写入配置）。";
+        public const string RunFail12 = "下载到的 Java 大版本是 ";
+        public const string RunFail13 = "，仍低于需要的 ";
+        public const string RunFail14 = "，已中止（未写入配置）。";
+        public const string RunWizLog12 = "Java 就绪：大版本 ";
+        public const string RunWizLog13 = "，";
+        public const string RunWizStep2 = "第 2 步：下载服务端 jar";
+        public const string RunFail15 = "拿不到 Mojang 版本清单：";
+        public const string RunFail16 = "版本清单里没有 Minecraft ";
+        public const string RunFail17 = "（请确认版本号无误、且是正式版）。";
+        public const string RunFail18 = "拿不到 ";
+        public const string RunFail19 = " 的版本元数据：";
+        public const string RunFail20 = "版本元数据里没有服务端下载地址。";
+        public const string RunWizLog14 = "下载原版服务端（Mojang 官方）…";
+        public const string RunDownloadWithProgress = "原版服务端";
+        public const string RunFail21 = "服务端下载失败：";
+        public const string RunWizLog15 = "校验服务端 SHA1…";
+        public const string RunFail22 = "服务端 SHA1 校验不通过，已删除 jar。期望 ";
+        public const string RunWizLog16 = "SHA1 校验通过。";
+        public const string RunFail23 = "拿不到 Fabric Loader 列表：";
+        public const string RunFail24 = "Fabric 还没有适配 Minecraft ";
+        public const string RunFail25 = " 的稳定版 Loader，请换一个版本。";
+        public const string RunFail26 = "拿不到 Fabric Installer 列表：";
+        public const string RunFail27 = "Fabric Installer 列表异常。";
+        public const string RunWizLog17 = "下载 Fabric 服务端启动 jar（Loader ";
+        public const string RunWizLog18 = "，Installer ";
+        public const string RunWizLog19 = "）…";
+        public const string RunWizLog20 = "注意：Fabric 官方不发布该 jar 的哈希校验值，本文件只能靠 HTTPS 传输，未做哈希校验。首次开服时它还会再下载原版服务端与库文件。";
+        public const string RunDownloadWithProgress2 = "Fabric 服务端";
+        public const string RunFail28 = "Fabric 服务端下载失败：";
+        public const string RunWizLog21 = "已建 mods 文件夹。提醒：Fabric 服务端要装 mod 还需要 Fabric API（放进 mods），语音等双端 mod 每个玩家客户端也要装。";
+        public const string RunFail29 = "拿不到 Paper 构建列表（Fill API）：";
+        public const string RunFail30 = "。注意：Paper 不支持的版本会返回错误，请确认该版本有 Paper。";
+        public const string RunFail31 = "Paper 构建列表里没找到可下载的服务端。";
+        public const string RunWizLog22 = "下载 Paper 服务端（最新构建）…";
+        public const string RunDownloadWithProgress3 = "Paper 服务端";
+        public const string RunFail32 = "Paper 服务端下载失败：";
+        public const string RunWizLog23 = "校验服务端 SHA256…";
+        public const string RunFail33 = "服务端 SHA256 校验不通过，已删除 jar。期望 ";
+        public const string RunWizStep3 = "第 3 步：写入初始文件";
+        public const string RunWizLog24 = "已写入 eula.txt（eula=true，按你勾选的同意）。";
+        public const string RunWizLog25 = "未勾选同意 EULA：没有写 eula.txt。首次开服时服务端会生成 eula=false 并自动退出，把它改成 eula=true 后再开服。";
+        public const string RunWizLog26 = "已写入 server.properties：server-port=25565，online-mode=false（离线联机必须关正版验证）。";
+        public const string RunWizLog27 = "目录里已有 server.properties，未改动它。请自行确认 online-mode=false，否则离线账号进不来。";
+        public const string RunWizStep4 = "第 4 步：保存设置";
+        public const string RunWizLog28 = "完成。服务端目录：";
+        public const string RunWizLog29 = "；jar：server.jar；Java：";
+        public const string RunStr2 = "（沿用原配置）";
+        public const string RunWizLog30 = "关掉向导后，先到「设置」里填 SakuraFrp 访问密钥和隧道 ID，再点「启动联机」。";
+        public const string RunWizStep5 = "安装完成";
+        public const string RunFail34 = "向导出错：";
+        public const string DownloadWithProgressWizStep = "下载";
+        public const string DownloadWithProgressWizStep2 = "…";
+        public const string FailWizLog = "失败：";
+        public const string FailWizStep = "已停止";
+        public const string CancelledWizLog = "已取消。未写入配置；已完整下载好的文件保留在目标目录，半成品已清理。";
+        public const string CancelledWizStep = "已取消";
+        public const string MainFormAppendServerLog = "[启动器] 已启动，日志同步保存在程序目录的 logs 文件夹中（保留 14 天）。";
+        public const string TrayText = "Minecraft 联机助手 · 已停止";
+        public const string InitTray613ToolStripMenuItem = "显示主窗口";
+        public const string InitTray613ToolStripMenuItem2 = "安全退出";
+        public const string BtnStartText2 = "启动联机";
+        public const string AddrLblCaption = "公网地址（发给朋友）：";
+        public const string Hint = "隧道启动后，公网地址会显示在这里";
+        public const string BtnCopyText = "复制地址发给朋友";
+        public const string BtnPcl2Text = "打开 PCL2";
+        public const string BtnStopText = "安全关服";
+        public const string LogToggleLblCaption = "▾  日志";
+        public const string BuildUiStr = "服务端日志";
+        public const string BuildUiStr2 = "隧道日志";
+        public const string BuildUiStr3 = "状态监控";
+        public const string BuildUiStr4 = "备份";
+        public const string BuildUiMakeLogBox = "暂无日志 · 服务端输出会显示在这里";
+        public const string BuildUiMakeLogBox2 = "暂无日志 · 隧道输出会显示在这里";
+        public const string BtnJumpBottomText = "↓ 回到底部";
+        public const string Hint2 = "搜索日志…";
+        public const string BuildUiSetToolTip = "上一个";
+        public const string BuildUiSetToolTip2 = "下一个";
+        public const string BuildUiSetToolTip3 = "在日志里搜索，回车跳到下一个";
+        public const string ChkErrOnlyText = "只看警告/错误";
+        public const string CmdLblCaption = "服务器指令";
+        public const string BtnCmdSendText = "发送";
+        public const string BuildUiAppendState = "首次使用：请在「设置」里填 SakuraFrp 访问密钥、隧道 ID，检查 PCL2 路径。";
+        public const string IsErrLineContains = "[守护]";
+        public const string IsErrLineContains2 = "[备份] 失败";
+        public const string LblFindCaption = "无结果";
+        public const string SrvState2 = "运行中 · ";
+        public const string SampleStatsPart = " 人";
+        public const string SampleStatsPart2 = " 人在线（名单未公开）";
+        public const string SampleStatsPart3 = "延迟 ";
+        public const string ToggleLogStr = "▸  日志";
+        public const string AppendServerLogPersistLog613 = "服务端";
+        public const string AppendTunnelLogPersistLog613 = "隧道";
+        public const string SendServerCommandAppendState = "服务端没在运行，指令发不出去。";
+        public const string SendServerCommandAppendState2 = "发送指令失败：服务端进程已不在。";
+        public const string SendServerCommandAppendState3 = "发送指令失败：";
+        public const string OpenPlayerManagerShow = "服务端没在运行，玩家管理要在开服后使用。";
+        public const string OpenPlayerManagerAppendState = "指令发送失败：服务端进程已不在。";
+        public const string DoBackupAppendState = "已经有一个备份正在进行中了。";
+        public const string BackupCoreAppendState = "找不到世界文件夹：";
+        public const string BackupCoreAppendState2 = "，无法备份。";
+        public const string BackupCoreAppendServerLog = "[备份] 已暂停服务端自动保存并落盘，开始打包世界…";
+        public const string BackupCoreAppendServerLog2 = "[备份] 完成：";
+        public const string BackupCorePart = " 个文件";
+        public const string BackupCoreStr = "，跳过 ";
+        public const string BackupCorePart2 = " 个占用中的文件";
+        public const string BackupCoreAppendState3 = "世界备份完成（";
+        public const string BackupCoreAppendServerLog3 = "[备份] 失败：";
+        public const string BackupCoreAppendState4 = "备份失败：";
+        public const string BackupCoreAppendServerLog4 = "[备份] 服务端自动保存已恢复。";
+        public const string RestoreBackupShow = "恢复存档前必须先关服：服务端开着的时候换世界文件会损坏存档。\n\n请先点「安全关服」，再来恢复。";
+        public const string RestoreBackupShow2 = "恢复存档";
+        public const string RestoreBackupConfirmBox = "把世界恢复到备份「";
+        public const string RestoreBackupConfirmBox2 = "」？\n\n当前的世界不会被删：它会先被改名留在一边（world_prerestore_时间），确认没问题后你可以自己删；恢复错了也能换回来。";
+        public const string RestoreBackupAppendState = "已经有一个备份任务正在进行中了。";
+        public const string Result = "已恢复到备份「";
+        public const string RestoreBackupPart = "」。旧世界保留在 ";
+        public const string RestoreBackupPart2 = "，确认新世界没问题后可以删除它。";
+        public const string Result2 = "恢复失败：";
+        public const string RestoreBackupPart3 = "（旧世界可能已被改名，先别开服，检查服务端目录。）";
+        public const string RestoreBackupAppendServerLog = "[备份] ";
+        public const string BuildBackupPanelBkLabel = "世界备份";
+        public const string BtnBackupNowText = "立即备份";
+        public const string BuildBackupPanelDoBackup = "手动备份";
+        public const string BtnRestoreBackupText = "恢复选中";
+        public const string BuildBackupPanelShow = "先在上面的列表里选中一个备份。";
+        public const string BtnDeleteBackupText = "删除选中";
+        public const string BuildBackupPanelShow2 = "删除备份";
+        public const string BuildBackupPanelConfirmBox = "删除备份「";
+        public const string BuildBackupPanelPart = "」？删了就恢复不了了。";
+        public const string BuildBackupPanelShow3 = "删除失败：";
+        public const string BuildBackupPanelBkLabel2 = "保留最近";
+        public const string BuildBackupPanelBkLabel3 = "份";
+        public const string BuildBackupPanelBkCheck = "崩溃自动重启";
+        public const string BuildBackupPanelBkCheck2 = "开服前自动备份";
+        public const string BuildBackupPanelBkCheck3 = "每日自动备份";
+        public const string BuildBackupPanelBkLabel4 = "应用开着时，到点自动备份一次";
+        public const string BuildBackupPanelBkCheck4 = "定时指令";
+        public const string LblBackupStateCaption = "正在备份…（大世界可能要一两分钟）";
+        public const string RefreshBackupListStr = "共 ";
+        public const string RefreshBackupListPart = " 份 · ";
+        public const string RefreshBackupListStr2 = "还没有备份";
+        public const string RefreshBackupListStr3 = "最近一份：";
+        public const string RefreshBackupListStr4 = "点「立即备份」给世界留一份快照。";
+        public const string CheckSchedulesAppendServerLog = "[定时] 到达每日备份时间，开始自动备份。";
+        public const string CheckSchedulesAppendServerLog2 = "[定时] 到了定时指令时间，但还有 ";
+        public const string CheckSchedulesAppendServerLog3 = " 人在线，推迟到没人时再执行。";
+        public const string CheckSchedulesAppendServerLog4 = "[定时] 已发送定时指令：";
+        public const string ServerText2 = "服务端：运行中";
+        public const string ServerText3 = "服务端：启动中…";
+        public const string TunnelText2 = "SakuraFrp 隧道：已连接";
+        public const string TunnelText3 = "SakuraFrp 隧道：启动中…";
+        public const string AddrText2 = "公网地址：已就绪";
+        public const string AddrText3 = "公网地址：已保存（隧道未启动）";
+        public const string Tt = "Minecraft 联机助手 · ";
+        public const string RefreshStatusStr = "运行中";
+        public const string RefreshStatusStr2 = "启动中";
+        public const string CopyAddrShow = "公网地址还没生成，请先启动联机。";
+        public const string CopyAddrShow2 = "提示";
+        public const string CopyAddrAppendState = "公网地址已复制到剪贴板，发给朋友即可。";
+        public const string BtnCopyText2 = "已复制 ✓";
+        public const string OpenPcl2Show = "找不到 PCL2，请到「设置」里填写 PCL2 的 exe 路径。";
+        public const string OpenPcl2Show2 = "打开 PCL2 失败：";
+        public const string HandleServerCrashAppendServerLog = "[守护] 服务端异常退出（退出码 ";
+        public const string HandleServerCrashAppendServerLog2 = "），这不是正常关服。";
+        public const string HandleServerCrashStr = "可能原因：";
+        public const string HandleServerCrashAppendState = "服务端异常退出了";
+        public const string HandleServerCrashStr2 = "，可能原因：";
+        public const string HandleServerCrashStr3 = "，请看服务端日志最底部找原因。";
+        public const string HandleServerCrashPart = "（守护自动重启是关着的）";
+        public const string HandleServerCrashAppendServerLog3 = "[守护] 10 分钟内已异常退出 ";
+        public const string HandleServerCrashAppendServerLog4 = " 次，停止自动重启，多半是存档或 mod 出了问题。";
+        public const string HandleServerCrashAppendState2 = "服务端连续异常退出，已停止自动重启，请看日志。";
+        public const string HandleServerCrashStr4 = " 可能原因：";
+        public const string HandleServerCrashAppendState3 = "服务端异常退出，守护将在 5 秒后自动重启…";
+        public const string GuessCrash614Ret = "端口 ";
+        public const string GuessCrash614Part = " 被占用，多半是还有一个服务端没关干净";
+        public const string GuessCrash614Ret2 = "内存不足或内存参数（-Xmx）设置有问题";
+        public const string GuessCrash614Ret3 = "Java 版本不对，这个服务端需要 Java 17";
+        public const string GuessCrash614Ret4 = "服务器卡死超过 60 秒，被游戏自带的看门狗停掉";
+        public const string GuessCrash614Ret5 = "有模组加载失败，看日志里报错的 mod 名";
+        public const string GuessCrash614Ret6 = "eula 未同意";
+        public const string OfferWizardIfNeededShow = "还没有可用的服务端：设置里的服务端目录不存在，或里面没有服务端 jar。\n\n「首次设置向导」可以下载匹配的 Java 和服务端（原版 / Fabric / Paper），并写好 EULA 与离线开服所需的 server.properties，下载均带哈希校验。";
+        public const string OfferWizardIfNeededShow2 = "打开向导";
+        public const string OfferWizardIfNeededShow3 = "以后再说";
+        public const string OpenWizardAppendState = "首次设置向导已完成，服务端和 Java 都就绪了。";
+        public const string CheckJavaVersionStr = "未知";
+        public const string CheckJavaVersionAppendServerLog = "[Java 检查] 读不到服务端 jar 的版本信息（version.json），跳过版本校验。当前 Java 大版本：";
+        public const string CheckJavaVersionAppendServerLog2 = "。";
+        public const string CheckJavaVersionAppendServerLog3 = "[Java 检查] 服务端版本 ";
+        public const string CheckJavaVersionAppendServerLog4 = " 不在对照表内，跳过版本校验。当前 Java 大版本：";
+        public const string CheckJavaVersionAppendServerLog5 = "[Java 检查] 服务端 ";
+        public const string CheckJavaVersionAppendServerLog6 = "，但没测出当前 Java 的版本，放行启动（请留意服务端日志）。";
+        public const string CheckJavaVersionAppendServerLog7 = "[Java 检查] 通过：服务端 ";
+        public const string CheckJavaVersionAppendServerLog8 = "，当前 Java ";
+        public const string CheckJavaVersionAppendServerLog9 = "[Java 检查] 不匹配：服务端 ";
+        public const string CheckJavaVersionAppendServerLog10 = "，当前 Java 只有 ";
+        public const string CheckJavaVersionAppendServerLog11 = "，已弹出提示等待确认。";
+        public const string Msg2 = "Java 版本不够，服务端大概率起不来。\n\n服务端版本：";
+        public const string CheckJavaVersionPart = "，需要 Java ";
+        public const string CheckJavaVersionPart2 = " 或更高；当前将要使用的 Java 大版本是 ";
+        public const string CheckJavaVersionPart3 = "。\n\n建议：到「设置」里换一个 Java ";
+        public const string CheckJavaVersionPart4 = " 的 java.exe，或用「首次设置向导」自动下载匹配的 Java。\n选「仍然启动」会按现在的 Java 硬启动，报错请看服务端日志。";
+        public const string CheckJavaVersionShow = "Java 版本不匹配";
+        public const string CheckJavaVersionShow2 = "仍然启动";
+        public const string CheckJavaVersionShow3 = "取消启动";
+        public const string CheckJavaVersionAppendServerLog12 = "[Java 检查] 用户选择仍然启动。";
+        public const string CheckJavaVersionAppendServerLog13 = "[Java 检查] 用户取消了启动。";
+        public const string StartAllAppendState = "服务端已在运行，无需重复启动。";
+        public const string BtnStartText3 = "联机运行中";
+        public const string BtnStartText4 = "启动中…";
+        public const string DoStartFailState = "服务端目录不存在：";
+        public const string DoStartFailState2 = "，请到「设置」里检查服务端目录。";
+        public const string DoStartFailState3 = "找不到服务端 jar：";
+        public const string DoStartFailState4 = "，请到「设置」里检查 jar 文件名。";
+        public const string DoStartFailState5 = "找不到 Java（java.exe）。请到「设置」里重新选择 Java 路径，通常是 .minecraft\\runtime 下或安装目录里。";
+        public const string DoStartFailState6 = "已取消启动：Java 版本低于服务端要求。换匹配的 Java，或用「首次设置向导」自动下载后再试。";
+        public const string DoStartFailState7 = " 已被占用。可能是上次服务端没关干净，请点「安全关服」或重启本应用，不要在任务管理器里结束 Java 进程。";
+        public const string DoStartAppendState = "开服前自动备份中…";
+        public const string DoStartAppendState2 = "正在启动 Minecraft 服务端…";
+        public const string DoStartAppendServerLog = "[进程已退出]";
+        public const string DoStartFailState8 = "无法启动 Java 进程，请检查 Java 路径是否正确。";
+        public const string DoStartAppendState3 = "等待服务端就绪（出现 Done）…";
+        public const string DoStartFailState9 = "服务端进程在出现 Done 之前就退出了。最可能：1) Java 路径或内存参数不对；2) 存档/world 或 mods 报错（请看服务端日志最底部）。不要动 world 和 mods。";
+        public const string DoStartFailState10 = "服务端 90 秒还没出现 Done。可能内存不够、世界过大、或启动卡住。请看服务端日志最底部，别动 world 和 mods。";
+        public const string DoStartAppendState4 = "已就绪，点「复制地址发给朋友」把地址发给朋友即可。";
+        public const string DoStartFailState11 = "启动出错：";
+        public const string StartTunnelAppendTunnelLog = "[备用方案] 正在打开官方 SakuraFrp 启动器，请在启动器里启动隧道。";
+        public const string StartTunnelAppendTunnelLog2 = "打开 SakuraFrp 启动器失败：";
+        public const string StartTunnelAppendTunnelLog3 = "找不到 frpc.exe：";
+        public const string StartTunnelAppendTunnelLog4 = "，请到「设置」里检查，或把隧道方式切到官方启动器。";
+        public const string StartTunnelAppendTunnelLog5 = "还没填访问密钥，请到「设置」里填写 SakuraFrp 访问密钥。";
+        public const string StartTunnelAppendTunnelLog6 = "还没填隧道 ID，请到「设置」里填写。";
+        public const string StartTunnelAppendState = "正在启动 SakuraFrp 隧道…";
+        public const string StartTunnelAppendTunnelLog7 = "[frpc 已退出]";
+        public const string StartTunnelAppendTunnelLog8 = "[守护] 游戏隧道异常退出，5 秒后自动重连。";
+        public const string StartTunnelAppendTunnelLog9 = "frpc 启动失败，请检查 frpc.exe 路径。";
+        public const string StartTunnelAppendTunnelLog10 = "检测到当前 frpc.exe 是 SakuraFrp 启动器自带的套装版，这个版本不能由外部程序直接运行（只能由 SakuraFrp Service 启动），所以直接调用会退出。这与访问密钥、隧道 ID、节点都无关。请到「设置」把 frpc 路径改成独立版 frpc，或把隧道方式切到官方启动器。";
+        public const string StartTunnelAppendTunnelLog11 = "frpc 进程退出了。可能：1) 访问密钥或隧道 ID 错误；2) 节点异常；3) 账号需实名/签到。请到「设置」检查密钥和隧道 ID，或把隧道方式切到官方启动器。";
+        public const string StartTunnelAppendState2 = "frpc 是启动器套装版，不能直接运行。请到「设置」改独立版 frpc 或切官方启动器。";
+        public const string StartVoiceTunnelAppendTunnelLog = "[语音] 未填写语音隧道 ID，跳过语音隧道。";
+        public const string StartVoiceTunnelAppendTunnelLog2 = "[语音 frpc 已退出]";
+        public const string StartVoiceTunnelAppendTunnelLog3 = "[守护] 语音隧道异常退出，5 秒后自动重连。";
+        public const string StartVoiceTunnelAppendTunnelLog4 = "[语音] frpc 启动失败，请检查 frpc.exe 路径。";
+        public const string StartVoiceTunnelAppendTunnelLog5 = "[语音] frpc 进程退出了，请检查语音隧道 ID 是否正确。";
+        public const string StartVoiceTunnelAppendState = "语音隧道已连接。";
+        public const string VoiceFrpcOutputAppendTunnelLog = "[语音] ";
+        public const string VoiceFrpcErrorAppendTunnelLog = "[语音][ERR] ";
+        public const string TryParseFrpcAppendState = "已自动获取公网地址：";
+        public const string ServerText4 = "服务端：出错";
+        public const string TunnelText4 = "SakuraFrp 隧道：出错";
+        public const string SafeStopAppendState = "服务端未在运行，已停止隧道。";
+        public const string SafeStopAppendState2 = "正在安全关服：向服务端发送 stop，等待存档保存…";
+        public const string SafeStopAppendServerLog = ">> 已发送 stop，等待存档保存并退出（最多 60 秒）";
+        public const string SafeStopAppendState3 = "服务端已正常停止（存档已保存）。正在关闭隧道…";
+        public const string SafeStopAppendServerLog2 = "[服务端进程已正常退出]";
+        public const string SafeStopShow = "服务端 60 秒还没退出。强制结束可能丢失最近几分钟的进度。是否强制结束？";
+        public const string SafeStopShow2 = "安全关服超时";
+        public const string SafeStopShow3 = "强制结束";
+        public const string SafeStopShow4 = "再等等";
+        public const string SafeStopAppendState4 = "已强制结束服务端进程（可能丢失最近进度）。";
+        public const string SafeStopAppendState5 = "已取消强制结束，服务端仍在运行。";
+        public const string SafeStopAppendState6 = "已全部停止：服务端和隧道均已关闭。";
+        public const string OnClosingConfirmBox = "服务端还在运行，直接关可能不存档，要先安全关服吗？";
+        public const string BtnSparkTpsText = "TPS 报告";
+        public const string BtnSparkProfileText = "诊断 30 秒";
+        public const string SparkLblCaption = "性能诊断";
+        public const string SparkProfileStarted = "[诊断] 已开始 30 秒性能采样，采样期间请保持服务器运行…";
+        public const string SparkProfileStopped = "[诊断] 采样结束，spark 报告链接会出现在上方服务器日志里。";
+        public const string SparkProfileCancelled = "[诊断] 服务器已停止，本次诊断已取消。";
+        public const int EulaAgreeWidth = 190;
+        public const int EulaLinkDx = 190;
+#endif
+    }
+
     static class Program
     {
         [STAThread]
@@ -30,10 +877,10 @@ namespace MinecraftLauncher
         {
             try
             {
-                string msg = "出了点小问题" + (terminating ? "，程序需要关闭。" : "，程序会继续运行。")
+                string msg = Txt.Msg + (terminating ? Txt.ShowFriendlyErrorStr : Txt.ShowFriendlyErrorStr2)
                     + "\n\n" + (ex != null ? ex.Message : "")
-                    + "\n\n如果反复出现，把这段信息告诉奶蛙就行。";
-                InfoBox.Show(msg, "Minecraft 联机助手");
+                    + Txt.ShowFriendlyErrorPart;
+                InfoBox.Show(msg, Txt.ShowFriendlyErrorShow);
             }
             catch { }
         }
@@ -228,10 +1075,10 @@ namespace MinecraftLauncher
         public ConfirmBox(string message)
         {
             _message = message ?? "";
-            InitChrome("Minecraft 联机助手", 440, 190);
+            InitChrome(Txt.ShowFriendlyErrorShow, 440, 190);
             _yes = new RoundButton();
             _yes.Primary = true;
-            _yes.Text = "先安全关服再退出";
+            _yes.Text = Txt.YesText;
             _yes.BackColor = Pal.Green;
             _yes.ForeColor = Color.White;
             _yes.BackdropColor = Pal.Bg;
@@ -239,7 +1086,7 @@ namespace MinecraftLauncher
             _yes.Click += (s, e) => { ChoiceYes = true; DialogResult = DialogResult.OK; };
             Controls.Add(_yes);
             _no = new RoundButton();
-            _no.Text = "取消";
+            _no.Text = Txt.NoText;
             _no.BackColor = Pal.Surface;
             _no.ForeColor = Color.White;
             _no.BackdropColor = Pal.Bg;
@@ -310,29 +1157,29 @@ namespace MinecraftLauncher
         public SettingsForm(Config cfg)
         {
             _cfg = cfg;
-            InitChrome("设置", 620, 620);
+            InitChrome(Txt.SettingsFormInitChrome, 620, 620);
             AutoScroll = true;
 
             int y = 14;
             int lx = 20, tx = 170, tw = 420;
 
-            AddField("服务端目录 D:\\MCServer", "tbServerDir", cfg.ServerDir, ref y, lx, tx, tw, out tbServerDir);
-            AddField("Java 完整路径 (java.exe)", "tbJava", cfg.JavaPath, ref y, lx, tx, tw, out tbJava);
-            AddField("jar 文件名", "tbJar", cfg.JarName, ref y, lx, tx, tw, out tbJar);
-            AddField("内存参数", "tbMem", cfg.MemParams, ref y, lx, tx, tw, out tbMem);
-            AddField("端口", "tbPort", cfg.Port.ToString(), ref y, lx, tx, tw, out tbPort);
-            AddField("frpc.exe 路径", "tbFrpc", cfg.FrpcPath, ref y, lx, tx, tw, out tbFrpc);
+            AddField(Txt.SettingsFormAddField, "tbServerDir", cfg.ServerDir, ref y, lx, tx, tw, out tbServerDir);
+            AddField(Txt.SettingsFormAddField2, "tbJava", cfg.JavaPath, ref y, lx, tx, tw, out tbJava);
+            AddField(Txt.SettingsFormAddField3, "tbJar", cfg.JarName, ref y, lx, tx, tw, out tbJar);
+            AddField(Txt.SettingsFormAddField4, "tbMem", cfg.MemParams, ref y, lx, tx, tw, out tbMem);
+            AddField(Txt.SettingsFormAddField5, "tbPort", cfg.Port.ToString(), ref y, lx, tx, tw, out tbPort);
+            AddField(Txt.SettingsFormAddField6, "tbFrpc", cfg.FrpcPath, ref y, lx, tx, tw, out tbFrpc);
 
             var lbMode = new TextLabel();
             lbMode.TopAlign = true;
-            lbMode.Caption = "隧道方式";
+            lbMode.Caption = Txt.LbModeCaption;
             lbMode.TextShiftX = 2f; lbMode.TextShiftY = -0.67f;
             lbMode.SetBounds(lx, y, 140, 26);
             lbMode.BackColor = Color.Transparent; lbMode.BackdropColor = Pal.Bg; lbMode.ForeColor = Pal.Sub;
             Controls.Add(lbMode);
             cbTunnelMode = new ComboBox();
-            cbTunnelMode.Items.Add("frpc 命令行（优先）");
-            cbTunnelMode.Items.Add("打开官方 SakuraFrp 启动器（兜底）");
+            cbTunnelMode.Items.Add(Txt.SettingsFormAdd);
+            cbTunnelMode.Items.Add(Txt.SettingsFormAdd2);
             cbTunnelMode.SelectedIndex = (cfg.TunnelMode == "launcher") ? 1 : 0;
             cbTunnelMode.SetBounds(tx, y, tw, 26);
             cbTunnelMode.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -345,7 +1192,7 @@ namespace MinecraftLauncher
 
             var lbKey = new TextLabel();
             lbKey.TopAlign = true;
-            lbKey.Caption = "SakuraFrp 访问密钥";
+            lbKey.Caption = Txt.LbKeyCaption;
             lbKey.TextShiftX = 2f; lbKey.TextShiftY = -0.67f;
             lbKey.SetBounds(lx, y, 140, 26);
             lbKey.BackColor = Color.Transparent; lbKey.BackdropColor = Pal.Bg; lbKey.ForeColor = Pal.Sub;
@@ -360,10 +1207,10 @@ namespace MinecraftLauncher
             Controls.Add(tbKey);
             y += 36;
 
-            AddField("隧道 ID", "tbTunnelId", cfg.TunnelId, ref y, lx, tx, tw, out tbTunnelId);
-            AddField("语音隧道 ID（可空）", "tbVoiceTunnelId", cfg.VoiceTunnelId, ref y, lx, tx, tw, out tbVoiceTunnelId);
-            AddField("公网地址（可空）", "tbAddr", cfg.PublicAddr, ref y, lx, tx, tw, out tbAddr);
-            AddField("PCL2 exe 路径", "tbPcl2", cfg.Pcl2Path, ref y, lx, tx, tw, out tbPcl2);
+            AddField(Txt.SettingsFormAddField7, "tbTunnelId", cfg.TunnelId, ref y, lx, tx, tw, out tbTunnelId);
+            AddField(Txt.SettingsFormAddField8, "tbVoiceTunnelId", cfg.VoiceTunnelId, ref y, lx, tx, tw, out tbVoiceTunnelId);
+            AddField(Txt.SettingsFormAddField9, "tbAddr", cfg.PublicAddr, ref y, lx, tx, tw, out tbAddr);
+            AddField(Txt.SettingsFormAddField10, "tbPcl2", cfg.Pcl2Path, ref y, lx, tx, tw, out tbPcl2);
 
             _errLbl = new TextLabel();
             _errLbl.TopAlign = true;
@@ -375,20 +1222,20 @@ namespace MinecraftLauncher
             Controls.Add(_errLbl);
 
             var btnProps = new RoundButton();
-            btnProps.Text = "服务器属性…";
+            btnProps.Text = Txt.BtnPropsText;
             btnProps.BackColor = Pal.Surface;
             btnProps.ForeColor = Color.White;
             btnProps.SetBounds(20, y + 52, 180, 38);
             btnProps.Click += (s, e) =>
             {
                 string dir = tbServerDir.Text.Trim();
-                if (dir.Length == 0 || !System.IO.Directory.Exists(dir)) { InfoBox.Show("先把上面的服务端目录填对，再来改服务器属性。", "服务器属性"); return; }
+                if (dir.Length == 0 || !System.IO.Directory.Exists(dir)) { InfoBox.Show(Txt.SettingsFormShow, Txt.SettingsFormShow2); return; }
                 using (var pf = new PropsForm(dir, ServerRunning)) pf.ShowDialog(this);
             };
             Controls.Add(btnProps);
 
             var btnWizard = new RoundButton();
-            btnWizard.Text = "首次设置向导";
+            btnWizard.Text = Txt.BtnWizardText;
             btnWizard.BackColor = Pal.Surface;
             btnWizard.ForeColor = Color.White;
             btnWizard.SetBounds(212, y + 52, 150, 38);
@@ -409,7 +1256,7 @@ namespace MinecraftLauncher
 
             var btnSave = new RoundButton();
             btnSave.Primary = true;
-            btnSave.Text = "保存";
+            btnSave.Text = Txt.BtnSaveText;
             btnSave.BackColor = Pal.Green;
             btnSave.ForeColor = Color.White;
             btnSave.SetBounds(374, y + 52, 100, 38);
@@ -417,7 +1264,7 @@ namespace MinecraftLauncher
             Controls.Add(btnSave);
 
             var btnCancel = new RoundButton();
-            btnCancel.Text = "取消";
+            btnCancel.Text = Txt.NoText;
             btnCancel.BackColor = Pal.Surface;
             btnCancel.ForeColor = Color.White;
             btnCancel.SetBounds(486, y + 52, 100, 38);
@@ -463,19 +1310,19 @@ namespace MinecraftLauncher
             if (_errLbl != null) _errLbl.Caption = "";
             bool ok = true;
             string dir = tbServerDir.Text.Trim();
-            if (dir.Length == 0 || !System.IO.Directory.Exists(dir)) ok = MarkInvalid(tbServerDir, "服务端目录不存在，请检查路径。");
+            if (dir.Length == 0 || !System.IO.Directory.Exists(dir)) ok = MarkInvalid(tbServerDir, Txt.ValidateSettingsMarkInvalid);
             string java = tbJava.Text.Trim();
-            if (java.Length > 0 && !System.IO.File.Exists(java)) ok = MarkInvalid(tbJava, "Java 路径不存在，请检查。");
+            if (java.Length > 0 && !System.IO.File.Exists(java)) ok = MarkInvalid(tbJava, Txt.ValidateSettingsMarkInvalid2);
             string jar = tbJar.Text.Trim();
-            if (jar.Length == 0) ok = MarkInvalid(tbJar, "jar 文件名不能为空。");
-            else if (dir.Length > 0 && System.IO.Directory.Exists(dir) && !System.IO.File.Exists(System.IO.Path.Combine(dir, jar))) ok = MarkInvalid(tbJar, "服务端目录里找不到这个 jar 文件。");
+            if (jar.Length == 0) ok = MarkInvalid(tbJar, Txt.ValidateSettingsMarkInvalid3);
+            else if (dir.Length > 0 && System.IO.Directory.Exists(dir) && !System.IO.File.Exists(System.IO.Path.Combine(dir, jar))) ok = MarkInvalid(tbJar, Txt.ValidateSettingsMarkInvalid4);
             int p;
-            if (!int.TryParse(tbPort.Text.Trim(), out p) || p < 1 || p > 65535) ok = MarkInvalid(tbPort, "端口必须是 1-65535 的数字。");
+            if (!int.TryParse(tbPort.Text.Trim(), out p) || p < 1 || p > 65535) ok = MarkInvalid(tbPort, Txt.ValidateSettingsMarkInvalid5);
             string frpc = tbFrpc.Text.Trim();
-            if (frpc.Length > 0 && !System.IO.File.Exists(frpc)) ok = MarkInvalid(tbFrpc, "frpc.exe 路径不存在，请检查。");
-            if (cbTunnelMode.SelectedIndex == 0 && tbTunnelId.Text.Trim().Length == 0) ok = MarkInvalid(tbTunnelId, "frpc 模式下隧道 ID 不能为空。");
+            if (frpc.Length > 0 && !System.IO.File.Exists(frpc)) ok = MarkInvalid(tbFrpc, Txt.ValidateSettingsMarkInvalid6);
+            if (cbTunnelMode.SelectedIndex == 0 && tbTunnelId.Text.Trim().Length == 0) ok = MarkInvalid(tbTunnelId, Txt.ValidateSettingsMarkInvalid7);
             string pcl = tbPcl2.Text.Trim();
-            if (pcl.Length > 0 && !System.IO.File.Exists(pcl)) ok = MarkInvalid(tbPcl2, "PCL2 路径不存在，请检查。");
+            if (pcl.Length > 0 && !System.IO.File.Exists(pcl)) ok = MarkInvalid(tbPcl2, Txt.ValidateSettingsMarkInvalid8);
             return ok;
         }
 
@@ -845,8 +1692,8 @@ namespace MinecraftLauncher
         public event EventHandler DragRequested;
         // v6.6: reusable on dialogs — zones are width-relative (identical
         // geometry on the 560-wide main form), title/subtitle/min are settable.
-        public string TitleText = "Minecraft 联机助手 v6.20.3";
-        public string SubText = "双隧道版 · 游戏 + 语音";
+        public string TitleText = Txt.TitleText;
+        public string SubText = Txt.SubText;
         public bool ShowMin = true;
         Image _icon;
         int _hover = 0, _down = 0;
@@ -953,11 +1800,11 @@ namespace MinecraftLauncher
 
     class StatusCard : CardPanel
     {
-        public string ServerText = "服务端：未启动";
+        public string ServerText = Txt.ServerText;
         public Color ServerColor = Color.FromArgb(94, 103, 115);
-        public string TunnelText = "SakuraFrp 隧道：未启动";
+        public string TunnelText = Txt.TunnelText;
         public Color TunnelColor = Color.FromArgb(94, 103, 115);
-        public string AddrText = "公网地址：未生成";
+        public string AddrText = Txt.AddrText;
         public Color AddrColor = Color.FromArgb(94, 103, 115);
         public string StateText = "";
         Image _art;
@@ -1600,7 +2447,7 @@ namespace MinecraftLauncher
     // Coordinates scale by Height/290 like StatusCard's Height/148 rule.
     class StatsPanel : Panel
     {
-        public string SrvState = "未启动";
+        public string SrvState = Txt.SrvState;
         public Color SrvStateColor = Pal.Mute;
         public string SrvMem = "—", SrvMemCap = "", SrvCpu = "—", SrvConn = "—";
         public string SrvPlayers = "—";
@@ -1619,7 +2466,7 @@ namespace MinecraftLauncher
             TabStop = false;
             // v6.11: player management entry, sits on the players row
             var mb = new RoundButton();
-            mb.Text = "玩家管理";
+            mb.Text = Txt.MbText;
             mb.SetBounds(392, 120, 80, 24);
             mb.BackColor = Pal.Surface;
             mb.ForeColor = Pal.Text;
@@ -1708,27 +2555,27 @@ namespace MinecraftLauncher
         {
             var g = e.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
-            Header(g, 4, "服务端进程");
-            Row(g, 22, "状态", SrvState, SrvStateColor);
-            Row(g, 40, "内存占用", SrvMem, Pal.Text);
+            Header(g, 4, Txt.OnPaintHeader);
+            Row(g, 22, Txt.OnPaintRow, SrvState, SrvStateColor);
+            Row(g, 40, Txt.OnPaintRow2, SrvMem, Pal.Text);
             Bar(g, 60, SrvMemFrac, SrvMemCap);
             Spark(g, 71);
             Row(g, 86, "CPU", SrvCpu, Pal.Text);
-            Row(g, 104, "玩家连接", SrvConn, Pal.Text);
+            Row(g, 104, Txt.OnPaintRow3, SrvConn, Pal.Text);
             // online player names (from the server log's join/leave lines)
-            TextRenderer.DrawText(g, "在线玩家", Font, new Rectangle(X(16), X(122), X(92), X(21)), Pal.Sub, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
+            TextRenderer.DrawText(g, Txt.OnPaintDrawText, Font, new Rectangle(X(16), X(122), X(92), X(21)), Pal.Sub, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
             TextRenderer.DrawText(g, SrvPlayers, Font, new Rectangle(X(112), X(122), Width - X(212), X(21)), Pal.Text, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine | TextFormatFlags.EndEllipsis);
-            Row(g, 140, "版本 · 延迟", SrvVerPing, Pal.Text);
-            Header(g, 162, "隧道进程（frpc）");
-            Row(g, 180, "内存占用", TunMem, Pal.Text);
+            Row(g, 140, Txt.OnPaintRow4, SrvVerPing, Pal.Text);
+            Header(g, 162, Txt.OnPaintHeader2);
+            Row(g, 180, Txt.OnPaintRow2, TunMem, Pal.Text);
             Row(g, 198, "CPU", TunCpu, Pal.Text);
-            Header(g, 220, "本机");
+            Header(g, 220, Txt.OnPaintHeader3);
             // net row: down/up side by side
-            TextRenderer.DrawText(g, "下行", Font, new Rectangle(X(16), X(238), X(40), X(21)), Pal.Sub, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
+            TextRenderer.DrawText(g, Txt.OnPaintDrawText2, Font, new Rectangle(X(16), X(238), X(40), X(21)), Pal.Sub, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
             TextRenderer.DrawText(g, NetDown, ValFont(), new Rectangle(X(58), X(238), X(150), X(21)), Pal.AddrGreen, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
-            TextRenderer.DrawText(g, "上行", Font, new Rectangle(X(256), X(238), X(40), X(21)), Pal.Sub, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
+            TextRenderer.DrawText(g, Txt.OnPaintDrawText3, Font, new Rectangle(X(256), X(238), X(40), X(21)), Pal.Sub, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
             TextRenderer.DrawText(g, NetUp, ValFont(), new Rectangle(X(298), X(238), X(150), X(21)), Pal.Text, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
-            Row(g, 256, "系统内存", SysMem, Pal.Text);
+            Row(g, 256, Txt.OnPaintRow5, SysMem, Pal.Text);
         }
     }
 
@@ -1847,7 +2694,7 @@ namespace MinecraftLauncher
             if (parts.Count == 0) parts.Add("");
             _paras = parts.ToArray();
             _twoBtn = cancelText != null;
-            if (title.IndexOf("错误") >= 0 || title == "出错" || norm.StartsWith("出了点小问题")) _dotColor = Pal.Danger;
+            if (title.IndexOf(Txt.OnHandleCreatedIndexOf) >= 0 || title == Txt.OnHandleCreatedStr || norm.StartsWith(Txt.Msg)) _dotColor = Pal.Danger;
             else if (_twoBtn) _dotColor = Pal.Amber;
             else _dotColor = InfoBlue;
             InitChrome(title, 440, 200);
@@ -1964,8 +2811,8 @@ namespace MinecraftLauncher
             base.Dispose(disposing);
         }
 
-        public static DialogResult Show(string message) { return Show(message, "Minecraft 联机助手", "确定", null); }
-        public static DialogResult Show(string message, string title) { return Show(message, title, "确定", null); }
+        public static DialogResult Show(string message) { return Show(message, Txt.ShowFriendlyErrorShow, Txt.ShowMsg, null); }
+        public static DialogResult Show(string message, string title) { return Show(message, title, Txt.ShowMsg, null); }
         public static DialogResult Show(string message, string title, string okText, string cancelText)
         {
             using (var f = new InfoBox(message, title, okText, cancelText)) return f.ShowDialog();
@@ -1991,7 +2838,7 @@ namespace MinecraftLauncher
         public PropsForm(string serverDir, bool serverRunning)
         {
             _dir = serverDir; _running = serverRunning;
-            InitChrome("服务器属性", 480, 444);
+            InitChrome(Txt.SettingsFormShow2, 480, 444);
             string pf = System.IO.Path.Combine(_dir, "server.properties");
             bool have = System.IO.File.Exists(pf);
             if (have)
@@ -2010,30 +2857,30 @@ namespace MinecraftLauncher
                 catch { }
             }
             int y = 14;
-            _cbDiff = AddCombo("难度", y, new string[] { "和平", "简单", "普通", "困难" }, new string[] { "peaceful", "easy", "normal", "hard" }, Get("difficulty", "easy")); y += 36;
-            _cbMode = AddCombo("游戏模式", y, new string[] { "生存", "创造", "冒险", "旁观" }, new string[] { "survival", "creative", "adventure", "spectator" }, Get("gamemode", "survival")); y += 36;
-            _tbMax = AddNum("最大玩家数", y, Get("max-players", "20")); y += 36;
-            _tbView = AddNum("视距（区块）", y, Get("view-distance", "10")); y += 36;
-            _tbSim = AddNum("模拟距离（区块）", y, Get("simulation-distance", "10")); y += 36;
-            _tbSpawn = AddNum("出生点保护半径", y, Get("spawn-protection", "16")); y += 36;
-            _tbMotd = AddText("服务器标语 MOTD", y, Get("motd", "A Minecraft Server")); y += 36;
-            _ckWhite = AddCheck("启用白名单（white-list）", y, Get("white-list", "false") == "true"); y += 32;
-            _ckPvp = AddCheck("允许玩家互相攻击（pvp）", y, Get("pvp", "true") == "true"); y += 32;
-            _ckFly = AddCheck("允许飞行（allow-flight）", y, Get("allow-flight", "false") == "true"); y += 36;
+            _cbDiff = AddCombo(Txt.PropsFormAddCombo, y, new string[] { Txt.PropsFormStr, Txt.PropsFormStr2, Txt.PropsFormStr3, Txt.PropsFormStr4 }, new string[] { "peaceful", "easy", "normal", "hard" }, Get("difficulty", "easy")); y += 36;
+            _cbMode = AddCombo(Txt.PropsFormAddCombo2, y, new string[] { Txt.PropsFormStr5, Txt.PropsFormStr6, Txt.PropsFormStr7, Txt.PropsFormStr8 }, new string[] { "survival", "creative", "adventure", "spectator" }, Get("gamemode", "survival")); y += 36;
+            _tbMax = AddNum(Txt.PropsFormAddNum, y, Get("max-players", "20")); y += 36;
+            _tbView = AddNum(Txt.PropsFormAddNum2, y, Get("view-distance", "10")); y += 36;
+            _tbSim = AddNum(Txt.PropsFormAddNum3, y, Get("simulation-distance", "10")); y += 36;
+            _tbSpawn = AddNum(Txt.PropsFormAddNum4, y, Get("spawn-protection", "16")); y += 36;
+            _tbMotd = AddText(Txt.PropsFormAddText, y, Get("motd", "A Minecraft Server")); y += 36;
+            _ckWhite = AddCheck(Txt.PropsFormAddCheck, y, Get("white-list", "false") == "true"); y += 32;
+            _ckPvp = AddCheck(Txt.PropsFormAddCheck2, y, Get("pvp", "true") == "true"); y += 32;
+            _ckFly = AddCheck(Txt.PropsFormAddCheck3, y, Get("allow-flight", "false") == "true"); y += 36;
             var lbOn = new TextLabel();
-            lbOn.Caption = "正版验证：关闭（离线联机必须保持关闭，这里不能改）";
+            lbOn.Caption = Txt.LbOnCaption;
             lbOn.SetBounds(20, y, 440, 22);
             lbOn.ForeColor = Pal.Mute; lbOn.BackColor = Pal.Bg; lbOn.Font = new Font("Microsoft YaHei UI", 9f);
             Controls.Add(lbOn); y += 32;
             var btnSave = new RoundButton();
             btnSave.Primary = true;
-            btnSave.Text = "保存";
+            btnSave.Text = Txt.BtnSaveText;
             btnSave.BackColor = Pal.Green; btnSave.ForeColor = Color.White; btnSave.BackdropColor = Pal.Bg;
             btnSave.SetBounds(240, y, 100, 34);
             btnSave.Click += (s2, e2) => { if (SaveProps()) DialogResult = DialogResult.OK; };
             Controls.Add(btnSave);
             var btnCancel = new RoundButton();
-            btnCancel.Text = "取消";
+            btnCancel.Text = Txt.NoText;
             btnCancel.BackColor = Pal.Surface; btnCancel.ForeColor = Color.White; btnCancel.BackdropColor = Pal.Bg;
             btnCancel.SetBounds(352, y, 100, 34);
             btnCancel.Click += (s2, e2) => { DialogResult = DialogResult.Cancel; };
@@ -2041,7 +2888,7 @@ namespace MinecraftLauncher
             if (!have)
             {
                 btnSave.Enabled = false;
-                InfoBox.Show("在服务端目录里找不到 server.properties。服务端至少成功启动过一次才会生成这个文件。", "服务器属性");
+                InfoBox.Show(Txt.PropsFormShow, Txt.SettingsFormShow2);
             }
             FinishChrome();
         }
@@ -2103,10 +2950,10 @@ namespace MinecraftLauncher
         bool SaveProps()
         {
             int maxp, view, sim, spawn;
-            if (!IntIn(_tbMax.Text, 1, 9999, out maxp)) { InfoBox.Show("最大玩家数要是 1-9999 的数字。", "服务器属性"); return false; }
-            if (!IntIn(_tbView.Text, 2, 32, out view)) { InfoBox.Show("视距要是 2-32 的数字。", "服务器属性"); return false; }
-            if (!IntIn(_tbSim.Text, 2, 32, out sim)) { InfoBox.Show("模拟距离要是 2-32 的数字。", "服务器属性"); return false; }
-            if (!IntIn(_tbSpawn.Text, 0, 9999, out spawn)) { InfoBox.Show("出生点保护半径要是 0-9999 的数字。", "服务器属性"); return false; }
+            if (!IntIn(_tbMax.Text, 1, 9999, out maxp)) { InfoBox.Show(Txt.SavePropsShow, Txt.SettingsFormShow2); return false; }
+            if (!IntIn(_tbView.Text, 2, 32, out view)) { InfoBox.Show(Txt.SavePropsShow2, Txt.SettingsFormShow2); return false; }
+            if (!IntIn(_tbSim.Text, 2, 32, out sim)) { InfoBox.Show(Txt.SavePropsShow3, Txt.SettingsFormShow2); return false; }
+            if (!IntIn(_tbSpawn.Text, 0, 9999, out spawn)) { InfoBox.Show(Txt.SavePropsShow4, Txt.SettingsFormShow2); return false; }
             var set = new System.Collections.Generic.Dictionary<string, string>();
             set["difficulty"] = ((string[])_cbDiff.Tag)[_cbDiff.SelectedIndex];
             set["gamemode"] = ((string[])_cbMode.Tag)[_cbMode.SelectedIndex];
@@ -2138,8 +2985,8 @@ namespace MinecraftLauncher
                 try { System.IO.File.Copy(pf, pf + ".bak", true); } catch { }
                 System.IO.File.WriteAllLines(pf, outLines.ToArray(), new UTF8Encoding(false));
             }
-            catch (Exception ex) { InfoBox.Show("保存失败：" + ex.Message, "服务器属性"); return false; }
-            if (_running) InfoBox.Show("已保存。服务端正在运行，这些设置会在下次开服时生效。", "服务器属性");
+            catch (Exception ex) { InfoBox.Show(Txt.SavePropsShow5 + ex.Message, Txt.SettingsFormShow2); return false; }
+            if (_running) InfoBox.Show(Txt.SavePropsShow6, Txt.SettingsFormShow2);
             return true;
         }
     }
@@ -2161,9 +3008,9 @@ namespace MinecraftLauncher
             System.Collections.Generic.List<string> banned, string me, Action<string> exec)
         {
             _ops = ops; _banned = banned; _me = me; _exec = exec;
-            InitChrome("玩家管理", 460, 372);
+            InitChrome(Txt.MbText, 460, 372);
             var head = new TextLabel();
-            head.Caption = online.Count > 0 ? ("在线玩家（" + online.Count + "）") : "现在没有玩家在线";
+            head.Caption = online.Count > 0 ? (Txt.PlayerFormStr + online.Count + "）") : Txt.PlayerFormStr2;
             head.SetBounds(20, 12, 300, 22);
             head.ForeColor = Pal.Sub; head.BackColor = Pal.Bg;
             head.Font = new Font("Microsoft YaHei UI", 9f, FontStyle.Bold);
@@ -2180,21 +3027,21 @@ namespace MinecraftLauncher
             if (online.Count > 0) _lb.SelectedIndex = 0;
             Controls.Add(_lb);
             int bx = 232, by = 38;
-            _btnTp = AddBtn(bx, by, "传送到我身边", (s2, e2) => { string n = Sel(); if (n != null && _me != null) _exec("tp " + n + " " + _me); }); by += 38;
-            AddBtn(bx, by, "踢出服务器", (s2, e2) => { string n = Sel(); if (n != null && ConfirmDo("把 " + n + " 踢出服务器？")) _exec("kick " + n); }); by += 38;
-            AddBtn(bx, by, "给 OP", (s2, e2) => { string n = Sel(); if (n != null) { _exec("op " + n); if (!_ops.Contains(n)) _ops.Add(n); RefreshLists(); } }); by += 38;
-            AddBtn(bx, by, "取消 OP", (s2, e2) => { string n = Sel(); if (n != null) { _exec("deop " + n); _ops.Remove(n); RefreshLists(); } }); by += 38;
-            AddBtn(bx, by, "封禁", (s2, e2) => { string n = Sel(); if (n != null && ConfirmDo("封禁 " + n + "？封禁后他进不了服务器（可解封）。")) { _exec("ban " + n); if (!_banned.Contains(n)) _banned.Add(n); RefreshLists(); } }); by += 38;
-            AddBtn(bx, by, "解封", (s2, e2) => { string n = Sel(); if (n != null) { _exec("pardon " + n); _banned.Remove(n); RefreshLists(); } });
+            _btnTp = AddBtn(bx, by, Txt.PlayerFormAddBtn, (s2, e2) => { string n = Sel(); if (n != null && _me != null) _exec("tp " + n + " " + _me); }); by += 38;
+            AddBtn(bx, by, Txt.PlayerFormAddBtn2, (s2, e2) => { string n = Sel(); if (n != null && ConfirmDo(Txt.PlayerFormConfirmDo + n + Txt.PlayerFormConfirmDo2)) _exec("kick " + n); }); by += 38;
+            AddBtn(bx, by, Txt.PlayerFormAddBtn3, (s2, e2) => { string n = Sel(); if (n != null) { _exec("op " + n); if (!_ops.Contains(n)) _ops.Add(n); RefreshLists(); } }); by += 38;
+            AddBtn(bx, by, Txt.PlayerFormAddBtn4, (s2, e2) => { string n = Sel(); if (n != null) { _exec("deop " + n); _ops.Remove(n); RefreshLists(); } }); by += 38;
+            AddBtn(bx, by, Txt.PlayerFormAddBtn5, (s2, e2) => { string n = Sel(); if (n != null && ConfirmDo(Txt.PlayerFormConfirmDo3 + n + Txt.PlayerFormConfirmDo4)) { _exec("ban " + n); if (!_banned.Contains(n)) _banned.Add(n); RefreshLists(); } }); by += 38;
+            AddBtn(bx, by, Txt.PlayerFormAddBtn6, (s2, e2) => { string n = Sel(); if (n != null) { _exec("pardon " + n); _banned.Remove(n); RefreshLists(); } });
             if (_me == null && _btnTp != null) { _btnTp.Enabled = false; }
             _lbOps = new TextLabel(); _lbOps.SetBounds(20, 244, 420, 20); _lbOps.ForeColor = Pal.Sub; _lbOps.BackColor = Pal.Bg; _lbOps.Font = new Font("Microsoft YaHei UI", 9f); Controls.Add(_lbOps);
             _lbBanned = new TextLabel(); _lbBanned.SetBounds(20, 268, 420, 20); _lbBanned.ForeColor = Pal.Sub; _lbBanned.BackColor = Pal.Bg; _lbBanned.Font = new Font("Microsoft YaHei UI", 9f); Controls.Add(_lbBanned);
             var hint = new TextLabel();
-            hint.Caption = _me == null ? "提示：你自己不在线时，「传送到我身边」不可用。" : "动作会以控制台指令发给服务端，和在指令框输入一样。";
+            hint.Caption = _me == null ? Txt.PlayerFormStr3 : Txt.PlayerFormStr4;
             hint.SetBounds(20, 292, 420, 20); hint.ForeColor = Pal.Mute; hint.BackColor = Pal.Bg; hint.Font = new Font("Microsoft YaHei UI", 9f);
             Controls.Add(hint);
             var close = new RoundButton();
-            close.Text = "关闭";
+            close.Text = Txt.CloseText;
             close.SetBounds(340, 322, 100, 32);
             close.BackColor = Pal.Surface; close.ForeColor = Color.White; close.BackdropColor = Pal.Bg;
             close.Font = new Font("Microsoft YaHei UI", 9f);
@@ -2222,8 +3069,8 @@ namespace MinecraftLauncher
         }
         void RefreshLists()
         {
-            if (_lbOps != null) _lbOps.Caption = "OP 名单：" + (_ops.Count > 0 ? string.Join("、", _ops.ToArray()) : "（无）");
-            if (_lbBanned != null) _lbBanned.Caption = "封禁名单：" + (_banned.Count > 0 ? string.Join("、", _banned.ToArray()) : "（无）");
+            if (_lbOps != null) _lbOps.Caption = Txt.LbOpsCaption + (_ops.Count > 0 ? string.Join("、", _ops.ToArray()) : Txt.RefreshListsStr);
+            if (_lbBanned != null) _lbBanned.Caption = Txt.LbBannedCaption + (_banned.Count > 0 ? string.Join("、", _banned.ToArray()) : Txt.RefreshListsStr);
         }
     }
 
@@ -2459,7 +3306,7 @@ namespace MinecraftLauncher
         {
             try { ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12; } catch { }
             var wc = new WebClient();
-            wc.Headers[HttpRequestHeader.UserAgent] = "MCLauncherApp/6.20.3";
+            wc.Headers[HttpRequestHeader.UserAgent] = "MCLauncherApp/6.21";
             wc.Encoding = Encoding.UTF8;
             return wc;
         }
@@ -2661,10 +3508,10 @@ namespace MinecraftLauncher
         public WizardForm(Config cfg, string initialDir)
         {
             _cfg = cfg;
-            InitChrome("首次设置向导", 660, 612);
+            InitChrome(Txt.WizardFormInitChrome, 660, 612);
 
             int lx = 20, tx = 170;
-            AddLabel("Minecraft 版本", lx, 18);
+            AddLabel(Txt.WizardFormAddLabel, lx, 18);
             cbVersion = new ComboBox();
             cbVersion.DropDownStyle = ComboBoxStyle.DropDown;
             cbVersion.Items.AddRange(new object[] { "1.20.1", "1.21.1", "1.21.11", "1.21.4", "1.20.4", "1.20.6", "1.19.4", "1.18.2" });
@@ -2675,15 +3522,15 @@ namespace MinecraftLauncher
             cbVersion.ForeColor = Color.White;
             Controls.Add(cbVersion);
             ThemedCombo.Attach(cbVersion);
-            AddHint("可手填任意正式版版本号", tx + 308, 18);
+            AddHint(Txt.WizardFormAddHint, tx + 308, 18);
 
-            AddLabel("服务端类型", lx, 56);
-            rbVanilla = AddRadio("原版", tx, 54);
+            AddLabel(Txt.WizardFormAddLabel2, lx, 56);
+            rbVanilla = AddRadio(Txt.WizardFormAddRadio, tx, 54);
             rbFabric = AddRadio("Fabric", tx + 90, 54);
             rbPaper = AddRadio("Paper", tx + 180, 54);
             rbFabric.Checked = true;
 
-            AddLabel("服务端目录", lx, 94);
+            AddLabel(Txt.WizardFormAddLabel3, lx, 94);
             tbDir = new TextBox();
             tbDir.SetBounds(tx, 90, 340, 26);
             tbDir.BackColor = Pal.Surface;
@@ -2692,7 +3539,7 @@ namespace MinecraftLauncher
             tbDir.Text = string.IsNullOrEmpty(initialDir) ? "D:\\MCServer" : initialDir;
             Controls.Add(tbDir);
             var btnBrowse = new RoundButton();
-            btnBrowse.Text = "浏览…";
+            btnBrowse.Text = Txt.BtnBrowseText;
             btnBrowse.BackColor = Pal.Surface;
             btnBrowse.ForeColor = Color.White;
             btnBrowse.BackdropColor = Pal.Bg;
@@ -2701,7 +3548,7 @@ namespace MinecraftLauncher
             {
                 using (var fbd = new FolderBrowserDialog())
                 {
-                    fbd.Description = "选择服务端文件夹（不存在也可以，先选一个父目录再改路径文字）";
+                    fbd.Description = Txt.Description;
                     if (Directory.Exists(tbDir.Text.Trim())) fbd.SelectedPath = tbDir.Text.Trim();
                     if (fbd.ShowDialog(this) == DialogResult.OK) tbDir.Text = fbd.SelectedPath;
                 }
@@ -2709,24 +3556,24 @@ namespace MinecraftLauncher
             Controls.Add(btnBrowse);
 
             chkEula = new CheckBox();
-            chkEula.Text = "我同意 Minecraft EULA";
+            chkEula.Text = Txt.ChkEulaText;
             chkEula.ForeColor = Color.White;
             chkEula.BackColor = Color.Transparent;
-            chkEula.SetBounds(tx, 128, 190, 24);
+            chkEula.SetBounds(tx, 128, Txt.EulaAgreeWidth, 24);
             Controls.Add(chkEula);
             var lnkEula = new LinkLabel();
-            lnkEula.Text = "查看 EULA 全文";
+            lnkEula.Text = Txt.LnkEulaText;
             lnkEula.LinkColor = Color.FromArgb(120, 180, 255);
             lnkEula.ActiveLinkColor = Color.FromArgb(160, 200, 255);
             lnkEula.BackColor = Color.Transparent;
-            lnkEula.SetBounds(tx + 190, 130, 120, 24);
+            lnkEula.SetBounds(tx + Txt.EulaLinkDx, 130, 120, 24);
             lnkEula.LinkClicked += (s, e) => { try { Process.Start("https://www.minecraft.net/en-us/eula"); } catch { } };
             Controls.Add(lnkEula);
-            AddHint("不勾选也能装，但首次开服前要自己把 eula.txt 改成 eula=true", tx, 154);
+            AddHint(Txt.WizardFormAddHint2, tx, 154);
 
             lblStep = new TextLabel();
             lblStep.TopAlign = true;
-            lblStep.Caption = "填好上面三项，点「开始安装」。Java 和服务端都会自动下好并校验。";
+            lblStep.Caption = Txt.LblStepCaption;
             lblStep.TextShiftX = 2f; lblStep.TextShiftY = -0.67f;
             lblStep.SetBounds(20, 186, 620, 24);
             lblStep.BackColor = Color.Transparent; lblStep.BackdropColor = Pal.Bg; lblStep.ForeColor = Pal.Sub;
@@ -2749,7 +3596,7 @@ namespace MinecraftLauncher
 
             btnStart = new RoundButton();
             btnStart.Primary = true;
-            btnStart.Text = "开始安装";
+            btnStart.Text = Txt.BtnStartText;
             btnStart.BackColor = Pal.Green;
             btnStart.ForeColor = Color.White;
             btnStart.BackdropColor = Pal.Bg;
@@ -2758,7 +3605,7 @@ namespace MinecraftLauncher
             Controls.Add(btnStart);
 
             btnCancelDl = new RoundButton();
-            btnCancelDl.Text = "取消";
+            btnCancelDl.Text = Txt.NoText;
             btnCancelDl.BackColor = Pal.Surface;
             btnCancelDl.ForeColor = Color.White;
             btnCancelDl.BackdropColor = Pal.Bg;
@@ -2768,12 +3615,12 @@ namespace MinecraftLauncher
             {
                 _cancel = true;
                 try { if (_wc != null) _wc.CancelAsync(); } catch { }
-                WizLog("正在取消…");
+                WizLog(Txt.WizardFormWizLog);
             };
             Controls.Add(btnCancelDl);
 
             btnClose = new RoundButton();
-            btnClose.Text = "关闭";
+            btnClose.Text = Txt.CloseText;
             btnClose.BackColor = Pal.Surface;
             btnClose.ForeColor = Color.White;
             btnClose.BackdropColor = Pal.Bg;
@@ -2868,18 +3715,18 @@ namespace MinecraftLauncher
             _dir = tbDir.Text.Trim();
             _type = rbPaper.Checked ? 2 : (rbFabric.Checked ? 1 : 0);
             _eulaAgreed = chkEula.Checked;
-            if (_ver.Length == 0) { InfoBox.Show("先填 Minecraft 版本。", "首次设置向导"); return; }
-            if (McJava.ParseMcVersion(_ver) == null) { InfoBox.Show("版本号格式不对，请填正式版版本号，例如 1.20.1（快照版暂不支持向导）。", "首次设置向导"); return; }
-            if (_dir.Length == 0) { InfoBox.Show("先填服务端目录。", "首次设置向导"); return; }
+            if (_ver.Length == 0) { InfoBox.Show(Txt.StartInstallShow, Txt.WizardFormInitChrome); return; }
+            if (McJava.ParseMcVersion(_ver) == null) { InfoBox.Show(Txt.StartInstallShow2, Txt.WizardFormInitChrome); return; }
+            if (_dir.Length == 0) { InfoBox.Show(Txt.StartInstallShow3, Txt.WizardFormInitChrome); return; }
             string existingJar = Path.Combine(_dir, "server.jar");
             if (File.Exists(existingJar))
             {
-                var r = InfoBox.Show("目标目录里已经有 server.jar，继续会覆盖它。\n\n存档和 mods 不受影响（向导只换 jar 并补缺失文件）。确定继续？", "首次设置向导", "覆盖并继续", "取消");
+                var r = InfoBox.Show(Txt.StartInstallShow4, Txt.WizardFormInitChrome, Txt.StartInstallShow5, Txt.NoText);
                 if (r != DialogResult.OK) return;
             }
             _cancel = false;
             SetRunningUi(true);
-            WizLog("—— 开始安装：Minecraft " + _ver + " / " + (_type == 2 ? "Paper" : (_type == 1 ? "Fabric" : "原版")) + " → " + _dir);
+            WizLog(Txt.StartInstallWizLog + _ver + " / " + (_type == 2 ? "Paper" : (_type == 1 ? "Fabric" : Txt.WizardFormAddRadio)) + Txt.StartInstallPart + _dir);
             var t = new Thread(Run);
             t.IsBackground = true;
             t.Start();
@@ -2891,18 +3738,18 @@ namespace MinecraftLauncher
             {
                 int[] vp = McJava.ParseMcVersion(_ver);
                 int required = McJava.RequiredJava(_ver);
-                if (required <= 0) { Fail("无法判断 Minecraft " + _ver + " 需要的 Java 版本，向导中止（没有改动任何文件）。"); return; }
-                if (vp != null && vp[0] >= 26) WizLog("提示：26.x 是 Mojang 的新年份版本号，官方要求的 Java 可能高于本向导按 21 的估算，装好后请留意服务端日志。");
+                if (required <= 0) { Fail(Txt.RunFail + _ver + Txt.RunFail2); return; }
+                if (vp != null && vp[0] >= 26) WizLog(Txt.RunWizLog);
 
                 // ---- Step 1: a suitable Java ----
-                WizStep("第 1 步：准备 Java " + required);
+                WizStep(Txt.RunWizStep + required);
                 string javaExe = null;
                 int cfgMajor = 0;
                 if (!string.IsNullOrEmpty(_cfg.JavaPath) && File.Exists(_cfg.JavaPath)) cfgMajor = McJava.GetJavaMajor(_cfg.JavaPath);
                 if (cfgMajor >= required)
                 {
                     javaExe = _cfg.JavaPath;
-                    WizLog("已配置的 Java 大版本为 " + cfgMajor + "，满足要求，直接使用：" + javaExe);
+                    WizLog(Txt.RunWizLog2 + cfgMajor + Txt.RunWizLog3 + javaExe);
                 }
                 if (javaExe == null)
                 {
@@ -2912,7 +3759,7 @@ namespace MinecraftLauncher
                     if (found != null && McJava.GetJavaMajor(found) >= required)
                     {
                         javaExe = found;
-                        WizLog("使用程序旁已下载的 Java：" + javaExe);
+                        WizLog(Txt.RunWizLog4 + javaExe);
                     }
                 }
                 if (javaExe == null)
@@ -2920,7 +3767,7 @@ namespace MinecraftLauncher
                     if (_cancel) { Cancelled(); return; }
                     if (required != 17 && required != 21)
                     {
-                        Fail("Minecraft " + _ver + " 需要 Java " + required + "，本向导只能自动下载 Java 17 / 21。请先手动安装 Java " + required + "，在「设置」里指定 java.exe 路径后再开服。");
+                        Fail("Minecraft " + _ver + Txt.RunFail3 + required + Txt.RunFail4 + required + Txt.RunFail5);
                         return;
                     }
                     string baseDir = AppDomain.CurrentDomain.BaseDirectory;
@@ -2942,122 +3789,122 @@ namespace MinecraftLauncher
                     {
                         link = "https://api.adoptium.net/v3/binary/latest/" + required + "/ga/windows/x64/jre/hotspot/normal/eclipse";
                         checksum = null;
-                        WizLog("Adoptium 资产接口没取到直链（" + (metaErr ?? "无详情") + "），改用官方二进制接口下载；该接口不提供哈希，本次 Java 下载不做哈希校验。");
+                        WizLog(Txt.RunWizLog5 + (metaErr ?? Txt.RunStr) + Txt.RunPart);
                     }
-                    WizLog("下载 Java " + required + "（Eclipse Temurin JRE，约 40–50 MB）…");
+                    WizLog(Txt.RunWizLog6 + required + Txt.RunWizLog7);
                     string dlErr = DownloadWithProgress(link, zipPath, "Java " + required);
                     if (dlErr == "cancelled") { Cancelled(); return; }
-                    if (dlErr != null) { Fail("Java 下载失败：" + dlErr); return; }
+                    if (dlErr != null) { Fail(Txt.RunFail6 + dlErr); return; }
                     if (checksum != null)
                     {
-                        WizLog("校验 Java 压缩包 SHA256…");
+                        WizLog(Txt.RunWizLog8);
                         string actual = DlUtil.Sha256File(zipPath);
                         if (!string.Equals(actual, checksum, StringComparison.OrdinalIgnoreCase))
                         {
                             DlUtil.TryDelete(zipPath);
-                            Fail("Java 压缩包 SHA256 校验不通过，已删除下载文件。期望 " + checksum + "，实际 " + actual + "。请检查网络后重试。");
+                            Fail(Txt.RunFail7 + checksum + Txt.RunFail8 + actual + Txt.RunFail9);
                             return;
                         }
-                        WizLog("SHA256 校验通过。");
+                        WizLog(Txt.RunWizLog9);
                     }
                     string destDir = Path.Combine(javaRoot, required.ToString());
-                    WizLog("解压 Java 到 " + destDir + " …");
+                    WizLog(Txt.RunWizLog10 + destDir + Txt.RunWizLog11);
                     string exErr = DlUtil.ExtractZip(zipPath, destDir);
                     DlUtil.TryDelete(zipPath);
-                    if (exErr != null) { Fail("Java 解压失败：" + exErr); return; }
+                    if (exErr != null) { Fail(Txt.RunFail10 + exErr); return; }
                     javaExe = DlUtil.FindJavaExe(destDir);
-                    if (javaExe == null) { Fail("Java 解压完成但没找到 bin\\java.exe，目录结构异常，已中止（未写入配置）。"); return; }
+                    if (javaExe == null) { Fail(Txt.RunFail11); return; }
                     int got = McJava.GetJavaMajor(javaExe);
-                    if (got < required) { Fail("下载到的 Java 大版本是 " + got + "，仍低于需要的 " + required + "，已中止（未写入配置）。"); return; }
-                    WizLog("Java 就绪：大版本 " + got + "，" + javaExe);
+                    if (got < required) { Fail(Txt.RunFail12 + got + Txt.RunFail13 + required + Txt.RunFail14); return; }
+                    WizLog(Txt.RunWizLog12 + got + Txt.RunWizLog13 + javaExe);
                 }
                 if (_cancel) { Cancelled(); return; }
 
                 // ---- Step 2: the server jar ----
-                WizStep("第 2 步：下载服务端 jar");
+                WizStep(Txt.RunWizStep2);
                 Directory.CreateDirectory(_dir);
                 string jarDest = Path.Combine(_dir, "server.jar");
                 if (_type == 0)
                 {
                     string err;
                     string manifest = DlUtil.DownloadStringTimed("https://piston-meta.mojang.com/mc/game/version_manifest_v2.json", 30, out err);
-                    if (manifest == null) { Fail("拿不到 Mojang 版本清单：" + err); return; }
+                    if (manifest == null) { Fail(Txt.RunFail15 + err); return; }
                     int vi = DlUtil.JsonIndexOf(manifest, "\"id\"\\s*:\\s*\"" + Regex.Escape(_ver) + "\"");
                     string verUrl = vi >= 0 ? DlUtil.JsonStrAfter(manifest, vi, "url") : null;
-                    if (verUrl == null) { Fail("版本清单里没有 Minecraft " + _ver + "（请确认版本号无误、且是正式版）。"); return; }
+                    if (verUrl == null) { Fail(Txt.RunFail16 + _ver + Txt.RunFail17); return; }
                     string verJson = DlUtil.DownloadStringTimed(verUrl, 30, out err);
-                    if (verJson == null) { Fail("拿不到 " + _ver + " 的版本元数据：" + err); return; }
+                    if (verJson == null) { Fail(Txt.RunFail18 + _ver + Txt.RunFail19 + err); return; }
                     int si = DlUtil.JsonIndexOf(verJson, "\"server\"\\s*:\\s*\\{");
                     string jarUrl = si >= 0 ? DlUtil.JsonStrAfter(verJson, si, "url") : null;
                     string sha1 = si >= 0 ? DlUtil.JsonStrAfter(verJson, si, "sha1") : null;
-                    if (jarUrl == null) { Fail("版本元数据里没有服务端下载地址。"); return; }
-                    WizLog("下载原版服务端（Mojang 官方）…");
-                    string dlErr = DownloadWithProgress(jarUrl, jarDest, "原版服务端");
+                    if (jarUrl == null) { Fail(Txt.RunFail20); return; }
+                    WizLog(Txt.RunWizLog14);
+                    string dlErr = DownloadWithProgress(jarUrl, jarDest, Txt.RunDownloadWithProgress);
                     if (dlErr == "cancelled") { Cancelled(); return; }
-                    if (dlErr != null) { Fail("服务端下载失败：" + dlErr); return; }
+                    if (dlErr != null) { Fail(Txt.RunFail21 + dlErr); return; }
                     if (sha1 != null)
                     {
-                        WizLog("校验服务端 SHA1…");
+                        WizLog(Txt.RunWizLog15);
                         string actual = DlUtil.Sha1File(jarDest);
                         if (!string.Equals(actual, sha1, StringComparison.OrdinalIgnoreCase))
                         {
                             DlUtil.TryDelete(jarDest);
-                            Fail("服务端 SHA1 校验不通过，已删除 jar。期望 " + sha1 + "，实际 " + actual + "。请检查网络后重试。");
+                            Fail(Txt.RunFail22 + sha1 + Txt.RunFail8 + actual + Txt.RunFail9);
                             return;
                         }
-                        WizLog("SHA1 校验通过。");
+                        WizLog(Txt.RunWizLog16);
                     }
                 }
                 else if (_type == 1)
                 {
                     string err;
                     string loaders = DlUtil.DownloadStringTimed("https://meta.fabricmc.net/v2/versions/loader/" + _ver, 30, out err);
-                    if (loaders == null) { Fail("拿不到 Fabric Loader 列表：" + err); return; }
+                    if (loaders == null) { Fail(Txt.RunFail23 + err); return; }
                     string loader = DlUtil.FirstStableVersion(loaders);
-                    if (loader == null) { Fail("Fabric 还没有适配 Minecraft " + _ver + " 的稳定版 Loader，请换一个版本。"); return; }
+                    if (loader == null) { Fail(Txt.RunFail24 + _ver + Txt.RunFail25); return; }
                     string installers = DlUtil.DownloadStringTimed("https://meta.fabricmc.net/v2/versions/installer", 30, out err);
-                    if (installers == null) { Fail("拿不到 Fabric Installer 列表：" + err); return; }
+                    if (installers == null) { Fail(Txt.RunFail26 + err); return; }
                     string installer = DlUtil.FirstStableVersion(installers);
-                    if (installer == null) { Fail("Fabric Installer 列表异常。"); return; }
+                    if (installer == null) { Fail(Txt.RunFail27); return; }
                     string jarUrl = "https://meta.fabricmc.net/v2/versions/loader/" + _ver + "/" + loader + "/" + installer + "/server/jar";
-                    WizLog("下载 Fabric 服务端启动 jar（Loader " + loader + "，Installer " + installer + "）…");
-                    WizLog("注意：Fabric 官方不发布该 jar 的哈希校验值，本文件只能靠 HTTPS 传输，未做哈希校验。首次开服时它还会再下载原版服务端与库文件。");
-                    string dlErr = DownloadWithProgress(jarUrl, jarDest, "Fabric 服务端");
+                    WizLog(Txt.RunWizLog17 + loader + Txt.RunWizLog18 + installer + Txt.RunWizLog19);
+                    WizLog(Txt.RunWizLog20);
+                    string dlErr = DownloadWithProgress(jarUrl, jarDest, Txt.RunDownloadWithProgress2);
                     if (dlErr == "cancelled") { Cancelled(); return; }
-                    if (dlErr != null) { Fail("Fabric 服务端下载失败：" + dlErr); return; }
+                    if (dlErr != null) { Fail(Txt.RunFail28 + dlErr); return; }
                     try { Directory.CreateDirectory(Path.Combine(_dir, "mods")); } catch { }
-                    WizLog("已建 mods 文件夹。提醒：Fabric 服务端要装 mod 还需要 Fabric API（放进 mods），语音等双端 mod 每个玩家客户端也要装。");
+                    WizLog(Txt.RunWizLog21);
                 }
                 else
                 {
                     string err;
                     string builds = DlUtil.DownloadStringTimed("https://fill.papermc.io/v3/projects/paper/versions/" + _ver + "/builds", 30, out err);
-                    if (builds == null) { Fail("拿不到 Paper 构建列表（Fill API）：" + err + "。注意：Paper 不支持的版本会返回错误，请确认该版本有 Paper。"); return; }
+                    if (builds == null) { Fail(Txt.RunFail29 + err + Txt.RunFail30); return; }
                     int si = DlUtil.JsonIndexOf(builds, "\"server:default\"");
                     string jarUrl = si >= 0 ? DlUtil.JsonStrAfter(builds, si, "url") : null;
                     string sha256 = si >= 0 ? DlUtil.JsonStrAfter(builds, si, "sha256") : null;
-                    if (jarUrl == null) { Fail("Paper 构建列表里没找到可下载的服务端。"); return; }
-                    WizLog("下载 Paper 服务端（最新构建）…");
-                    string dlErr = DownloadWithProgress(jarUrl, jarDest, "Paper 服务端");
+                    if (jarUrl == null) { Fail(Txt.RunFail31); return; }
+                    WizLog(Txt.RunWizLog22);
+                    string dlErr = DownloadWithProgress(jarUrl, jarDest, Txt.RunDownloadWithProgress3);
                     if (dlErr == "cancelled") { Cancelled(); return; }
-                    if (dlErr != null) { Fail("Paper 服务端下载失败：" + dlErr); return; }
+                    if (dlErr != null) { Fail(Txt.RunFail32 + dlErr); return; }
                     if (sha256 != null)
                     {
-                        WizLog("校验服务端 SHA256…");
+                        WizLog(Txt.RunWizLog23);
                         string actual = DlUtil.Sha256File(jarDest);
                         if (!string.Equals(actual, sha256, StringComparison.OrdinalIgnoreCase))
                         {
                             DlUtil.TryDelete(jarDest);
-                            Fail("服务端 SHA256 校验不通过，已删除 jar。期望 " + sha256 + "，实际 " + actual + "。请检查网络后重试。");
+                            Fail(Txt.RunFail33 + sha256 + Txt.RunFail8 + actual + Txt.RunFail9);
                             return;
                         }
-                        WizLog("SHA256 校验通过。");
+                        WizLog(Txt.RunWizLog9);
                     }
                 }
                 if (_cancel) { Cancelled(); return; }
 
                 // ---- Step 3: starter files ----
-                WizStep("第 3 步：写入初始文件");
+                WizStep(Txt.RunWizStep3);
                 string eulaPath = Path.Combine(_dir, "eula.txt");
                 if (_eulaAgreed)
                 {
@@ -3065,11 +3912,11 @@ namespace MinecraftLauncher
                         "#By changing the setting below to TRUE you are indicating your agreement to our EULA (https://aka.ms/MinecraftEULA).\r\n" +
                         "#" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "\r\n" +
                         "eula=true\r\n", Encoding.UTF8);
-                    WizLog("已写入 eula.txt（eula=true，按你勾选的同意）。");
+                    WizLog(Txt.RunWizLog24);
                 }
                 else
                 {
-                    WizLog("未勾选同意 EULA：没有写 eula.txt。首次开服时服务端会生成 eula=false 并自动退出，把它改成 eula=true 后再开服。");
+                    WizLog(Txt.RunWizLog25);
                 }
                 string propsPath = Path.Combine(_dir, "server.properties");
                 if (!File.Exists(propsPath))
@@ -3079,28 +3926,28 @@ namespace MinecraftLauncher
                         "#generated by MCLauncherApp first-run wizard\r\n" +
                         "server-port=25565\r\n" +
                         "online-mode=false\r\n", Encoding.UTF8);
-                    WizLog("已写入 server.properties：server-port=25565，online-mode=false（离线联机必须关正版验证）。");
+                    WizLog(Txt.RunWizLog26);
                 }
                 else
                 {
-                    WizLog("目录里已有 server.properties，未改动它。请自行确认 online-mode=false，否则离线账号进不来。");
+                    WizLog(Txt.RunWizLog27);
                 }
 
                 // ---- Step 4: save config ----
-                WizStep("第 4 步：保存设置");
+                WizStep(Txt.RunWizStep4);
                 _cfg.ServerDir = _dir;
                 _cfg.JarName = "server.jar";
                 if (javaExe != null) _cfg.JavaPath = javaExe;
                 _cfg.Save();
                 InstalledOk = true;
-                WizLog("完成！服务端目录：" + _dir + "；jar：server.jar；Java：" + (javaExe ?? "（沿用原配置）"));
-                WizLog("关掉向导后，先到「设置」里填 SakuraFrp 访问密钥和隧道 ID，再点「一键启动联机」。");
-                WizStep("安装完成");
+                WizLog(Txt.RunWizLog28 + _dir + Txt.RunWizLog29 + (javaExe ?? Txt.RunStr2));
+                WizLog(Txt.RunWizLog30);
+                WizStep(Txt.RunWizStep5);
                 SetRunningUi(false);
             }
             catch (Exception ex)
             {
-                Fail("向导出错：" + ex.Message);
+                Fail(Txt.RunFail34 + ex.Message);
             }
         }
 
@@ -3117,7 +3964,7 @@ namespace MinecraftLauncher
                         {
                             lastPct = pct;
                             WizProgress(pct);
-                            if (pct >= 0) WizStep("下载" + label + "…" + pct + "%");
+                            if (pct >= 0) WizStep(Txt.DownloadWithProgressWizStep + label + Txt.DownloadWithProgressWizStep2 + pct + "%");
                         }
                     },
                     () => _cancel);
@@ -3129,15 +3976,15 @@ namespace MinecraftLauncher
 
         void Fail(string msg)
         {
-            WizLog("失败：" + msg);
-            WizStep("已停止");
+            WizLog(Txt.FailWizLog + msg);
+            WizStep(Txt.FailWizStep);
             SetRunningUi(false);
         }
 
         void Cancelled()
         {
-            WizLog("已取消。未写入配置；已完整下载好的文件保留在目标目录，半成品已清理。");
-            WizStep("已取消");
+            WizLog(Txt.CancelledWizLog);
+            WizStep(Txt.CancelledWizStep);
             SetRunningUi(false);
         }
     }
@@ -3154,6 +4001,11 @@ namespace MinecraftLauncher
         private readonly AnimFloat _logFade = new AnimFloat(1);
         private TextBox tbCmd;
         private RoundButton btnCmdSend;
+        // v6.21: spark 性能诊断入口（TPS 报告 + 30 秒 profiler）
+        private TextLabel sparkLbl;
+        private RoundButton btnSparkTps, btnSparkProfile;
+        private System.Windows.Forms.Timer _sparkTimer;
+        private bool _profiling = false;
         // v6.6: slim overlay scrollbars + jump-to-bottom chip + command history
         private SlimScrollBar sbSrvV, sbSrvH, sbTunV, sbTunH;
         private RoundButton btnJumpBottom;
@@ -3239,7 +4091,7 @@ namespace MinecraftLauncher
             InitTray613();
             CleanupOldLogs613();
             if (_cfg.LastTab > 0 && segLog != null) segLog.Restore613(_cfg.LastTab);
-            AppendServerLog("[启动器] 已启动，日志同步保存在程序目录的 logs 文件夹中（保留 14 天）。");
+            AppendServerLog(Txt.MainFormAppendServerLog);
         }
 
         // v6.13: tray icon - tooltip mirrors server state; double-click or
@@ -3258,11 +4110,11 @@ namespace MinecraftLauncher
                 }
                 catch { }
                 if (_tray.Icon == null) _tray.Icon = SystemIcons.Application;
-                _tray.Text = "Minecraft 联机助手 · 已停止";
+                _tray.Text = Txt.TrayText;
                 var menu = new ContextMenuStrip();
-                var miShow = new ToolStripMenuItem("显示主窗口");
+                var miShow = new ToolStripMenuItem(Txt.InitTray613ToolStripMenuItem);
                 miShow.Click += (s2, e2) => { try { Show(); WindowState = FormWindowState.Normal; Activate(); } catch { } };
-                var miExit = new ToolStripMenuItem("安全退出");
+                var miExit = new ToolStripMenuItem(Txt.InitTray613ToolStripMenuItem2);
                 miExit.Click += (s2, e2) => { try { Close(); } catch { } };
                 menu.Items.Add(miShow);
                 menu.Items.Add(miExit);
@@ -3523,7 +4375,7 @@ namespace MinecraftLauncher
 
         void BuildUi()
         {
-            Text = "Minecraft 联机助手 v6.20.3";
+            Text = Txt.TitleText;
             StartPosition = FormStartPosition.CenterScreen;
             BackColor = Pal.Bg;
             ForeColor = Pal.Text;
@@ -3553,7 +4405,7 @@ namespace MinecraftLauncher
             btnStart = new RoundButton();
             btnStart.Primary = true;
             btnStart.Radius = 8;
-            btnStart.Text = "一键启动联机";
+            btnStart.Text = Txt.BtnStartText2;
             btnStart.SetBounds(20, 220, 520, 52);
             btnStart.BackColor = Pal.Green;
             btnStart.ForeColor = Color.White;
@@ -3565,7 +4417,7 @@ namespace MinecraftLauncher
             var addrLbl = new TextLabel();
             addrLbl.BackdropColor = Pal.Bg;
             addrLbl.TopAlign = true;
-            addrLbl.Caption = "公网地址（发给朋友）：";
+            addrLbl.Caption = Txt.AddrLblCaption;
             addrLbl.TextShiftX = 1.33f; addrLbl.TextShiftY = -0.67f;
             addrLbl.SetBounds(20, 290, 220, 18);
             addrLbl.BackColor = Color.Transparent;
@@ -3578,7 +4430,7 @@ namespace MinecraftLauncher
             Controls.Add(addrInset);
 
             tbAddr = new HintTextBox();
-            tbAddr.Hint = "隧道启动后，公网地址会显示在这里";
+            tbAddr.Hint = Txt.Hint;
             tbAddr.SetBounds(12, 10, 368, 22);
             tbAddr.BackColor = Pal.Inset;
             tbAddr.ForeColor = Pal.AddrGreen;
@@ -3590,7 +4442,7 @@ namespace MinecraftLauncher
             addrInset.Controls.Add(tbAddr);
 
             btnCopy = new RoundButton();
-            btnCopy.Text = "复制地址发给朋友";
+            btnCopy.Text = Txt.BtnCopyText;
             btnCopy.SetBounds(420, 314, 120, 38);
             btnCopy.BackColor = Pal.Surface;
             btnCopy.ForeColor = Color.White;
@@ -3600,7 +4452,7 @@ namespace MinecraftLauncher
 
             // ---- 次要按钮（等宽三列） ----
             btnPcl2 = new RoundButton();
-            btnPcl2.Text = "打开 PCL2";
+            btnPcl2.Text = Txt.BtnPcl2Text;
             btnPcl2.SetBounds(20, 368, 168, 38);
             btnPcl2.BackColor = Pal.Surface;
             btnPcl2.ForeColor = Color.White;
@@ -3609,7 +4461,7 @@ namespace MinecraftLauncher
 
             btnStop = new RoundButton();
             btnStop.DangerHover = true;
-            btnStop.Text = "安全关服";
+            btnStop.Text = Txt.BtnStopText;
             btnStop.SetBounds(196, 368, 168, 38);
             btnStop.BackColor = Pal.Surface;
             btnStop.ForeColor = Color.White;
@@ -3624,7 +4476,7 @@ namespace MinecraftLauncher
             Controls.Add(btnStop);
 
             btnSettings = new RoundButton();
-            btnSettings.Text = "设置";
+            btnSettings.Text = Txt.SettingsFormInitChrome;
             btnSettings.SetBounds(372, 368, 168, 38);
             btnSettings.BackColor = Pal.Surface;
             btnSettings.ForeColor = Color.White;
@@ -3637,7 +4489,7 @@ namespace MinecraftLauncher
             Controls.Add(logPanel);
 
             logToggleLbl = new TextLabel();
-            logToggleLbl.Caption = "▾  日志";
+            logToggleLbl.Caption = Txt.LogToggleLblCaption;
             logToggleLbl.TextShiftX = -0.67f;
             logToggleLbl.SetBounds(16, 10, 120, 32);
             logToggleLbl.BackColor = Pal.Card;
@@ -3653,39 +4505,39 @@ namespace MinecraftLauncher
             segLog = new SegControl();
             segLog.SetBounds(216, 10, 288, 32);
             segLog.Font = new Font("Microsoft YaHei UI", 9f);
-            segLog.Items = new string[] { "服务端日志", "隧道日志", "状态监控", "备份" };
+            segLog.Items = new string[] { Txt.BuildUiStr, Txt.BuildUiStr2, Txt.BuildUiStr3, Txt.BuildUiStr4 };
             segLog.Changed += (s, e) => ShowLogPage();
             logPanel.Controls.Add(segLog);
 
             logInset = new InsetPanel();
-            logInset.SetBounds(16, 86, 488, 208);
+            logInset.SetBounds(16, 86, 488, 166);
             logInset.BackdropColor = Pal.Card;
             logPanel.Controls.Add(logInset);
 
-            tbServerLog = MakeLogBox("暂无日志 · 服务端输出会显示在这里");
-            tbServerLog.SetBounds(8, 6, 472, 196);
+            tbServerLog = MakeLogBox(Txt.BuildUiMakeLogBox);
+            tbServerLog.SetBounds(8, 6, 472, 154);
             logInset.Controls.Add(tbServerLog);
 
-            tbTunnelLog = MakeLogBox("暂无日志 · 隧道输出会显示在这里");
-            tbTunnelLog.SetBounds(8, 6, 472, 196);
+            tbTunnelLog = MakeLogBox(Txt.BuildUiMakeLogBox2);
+            tbTunnelLog.SetBounds(8, 6, 472, 154);
             tbTunnelLog.Visible = false;
             logInset.Controls.Add(tbTunnelLog);
 
             // v6.6: slim overlay scrollbars (vertical overlays the box's right
             // edge; horizontal along its bottom) + jump-to-bottom chip
-            sbSrvV = new SlimScrollBar(); sbSrvV.Target = tbServerLog; sbSrvV.SetBounds(472, 6, 8, 188);
-            sbSrvH = new SlimScrollBar(); sbSrvH.Horizontal = true; sbSrvH.Target = tbServerLog; sbSrvH.MaxChars = () => _maxCharsSrv; sbSrvH.SetBounds(8, 194, 464, 8);
-            sbTunV = new SlimScrollBar(); sbTunV.Target = tbTunnelLog; sbTunV.SetBounds(472, 6, 8, 188);
-            sbTunH = new SlimScrollBar(); sbTunH.Horizontal = true; sbTunH.Target = tbTunnelLog; sbTunH.MaxChars = () => _maxCharsTun; sbTunH.SetBounds(8, 194, 464, 8);
+            sbSrvV = new SlimScrollBar(); sbSrvV.Target = tbServerLog; sbSrvV.SetBounds(472, 6, 8, 146);
+            sbSrvH = new SlimScrollBar(); sbSrvH.Horizontal = true; sbSrvH.Target = tbServerLog; sbSrvH.MaxChars = () => _maxCharsSrv; sbSrvH.SetBounds(8, 152, 464, 8);
+            sbTunV = new SlimScrollBar(); sbTunV.Target = tbTunnelLog; sbTunV.SetBounds(472, 6, 8, 146);
+            sbTunH = new SlimScrollBar(); sbTunH.Horizontal = true; sbTunH.Target = tbTunnelLog; sbTunH.MaxChars = () => _maxCharsTun; sbTunH.SetBounds(8, 152, 464, 8);
             logInset.Controls.Add(sbSrvV); logInset.Controls.Add(sbSrvH);
             logInset.Controls.Add(sbTunV); logInset.Controls.Add(sbTunH);
             btnJumpBottom = new RoundButton();
-            btnJumpBottom.Text = "↓ 回到底部";
+            btnJumpBottom.Text = Txt.BtnJumpBottomText;
             btnJumpBottom.BackColor = Pal.Surface;
             btnJumpBottom.ForeColor = Pal.Text;
             btnJumpBottom.BackdropColor = Pal.Inset;
             btnJumpBottom.Radius = 8;
-            btnJumpBottom.SetBounds(378, 162, 96, 26);
+            btnJumpBottom.SetBounds(378, 120, 96, 26);
             btnJumpBottom.Visible = false;
             btnJumpBottom.Click += (s, e) => JumpToBottom();
             logInset.Controls.Add(btnJumpBottom);
@@ -3695,7 +4547,7 @@ namespace MinecraftLauncher
             searchRow.BackColor = Pal.Card;
             logPanel.Controls.Add(searchRow);
             tbSearch = new HintTextBox();
-            tbSearch.Hint = "搜索日志…";
+            tbSearch.Hint = Txt.Hint2;
             tbSearch.SetBounds(0, 2, 218, 24);
             tbSearch.BackColor = Color.FromArgb(17, 20, 24);
             tbSearch.ForeColor = Pal.Text;
@@ -3719,9 +4571,9 @@ namespace MinecraftLauncher
             btnNext.Click += (s2, e2) => FindInLog(true);
             searchRow.Controls.Add(btnNext);
             _tips = new ToolTip();
-            _tips.SetToolTip(btnPrev, "上一个");
-            _tips.SetToolTip(btnNext, "下一个");
-            _tips.SetToolTip(tbSearch, "在日志里搜索，回车跳到下一个");
+            _tips.SetToolTip(btnPrev, Txt.BuildUiSetToolTip);
+            _tips.SetToolTip(btnNext, Txt.BuildUiSetToolTip2);
+            _tips.SetToolTip(tbSearch, Txt.BuildUiSetToolTip3);
             lblFind = new TextLabel();
             lblFind.Caption = "";
             lblFind.SetBounds(322, 2, 60, 24);
@@ -3729,7 +4581,7 @@ namespace MinecraftLauncher
             lblFind.Font = new Font("Microsoft YaHei UI", 9f);
             searchRow.Controls.Add(lblFind);
             chkErrOnly = new DarkCheckBox();
-            chkErrOnly.Text = "只看警告/错误";
+            chkErrOnly.Text = Txt.ChkErrOnlyText;
             chkErrOnly.SetBounds(386, 2, 102, 24);
             chkErrOnly.ForeColor = Pal.Text; chkErrOnly.BackColor = Pal.Card;
             chkErrOnly.Font = new Font("Microsoft YaHei UI", 8f);
@@ -3758,7 +4610,7 @@ namespace MinecraftLauncher
 
             cmdLbl = new TextLabel();
             cmdLbl.TopAlign = true;
-            cmdLbl.Caption = "服务器指令";
+            cmdLbl.Caption = Txt.CmdLblCaption;
             cmdLbl.TextShiftX = 2f; cmdLbl.TextShiftY = -0.67f;
             cmdLbl.SetBounds(16, 312, 72, 26);
             cmdLbl.BackColor = Pal.Card;
@@ -3784,7 +4636,7 @@ namespace MinecraftLauncher
             cmdInset.Controls.Add(tbCmd);
 
             btnCmdSend = new RoundButton();
-            btnCmdSend.Text = "发送";
+            btnCmdSend.Text = Txt.BtnCmdSendText;
             btnCmdSend.SetBounds(420, 308, 84, 34);
             btnCmdSend.BackColor = Pal.Surface;
             btnCmdSend.BackdropColor = Pal.Card;
@@ -3792,13 +4644,44 @@ namespace MinecraftLauncher
             btnCmdSend.Click += (s, e) => SendServerCommand();
             logPanel.Controls.Add(btnCmdSend);
 
+            // v6.21: spark 性能诊断行（日志框下方、指令行上方；与指令行同显隐）
+            sparkLbl = new TextLabel();
+            sparkLbl.TopAlign = true;
+            sparkLbl.Caption = Txt.SparkLblCaption;
+            sparkLbl.TextShiftX = 2f; sparkLbl.TextShiftY = -0.67f;
+            sparkLbl.SetBounds(16, 262, 72, 26);
+            sparkLbl.BackColor = Pal.Card;
+            sparkLbl.ForeColor = Pal.Sub;
+            sparkLbl.Font = new Font("Microsoft YaHei UI", 9f);
+            logPanel.Controls.Add(sparkLbl);
+
+            btnSparkTps = new RoundButton();
+            btnSparkTps.Text = Txt.BtnSparkTpsText;
+            btnSparkTps.SetBounds(92, 258, 130, 34);
+            btnSparkTps.BackColor = Pal.Surface;
+            btnSparkTps.BackdropColor = Pal.Card;
+            btnSparkTps.ForeColor = Color.White;
+            btnSparkTps.Enabled = false;
+            btnSparkTps.Click += (s, e) => SparkTps();
+            logPanel.Controls.Add(btnSparkTps);
+
+            btnSparkProfile = new RoundButton();
+            btnSparkProfile.Text = Txt.BtnSparkProfileText;
+            btnSparkProfile.SetBounds(230, 258, 150, 34);
+            btnSparkProfile.BackColor = Pal.Surface;
+            btnSparkProfile.BackdropColor = Pal.Card;
+            btnSparkProfile.ForeColor = Color.White;
+            btnSparkProfile.Enabled = false;
+            btnSparkProfile.Click += (s, e) => SparkProfileStart();
+            logPanel.Controls.Add(btnSparkProfile);
+
             try { bool b = true; if (SystemParametersInfo(0x1042, 0, ref b, 0)) _sysClientAnim = b; } catch { } UiAnim.Enabled = _sysClientAnim;
             _animTimer = new System.Windows.Forms.Timer();
             _animTimer.Interval = 8;
             _animTimer.Tick += (s, e) => AnimFrame();
 
             KeyPreview = true;
-            Shown += (s, e) => { if (string.IsNullOrEmpty(_cfg.FrpKey)) { AppendState("首次使用：请在「设置」里填 SakuraFrp 访问密钥、隧道 ID，检查 PCL2 路径。"); } };
+            Shown += (s, e) => { if (string.IsNullOrEmpty(_cfg.FrpKey)) { AppendState(Txt.BuildUiAppendState); } };
             Shown += (s, e) => { BeginInvoke(new Action(() => { try { OfferWizardIfNeeded(); } catch { } })); };
             // v6.6 trial: one full repaint right after the first frame settles,
             // to normalize any first-paint edge rasterization (QA measures it).
@@ -3819,27 +4702,27 @@ namespace MinecraftLauncher
             bool srv = page == 0;
             if (srv)
             {
-                logInset.SetBounds(D(16), D(86), D(488), D(208));
-                tbServerLog.SetBounds(D(8), D(6), D(472), D(196));
-                tbTunnelLog.SetBounds(D(8), D(6), D(472), D(196));
-                sbSrvV.SetBounds(D(472), D(6), D(8), D(188)); sbSrvH.SetBounds(D(8), D(194), D(464), D(8));
-                sbTunV.SetBounds(D(472), D(6), D(8), D(188)); sbTunH.SetBounds(D(8), D(194), D(464), D(8));
-                if (btnJumpBottom != null) btnJumpBottom.SetBounds(D(378), D(162), D(96), D(26));
+                logInset.SetBounds(D(16), D(86), D(488), D(166));
+                tbServerLog.SetBounds(D(8), D(6), D(472), D(154));
+                tbTunnelLog.SetBounds(D(8), D(6), D(472), D(154));
+                sbSrvV.SetBounds(D(472), D(6), D(8), D(146)); sbSrvH.SetBounds(D(8), D(152), D(464), D(8));
+                sbTunV.SetBounds(D(472), D(6), D(8), D(146)); sbTunH.SetBounds(D(8), D(152), D(464), D(8));
+                if (btnJumpBottom != null) btnJumpBottom.SetBounds(D(378), D(120), D(96), D(26));
             }
             else
             {
-                logInset.SetBounds(D(16), D(52), D(488), D(242));
-                tbServerLog.SetBounds(D(8), D(6), D(472), D(230));
-                tbTunnelLog.SetBounds(D(8), D(6), D(472), D(230));
-                sbSrvV.SetBounds(D(472), D(6), D(8), D(222)); sbSrvH.SetBounds(D(8), D(228), D(464), D(8));
-                sbTunV.SetBounds(D(472), D(6), D(8), D(222)); sbTunH.SetBounds(D(8), D(228), D(464), D(8));
-                if (btnJumpBottom != null) btnJumpBottom.SetBounds(D(378), D(196), D(96), D(26));
+                logInset.SetBounds(D(16), D(52), D(488), D(200));
+                tbServerLog.SetBounds(D(8), D(6), D(472), D(188));
+                tbTunnelLog.SetBounds(D(8), D(6), D(472), D(188));
+                sbSrvV.SetBounds(D(472), D(6), D(8), D(180)); sbSrvH.SetBounds(D(8), D(186), D(464), D(8));
+                sbTunV.SetBounds(D(472), D(6), D(8), D(180)); sbTunH.SetBounds(D(8), D(186), D(464), D(8));
+                if (btnJumpBottom != null) btnJumpBottom.SetBounds(D(378), D(154), D(96), D(26));
             }
         }
 
         static bool IsErrLine(string ln)
         {
-            return ln != null && (ln.Contains("/WARN") || ln.Contains("/ERROR") || ln.Contains("/FATAL") || ln.Contains("Exception") || ln.Contains("[守护]") || ln.Contains("[备份] 失败"));
+            return ln != null && (ln.Contains("/WARN") || ln.Contains("/ERROR") || ln.Contains("/FATAL") || ln.Contains("Exception") || ln.Contains(Txt.IsErrLineContains) || ln.Contains(Txt.IsErrLineContains2));
         }
 
         void SetSrvFilter(bool on)
@@ -3871,7 +4754,7 @@ namespace MinecraftLauncher
                 hits.Add(h);
                 scan = h + Math.Max(1, q.Length);
             }
-            if (hits.Count == 0) { lblFind.Caption = "无结果"; return; }
+            if (hits.Count == 0) { lblFind.Caption = Txt.LblFindCaption; return; }
             int idx;
             if (next)
             {
@@ -3909,6 +4792,9 @@ namespace MinecraftLauncher
             if (cmdLbl != null) cmdLbl.Visible = !stats && !backup;
             if (cmdInset != null) cmdInset.Visible = !stats && !backup;
             if (btnCmdSend != null) btnCmdSend.Visible = !stats && !backup;
+            if (sparkLbl != null) sparkLbl.Visible = !stats && !backup;
+            if (btnSparkTps != null) btnSparkTps.Visible = !stats && !backup;
+            if (btnSparkProfile != null) btnSparkProfile.Visible = !stats && !backup;
             if (backup) RefreshBackupList();
             LayoutLogChrome(page);
             // v6.5: the incoming log fades in over ~180ms instead of popping
@@ -4030,7 +4916,7 @@ namespace MinecraftLauncher
                     try
                     {
                         _server.Refresh();
-                        statsPanel.SrvState = "运行中 · " + FmtDur(now - _server.StartTime);
+                        statsPanel.SrvState = Txt.SrvState2 + FmtDur(now - _server.StartTime);
                         statsPanel.SrvStateColor = Color.FromArgb(64, 199, 116);
                         long ws = _server.WorkingSet64;
                         statsPanel.SrvMem = FmtBytes(ws);
@@ -4043,7 +4929,7 @@ namespace MinecraftLauncher
                         else { statsPanel.SrvMemFrac = -1; statsPanel.SrvMemCap = ""; }
                         double pc = CpuRate(_server.TotalProcessorTime, now, ref _lastSrvCpu, ref _lastSrvCpuT);
                         statsPanel.SrvCpu = pc < 0 ? "—" : pc.ToString("0.0") + " %";
-                        statsPanel.SrvConn = CountConns(_server.Id, _cfg.Port) + " 人";
+                        statsPanel.SrvConn = CountConns(_server.Id, _cfg.Port) + Txt.SampleStatsPart;
                         // v6.9: memory history for the sparkline + player names
                         if (statsPanel.SrvMemFrac >= 0)
                         {
@@ -4069,10 +4955,10 @@ namespace MinecraftLauncher
                         if (slpNow != null && slpNow.Ok)
                         {
                             if (slpNow.Names.Count > 0) statsPanel.SrvPlayers = string.Join("、", slpNow.Names.ToArray());
-                            else if (slpNow.Online > 0) statsPanel.SrvPlayers = slpNow.Online + " 人在线（名单未公开）";
+                            else if (slpNow.Online > 0) statsPanel.SrvPlayers = slpNow.Online + Txt.SampleStatsPart2;
                             string vp = slpNow.Version ?? "";
-                            if (slpNow.Max > 0) vp += (vp.Length > 0 ? " · " : "") + slpNow.Online + "/" + slpNow.Max + " 人";
-                            if (slpNow.PingMs >= 0) vp += (vp.Length > 0 ? " · " : "") + "延迟 " + slpNow.PingMs + " ms";
+                            if (slpNow.Max > 0) vp += (vp.Length > 0 ? " · " : "") + slpNow.Online + "/" + slpNow.Max + Txt.SampleStatsPart;
+                            if (slpNow.PingMs >= 0) vp += (vp.Length > 0 ? " · " : "") + Txt.SampleStatsPart3 + slpNow.PingMs + " ms";
                             if (vp.Length > 0) statsPanel.SrvVerPing = vp;
                         }
                     }
@@ -4080,7 +4966,7 @@ namespace MinecraftLauncher
                 }
                 else
                 {
-                    statsPanel.SrvState = "未启动"; statsPanel.SrvStateColor = Pal.Mute;
+                    statsPanel.SrvState = Txt.SrvState; statsPanel.SrvStateColor = Pal.Mute;
                     statsPanel.SrvMem = "—"; statsPanel.SrvMemFrac = -1; statsPanel.SrvMemCap = "";
                     statsPanel.SrvCpu = "—"; statsPanel.SrvConn = "—";
                     statsPanel.SrvPlayers = "—"; statsPanel.SrvVerPing = "—"; _slp = null;
@@ -4351,7 +5237,7 @@ namespace MinecraftLauncher
         void ToggleLog()
         {
             logCollapsed = !logCollapsed;
-            logToggleLbl.Caption = logCollapsed ? "▸  日志" : "▾  日志";
+            logToggleLbl.Caption = logCollapsed ? Txt.ToggleLogStr : Txt.LogToggleLblCaption;
             bool expanding = !logCollapsed;
             if (expanding)
             {
@@ -4499,7 +5385,7 @@ namespace MinecraftLauncher
         void AppendServerLog(string s)
         {
             if (string.IsNullOrEmpty(s)) return;
-            PersistLog613("服务端", s);
+            PersistLog613(Txt.AppendServerLogPersistLog613, s);
             if (s.Length > _maxCharsSrv) _maxCharsSrv = s.Length;
             Ui(() =>
             {
@@ -4515,7 +5401,7 @@ namespace MinecraftLauncher
         void AppendTunnelLog(string s)
         {
             if (string.IsNullOrEmpty(s)) return;
-            PersistLog613("隧道", s);
+            PersistLog613(Txt.AppendTunnelLogPersistLog613, s);
             if (s.Length > _maxCharsTun) _maxCharsTun = s.Length;
             Ui(() => { AppendLogLine(tbTunnelLog, s); });
         }
@@ -4540,16 +5426,70 @@ namespace MinecraftLauncher
             if (tbCmd == null) return;
             string cmd = tbCmd.Text.Trim();
             if (cmd.Length == 0) return;
-            if (!ProcAlive(_server)) { AppendState("服务端没在运行，指令发不出去。"); return; }
+            if (!ProcAlive(_server)) { AppendState(Txt.SendServerCommandAppendState); return; }
             try
             {
-                if (!SendCmd(cmd)) { AppendState("发送指令失败：服务端进程已不在。"); return; }
+                if (!SendCmd(cmd)) { AppendState(Txt.SendServerCommandAppendState2); return; }
                 AppendServerLog("> " + cmd);
                 RecordCmd(cmd);
                 tbCmd.Clear();
                 tbCmd.Focus();
             }
-            catch (Exception ex) { AppendState("发送指令失败：" + ex.Message); }
+            catch (Exception ex) { AppendState(Txt.SendServerCommandAppendState3 + ex.Message); }
+        }
+
+        // ---------- spark 性能诊断（v6.21） ----------
+        // 命令走与指令框相同的 SendCmd 通道（控制台 stdin，无斜杠）；
+        // spark 的输出（含报告链接）由服务端控制台流回日志区，不另做查看器。
+        void SparkTps()
+        {
+            if (!ProcAlive(_server)) { AppendState(Txt.SendServerCommandAppendState); return; }
+            if (SendCmd("spark tps")) AppendServerLog("> spark tps");
+            else AppendState(Txt.SendServerCommandAppendState2);
+        }
+
+        void SparkProfileStart()
+        {
+            if (_profiling) return;
+            if (!ProcAlive(_server)) { AppendState(Txt.SendServerCommandAppendState); return; }
+            if (!SendCmd("spark profiler start")) { AppendState(Txt.SendServerCommandAppendState2); return; }
+            AppendServerLog("> spark profiler start");
+            AppendServerLog(Txt.SparkProfileStarted);
+            _profiling = true;
+            if (btnSparkProfile != null) btnSparkProfile.Enabled = false;
+            if (_sparkTimer == null)
+            {
+                _sparkTimer = new System.Windows.Forms.Timer();
+                _sparkTimer.Interval = 30000;
+                _sparkTimer.Tick += (s, e) => SparkProfileStop();
+            }
+            _sparkTimer.Stop();
+            _sparkTimer.Start();
+        }
+
+        // 计时器到期（UI 线程）或关服取消后走到这里：复位并按需发送 stop
+        void SparkProfileStop()
+        {
+            if (_sparkTimer != null) _sparkTimer.Stop();
+            if (!_profiling) return;
+            _profiling = false;
+            if (btnSparkProfile != null) btnSparkProfile.Enabled = ProcAlive(_server);
+            if (!ProcAlive(_server)) { AppendServerLog(Txt.SparkProfileCancelled); return; }
+            if (SendCmd("spark profiler stop"))
+            {
+                AppendServerLog("> spark profiler stop");
+                AppendServerLog(Txt.SparkProfileStopped);
+            }
+            else AppendState(Txt.SendServerCommandAppendState2);
+        }
+
+        // 服务端在采样途中退出时由 Exited 处理调用：停表、复位并记一行取消日志
+        void CancelSparkProfile()
+        {
+            if (!_profiling) return;
+            if (_sparkTimer != null) _sparkTimer.Stop();
+            _profiling = false;
+            AppendServerLog(Txt.SparkProfileCancelled);
         }
 
         // ---------- 玩家管理入口（v6.11） ----------
@@ -4571,7 +5511,7 @@ namespace MinecraftLauncher
         }
         void OpenPlayerManager()
         {
-            if (!ProcAlive(_server)) { InfoBox.Show("服务端没在运行，玩家管理要在开服后使用。", "玩家管理"); return; }
+            if (!ProcAlive(_server)) { InfoBox.Show(Txt.OpenPlayerManagerShow, Txt.MbText); return; }
             var online = new System.Collections.Generic.List<string>();
             var slp = _slp;
             if (slp != null && slp.Ok && slp.Names.Count > 0) online.AddRange(slp.Names);
@@ -4583,7 +5523,7 @@ namespace MinecraftLauncher
             using (var f = new PlayerForm(online, ops, banned, me, cmd =>
             {
                 if (SendCmd(cmd)) AppendServerLog("> " + cmd);
-                else AppendState("指令发送失败：服务端进程已不在。");
+                else AppendState(Txt.OpenPlayerManagerAppendState);
             }))
                 f.ShowDialog(this);
         }
@@ -4623,7 +5563,7 @@ namespace MinecraftLauncher
         // start-of-server path can run it inline on its own thread.
         void DoBackup(string reason, Action doneUi)
         {
-            if (_backupBusy) { AppendState("已经有一个备份正在进行中了。"); return; }
+            if (_backupBusy) { AppendState(Txt.DoBackupAppendState); return; }
             _backupBusy = true;
             SetBackupUi();
             var th = new Thread(() => { BackupCore(reason); Ui(() => { _backupBusy = false; SetBackupUi(); RefreshBackupList(); if (doneUi != null) doneUi(); }); });
@@ -4637,14 +5577,14 @@ namespace MinecraftLauncher
             bool running = ProcAlive(_server) && _serverDone;
             try
             {
-                if (!Directory.Exists(world)) { Ui(() => AppendState("找不到世界文件夹：" + world + "，无法备份。")); return; }
+                if (!Directory.Exists(world)) { Ui(() => AppendState(Txt.BackupCoreAppendState + world + Txt.BackupCoreAppendState2)); return; }
                 string bdir = BackupDirPath();
                 Directory.CreateDirectory(bdir);
                 if (running)
                 {
                     SendCmd("save-off");
                     SendCmd("save-all flush");
-                    Ui(() => AppendServerLog("[备份] 已暂停服务端自动保存并落盘，开始打包世界…"));
+                    Ui(() => AppendServerLog(Txt.BackupCoreAppendServerLog));
                     Thread.Sleep(2000);
                 }
                 string stamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
@@ -4671,17 +5611,17 @@ namespace MinecraftLauncher
                         catch { skipped++; }
                     }
                 }
-                Ui(() => AppendServerLog("[备份] 完成：" + Path.GetFileName(zip) + "（" + files + " 个文件" + (skipped > 0 ? "，跳过 " + skipped + " 个占用中的文件" : "") + "）"));
-                Ui(() => AppendState("世界备份完成（" + reason + "）。"));
+                Ui(() => AppendServerLog(Txt.BackupCoreAppendServerLog2 + Path.GetFileName(zip) + "（" + files + Txt.BackupCorePart + (skipped > 0 ? Txt.BackupCoreStr + skipped + Txt.BackupCorePart2 : "") + "）"));
+                Ui(() => AppendState(Txt.BackupCoreAppendState3 + reason + "）。"));
                 PruneBackups();
             }
             catch (Exception ex)
             {
-                Ui(() => { AppendServerLog("[备份] 失败：" + ex.Message); AppendState("备份失败：" + ex.Message); });
+                Ui(() => { AppendServerLog(Txt.BackupCoreAppendServerLog3 + ex.Message); AppendState(Txt.BackupCoreAppendState4 + ex.Message); });
             }
             finally
             {
-                if (running) { SendCmd("save-on"); Ui(() => AppendServerLog("[备份] 服务端自动保存已恢复。")); }
+                if (running) { SendCmd("save-on"); Ui(() => AppendServerLog(Txt.BackupCoreAppendServerLog4)); }
             }
         }
 
@@ -4698,16 +5638,16 @@ namespace MinecraftLauncher
 
         void RestoreBackup(string zipPath)
         {
-            if (ProcAlive(_server)) { InfoBox.Show("恢复存档前必须先关服：服务端开着的时候换世界文件会损坏存档。\n\n请先点「安全关服」，再来恢复。", "恢复存档"); return; }
+            if (ProcAlive(_server)) { InfoBox.Show(Txt.RestoreBackupShow, Txt.RestoreBackupShow2); return; }
             string name = Path.GetFileName(zipPath);
             bool yes = false;
-            using (var c = new ConfirmBox("把世界恢复到备份「" + name + "」？\n\n当前的世界不会被删：它会先被改名留在一边（world_prerestore_时间），确认没问题后你可以自己删；恢复错了也能换回来。"))
+            using (var c = new ConfirmBox(Txt.RestoreBackupConfirmBox + name + Txt.RestoreBackupConfirmBox2))
             {
                 var r = c.ShowDialog(this);
                 yes = (r == DialogResult.OK && c.ChoiceYes);
             }
             if (!yes) return;
-            if (_backupBusy) { AppendState("已经有一个备份任务正在进行中了。"); return; }
+            if (_backupBusy) { AppendState(Txt.RestoreBackupAppendState); return; }
             _backupBusy = true; SetBackupUi();
             var th = new Thread(() =>
             {
@@ -4734,10 +5674,10 @@ namespace MinecraftLauncher
                                 es.CopyTo(ds);
                         }
                     }
-                    result = "已恢复到备份「" + name + "」。旧世界保留在 " + Path.GetFileName(aside) + "，确认新世界没问题后可以删除它。";
+                    result = Txt.Result + name + Txt.RestoreBackupPart + Path.GetFileName(aside) + Txt.RestoreBackupPart2;
                 }
-                catch (Exception ex) { result = "恢复失败：" + ex.Message + "（旧世界可能已被改名，先别开服，检查服务端目录。）"; }
-                Ui(() => { _backupBusy = false; SetBackupUi(); RefreshBackupList(); InfoBox.Show(result, "恢复存档"); AppendServerLog("[备份] " + result); });
+                catch (Exception ex) { result = Txt.Result2 + ex.Message + Txt.RestoreBackupPart3; }
+                Ui(() => { _backupBusy = false; SetBackupUi(); RefreshBackupList(); InfoBox.Show(result, Txt.RestoreBackupShow2); AppendServerLog(Txt.RestoreBackupAppendServerLog + result); });
             });
             th.IsBackground = true;
             th.Start();
@@ -4778,15 +5718,15 @@ namespace MinecraftLauncher
         void BuildBackupPanel()
         {
             _bkInit = true;
-            var head = BkLabel(16, 10, 220, "世界备份", Pal.Text);
+            var head = BkLabel(16, 10, 220, Txt.BuildBackupPanelBkLabel, Pal.Text);
             head.Font = new Font("Microsoft YaHei UI", 9f, FontStyle.Bold);
             backupPanel.Controls.Add(head);
             btnBackupNow = new RoundButton();
-            btnBackupNow.Text = "立即备份";
+            btnBackupNow.Text = Txt.BtnBackupNowText;
             btnBackupNow.SetBounds(356, 8, 116, 28);
             btnBackupNow.BackColor = Pal.Surface; btnBackupNow.ForeColor = Pal.Text; btnBackupNow.BackdropColor = Pal.Inset;
             btnBackupNow.Font = new Font("Microsoft YaHei UI", 9f);
-            btnBackupNow.Click += (s, e) => DoBackup("手动备份");
+            btnBackupNow.Click += (s, e) => DoBackup(Txt.BuildBackupPanelDoBackup);
             backupPanel.Controls.Add(btnBackupNow);
             lblBackupState = BkLabel(16, 38, 456, "—", Pal.Sub);
             backupPanel.Controls.Add(lblBackupState);
@@ -4802,53 +5742,53 @@ namespace MinecraftLauncher
             backupList.DoubleClick += (s, e) => { int i = backupList.SelectedIndex; if (i >= 0 && i < _backupFiles.Count) RestoreBackup(_backupFiles[i]); };
             backupPanel.Controls.Add(backupList);
             btnRestoreBackup = new RoundButton();
-            btnRestoreBackup.Text = "恢复选中";
+            btnRestoreBackup.Text = Txt.BtnRestoreBackupText;
             btnRestoreBackup.SetBounds(16, 160, 104, 28);
             btnRestoreBackup.BackColor = Pal.Surface; btnRestoreBackup.ForeColor = Pal.Text; btnRestoreBackup.BackdropColor = Pal.Inset;
             btnRestoreBackup.Font = new Font("Microsoft YaHei UI", 9f);
-            btnRestoreBackup.Click += (s, e) => { int i = backupList.SelectedIndex; if (i >= 0 && i < _backupFiles.Count) RestoreBackup(_backupFiles[i]); else InfoBox.Show("先在上面的列表里选中一个备份。", "恢复存档"); };
+            btnRestoreBackup.Click += (s, e) => { int i = backupList.SelectedIndex; if (i >= 0 && i < _backupFiles.Count) RestoreBackup(_backupFiles[i]); else InfoBox.Show(Txt.BuildBackupPanelShow, Txt.RestoreBackupShow2); };
             backupPanel.Controls.Add(btnRestoreBackup);
             btnDeleteBackup = new RoundButton();
-            btnDeleteBackup.Text = "删除选中";
+            btnDeleteBackup.Text = Txt.BtnDeleteBackupText;
             btnDeleteBackup.SetBounds(128, 160, 104, 28);
             btnDeleteBackup.BackColor = Pal.Surface; btnDeleteBackup.ForeColor = Pal.Text; btnDeleteBackup.BackdropColor = Pal.Inset;
             btnDeleteBackup.Font = new Font("Microsoft YaHei UI", 9f);
             btnDeleteBackup.Click += (s, e) =>
             {
                 int i = backupList.SelectedIndex;
-                if (i < 0 || i >= _backupFiles.Count) { InfoBox.Show("先在上面的列表里选中一个备份。", "删除备份"); return; }
+                if (i < 0 || i >= _backupFiles.Count) { InfoBox.Show(Txt.BuildBackupPanelShow, Txt.BuildBackupPanelShow2); return; }
                 bool yes = false;
-                using (var c = new ConfirmBox("删除备份「" + Path.GetFileName(_backupFiles[i]) + "」？删了就恢复不了了。"))
+                using (var c = new ConfirmBox(Txt.BuildBackupPanelConfirmBox + Path.GetFileName(_backupFiles[i]) + Txt.BuildBackupPanelPart))
                 { var r = c.ShowDialog(this); yes = (r == DialogResult.OK && c.ChoiceYes); }
                 if (!yes) return;
-                try { File.Delete(_backupFiles[i]); } catch (Exception ex) { InfoBox.Show("删除失败：" + ex.Message, "删除备份"); }
+                try { File.Delete(_backupFiles[i]); } catch (Exception ex) { InfoBox.Show(Txt.BuildBackupPanelShow3 + ex.Message, Txt.BuildBackupPanelShow2); }
                 RefreshBackupList();
             };
             backupPanel.Controls.Add(btnDeleteBackup);
             lblBackupInfo = BkLabel(244, 162, 228, "", Pal.Sub);
             backupPanel.Controls.Add(lblBackupInfo);
-            backupPanel.Controls.Add(BkLabel(16, 198, 62, "保留最近", Pal.Sub));
+            backupPanel.Controls.Add(BkLabel(16, 198, 62, Txt.BuildBackupPanelBkLabel2, Pal.Sub));
             tbKeep = BkBox(142, 198, 44); tbKeep.Text = _cfg.BackupKeep.ToString(); tbKeep.TextAlign = HorizontalAlignment.Center;
             tbKeep.Leave += (s, e) => { int v; if (int.TryParse(tbKeep.Text.Trim(), out v) && v >= 1 && v <= 99) { _cfg.BackupKeep = v; _cfg.Save(); PruneBackups(); RefreshBackupList(); } tbKeep.Text = _cfg.BackupKeep.ToString(); };
             backupPanel.Controls.Add(tbKeep);
-            backupPanel.Controls.Add(BkLabel(192, 198, 20, "份", Pal.Sub));
-            chkAutoRestart = BkCheck(218, 198, 128, "崩溃自动重启");
+            backupPanel.Controls.Add(BkLabel(192, 198, 20, Txt.BuildBackupPanelBkLabel3, Pal.Sub));
+            chkAutoRestart = BkCheck(218, 198, 128, Txt.BuildBackupPanelBkCheck);
             chkAutoRestart.Checked = _cfg.AutoRestart;
             chkAutoRestart.CheckedChanged += (s, e) => { if (_bkInit) return; _cfg.AutoRestart = chkAutoRestart.Checked; _cfg.Save(); };
             backupPanel.Controls.Add(chkAutoRestart);
-            chkBackupOnStart = BkCheck(352, 198, 120, "开服前自动备份");
+            chkBackupOnStart = BkCheck(352, 198, 120, Txt.BuildBackupPanelBkCheck2);
             chkBackupOnStart.Checked = _cfg.BackupOnStart;
             chkBackupOnStart.CheckedChanged += (s, e) => { if (_bkInit) return; _cfg.BackupOnStart = chkBackupOnStart.Checked; _cfg.Save(); };
             backupPanel.Controls.Add(chkBackupOnStart);
-            chkDailyBackup = BkCheck(16, 226, 118, "每日自动备份");
+            chkDailyBackup = BkCheck(16, 226, 118, Txt.BuildBackupPanelBkCheck3);
             chkDailyBackup.Checked = _cfg.DailyBackup;
             chkDailyBackup.CheckedChanged += (s, e) => { if (_bkInit) return; _cfg.DailyBackup = chkDailyBackup.Checked; _cfg.Save(); };
             backupPanel.Controls.Add(chkDailyBackup);
             tbDailyTime = BkBox(142, 226, 56); tbDailyTime.Text = _cfg.DailyBackupTime; tbDailyTime.TextAlign = HorizontalAlignment.Center;
             tbDailyTime.Leave += (s, e) => { TimeSpan ts; if (TimeSpan.TryParse(tbDailyTime.Text.Trim(), out ts)) { _cfg.DailyBackupTime = tbDailyTime.Text.Trim(); _cfg.Save(); } tbDailyTime.Text = _cfg.DailyBackupTime; };
             backupPanel.Controls.Add(tbDailyTime);
-            backupPanel.Controls.Add(BkLabel(206, 226, 266, "应用开着时，到点自动备份一次", Pal.Sub)); // v6.14: meaningful text
-            chkTimedCmd = BkCheck(16, 254, 118, "定时指令");
+            backupPanel.Controls.Add(BkLabel(206, 226, 266, Txt.BuildBackupPanelBkLabel4, Pal.Sub)); // v6.14: meaningful text
+            chkTimedCmd = BkCheck(16, 254, 118, Txt.BuildBackupPanelBkCheck4);
             chkTimedCmd.Checked = _cfg.TimedCmdEnabled;
             chkTimedCmd.CheckedChanged += (s, e) => { if (_bkInit) return; _cfg.TimedCmdEnabled = chkTimedCmd.Checked; _cfg.Save(); };
             backupPanel.Controls.Add(chkTimedCmd);
@@ -4869,7 +5809,7 @@ namespace MinecraftLauncher
             btnBackupNow.Enabled = en;
             if (btnRestoreBackup != null) btnRestoreBackup.Enabled = en;
             if (btnDeleteBackup != null) btnDeleteBackup.Enabled = en;
-            if (lblBackupState != null && _backupBusy) lblBackupState.Caption = "正在备份…（大世界可能要一两分钟）";
+            if (lblBackupState != null && _backupBusy) lblBackupState.Caption = Txt.LblBackupStateCaption;
         }
 
         void RefreshBackupList()
@@ -4897,9 +5837,9 @@ namespace MinecraftLauncher
                 }
             }
             catch { }
-            if (lblBackupInfo != null) lblBackupInfo.Caption = _backupFiles.Count > 0 ? ("共 " + _backupFiles.Count + " 份 · " + FmtBytes(total)) : "还没有备份";
+            if (lblBackupInfo != null) lblBackupInfo.Caption = _backupFiles.Count > 0 ? (Txt.RefreshBackupListStr + _backupFiles.Count + Txt.RefreshBackupListPart + FmtBytes(total)) : Txt.RefreshBackupListStr2;
             if (lblBackupState != null && !_backupBusy)
-                lblBackupState.Caption = _backupFiles.Count > 0 ? "最近一份：" + backupList.Items[0].ToString() : "点「立即备份」给世界留一份快照。";
+                lblBackupState.Caption = _backupFiles.Count > 0 ? Txt.RefreshBackupListStr3 + backupList.Items[0].ToString() : Txt.RefreshBackupListStr4;
             SetBackupUi();
         }
 
@@ -4918,8 +5858,8 @@ namespace MinecraftLauncher
                 if (_cfg.DailyBackup && _cfg.LastDailyBackup != today && TimeReached(_cfg.DailyBackupTime) && !_backupBusy)
                 {
                     _cfg.LastDailyBackup = today; _cfg.Save();
-                    AppendServerLog("[定时] 到达每日备份时间，开始自动备份。");
-                    DoBackup("每日自动备份");
+                    AppendServerLog(Txt.CheckSchedulesAppendServerLog);
+                    DoBackup(Txt.BuildBackupPanelBkCheck3);
                 }
                 if (_cfg.TimedCmdEnabled && _cfg.LastTimedCmd != today && TimeReached(_cfg.TimedCmdTime)
                     && ProcAlive(_server) && _serverDone && !string.IsNullOrEmpty(_cfg.TimedCmdText))
@@ -4933,14 +5873,14 @@ namespace MinecraftLauncher
                         if (!_timedDeferred614)
                         {
                             _timedDeferred614 = true;
-                            AppendServerLog("[定时] 到了定时指令时间，但还有 " + _onlineNames.Count + " 人在线，推迟到没人时再执行。");
+                            AppendServerLog(Txt.CheckSchedulesAppendServerLog2 + _onlineNames.Count + Txt.CheckSchedulesAppendServerLog3);
                         }
                     }
                     else
                     {
                         _timedDeferred614 = false;
                         _cfg.LastTimedCmd = today; _cfg.Save();
-                        if (c.Length > 0 && SendCmd(c)) AppendServerLog("[定时] 已发送定时指令：" + c);
+                        if (c.Length > 0 && SendCmd(c)) AppendServerLog(Txt.CheckSchedulesAppendServerLog4 + c);
                     }
                 }
             }
@@ -5004,53 +5944,54 @@ namespace MinecraftLauncher
             // 服务端灯
             if (statusCard != null)
             {
-                if (sRun && sDone) { statusCard.ServerText = "服务端：运行中"; statusCard.ServerColor = Color.FromArgb(64, 199, 116); }
-                else if (sRun) { statusCard.ServerText = "服务端：启动中…"; statusCard.ServerColor = Color.FromArgb(250, 168, 26); }
-                else { statusCard.ServerText = "服务端：未启动"; statusCard.ServerColor = Color.FromArgb(94, 103, 115); }
+                if (sRun && sDone) { statusCard.ServerText = Txt.ServerText2; statusCard.ServerColor = Color.FromArgb(64, 199, 116); }
+                else if (sRun) { statusCard.ServerText = Txt.ServerText3; statusCard.ServerColor = Color.FromArgb(250, 168, 26); }
+                else { statusCard.ServerText = Txt.ServerText; statusCard.ServerColor = Color.FromArgb(94, 103, 115); }
             }
 
             bool tRun = ProcAlive(_frpc) || ProcAlive(_frpcVoice);
             if (statusCard != null)
             {
-                if (tRun && _tunnelUp) { statusCard.TunnelText = "SakuraFrp 隧道：已连接"; statusCard.TunnelColor = Color.FromArgb(64, 199, 116); }
-                else if (tRun) { statusCard.TunnelText = "SakuraFrp 隧道：启动中…"; statusCard.TunnelColor = Color.FromArgb(250, 168, 26); }
-                else { statusCard.TunnelText = "SakuraFrp 隧道：未启动"; statusCard.TunnelColor = Color.FromArgb(94, 103, 115); }
+                if (tRun && _tunnelUp) { statusCard.TunnelText = Txt.TunnelText2; statusCard.TunnelColor = Color.FromArgb(64, 199, 116); }
+                else if (tRun) { statusCard.TunnelText = Txt.TunnelText3; statusCard.TunnelColor = Color.FromArgb(250, 168, 26); }
+                else { statusCard.TunnelText = Txt.TunnelText; statusCard.TunnelColor = Color.FromArgb(94, 103, 115); }
             }
 
             bool gameUp = ProcAlive(_frpc) && _tunnelUp;
             if (statusCard != null)
             {
-                if (string.IsNullOrEmpty(_cfg.PublicAddr)) { statusCard.AddrText = "公网地址：未生成"; statusCard.AddrColor = Color.FromArgb(94, 103, 115); }
-                else if (gameUp) { statusCard.AddrText = "公网地址：已就绪"; statusCard.AddrColor = Color.FromArgb(64, 199, 116); }
-                else { statusCard.AddrText = "公网地址：已保存（隧道未启动）"; statusCard.AddrColor = Color.FromArgb(154, 165, 177); }
+                if (string.IsNullOrEmpty(_cfg.PublicAddr)) { statusCard.AddrText = Txt.AddrText; statusCard.AddrColor = Color.FromArgb(94, 103, 115); }
+                else if (gameUp) { statusCard.AddrText = Txt.AddrText2; statusCard.AddrColor = Color.FromArgb(64, 199, 116); }
+                else { statusCard.AddrText = Txt.AddrText3; statusCard.AddrColor = Color.FromArgb(154, 165, 177); }
                 statusCard.SetPulse(0, sRun && !sDone);
                 statusCard.SetPulse(1, tRun && !_tunnelUp);
                 statusCard.Invalidate();
             }
 
-            if (_tray != null) { string tt = "Minecraft 联机助手 · " + (sDone ? "运行中" : ((sRun || tRun) ? "启动中" : "已停止")); if (_tray.Text != tt) _tray.Text = tt; } // v6.13
+            if (_tray != null) { string tt = Txt.Tt + (sDone ? Txt.RefreshStatusStr : ((sRun || tRun) ? Txt.RefreshStatusStr2 : Txt.FailWizStep)); if (_tray.Text != tt) _tray.Text = tt; } // v6.13
             string pa = _cfg.PublicAddr ?? "";
             if (tbAddr.Text != pa) tbAddr.Text = pa; // v6.6: don't clobber a selection on every refresh
             btnCopy.Enabled = !string.IsNullOrEmpty(_cfg.PublicAddr);
             btnStop.Enabled = sRun || tRun;
             if (tbCmd != null) { tbCmd.Enabled = sRun; btnCmdSend.Enabled = sRun; }
+            if (btnSparkTps != null) { btnSparkTps.Enabled = sRun; btnSparkProfile.Enabled = sRun && !_profiling; }
         }
 
         void CopyAddr()
         {
-            if (string.IsNullOrEmpty(_cfg.PublicAddr)) { InfoBox.Show("公网地址还没生成，先一键启动联机。", "提示"); return; }
+            if (string.IsNullOrEmpty(_cfg.PublicAddr)) { InfoBox.Show(Txt.CopyAddrShow, Txt.CopyAddrShow2); return; }
             try
             {
                 Clipboard.SetText(_cfg.PublicAddr);
-                AppendState("已复制公网地址到剪贴板：发给朋友即可。");
+                AppendState(Txt.CopyAddrAppendState);
                 // v6.9: the button itself confirms for a moment - the state
                 // line alone was easy to miss
-                btnCopy.Text = "已复制 ✓";
+                btnCopy.Text = Txt.BtnCopyText2;
                 if (_copyTimer == null)
                 {
                     _copyTimer = new System.Windows.Forms.Timer();
                     _copyTimer.Interval = 1200;
-                    _copyTimer.Tick += (s, e) => { _copyTimer.Stop(); btnCopy.Text = "复制地址发给朋友"; };
+                    _copyTimer.Tick += (s, e) => { _copyTimer.Stop(); btnCopy.Text = Txt.BtnCopyText; };
                 }
                 _copyTimer.Stop();
                 _copyTimer.Start();
@@ -5060,9 +6001,9 @@ namespace MinecraftLauncher
 
         void OpenPcl2()
         {
-            if (string.IsNullOrEmpty(_cfg.Pcl2Path) || !File.Exists(_cfg.Pcl2Path)) { InfoBox.Show("找不到 PCL2，请到「设置」里填写 PCL2 的 exe 路径。", "提示"); OpenSettings(); return; }
+            if (string.IsNullOrEmpty(_cfg.Pcl2Path) || !File.Exists(_cfg.Pcl2Path)) { InfoBox.Show(Txt.OpenPcl2Show, Txt.CopyAddrShow2); OpenSettings(); return; }
             try { Process.Start(new ProcessStartInfo(_cfg.Pcl2Path) { WorkingDirectory = Path.GetDirectoryName(_cfg.Pcl2Path) }); }
-            catch (Exception ex) { InfoBox.Show("打开 PCL2 失败：" + ex.Message, "错误"); }
+            catch (Exception ex) { InfoBox.Show(Txt.OpenPcl2Show2 + ex.Message, Txt.OnHandleCreatedIndexOf); }
         }
 
         void OpenSettings()
@@ -5094,19 +6035,19 @@ namespace MinecraftLauncher
             _crashTimes.Add(now);
             bool again = _cfg.AutoRestart && _crashTimes.Count <= 3;
             string guess614 = GuessCrash614();
-            AppendServerLog("[守护] 服务端异常退出（退出码 " + exitCode + "），这不是正常关服。" + (guess614.Length > 0 ? "可能原因：" + guess614 + "。" : ""));
+            AppendServerLog(Txt.HandleServerCrashAppendServerLog + exitCode + Txt.HandleServerCrashAppendServerLog2 + (guess614.Length > 0 ? Txt.HandleServerCrashStr + guess614 + "。" : ""));
             if (!_cfg.AutoRestart)
             {
-                AppendState("服务端异常退出了" + (guess614.Length > 0 ? "，可能原因：" + guess614 + "。" : "，请看服务端日志最底部找原因。") + "（守护自动重启是关着的）");
+                AppendState(Txt.HandleServerCrashAppendState + (guess614.Length > 0 ? Txt.HandleServerCrashStr2 + guess614 + "。" : Txt.HandleServerCrashStr3) + Txt.HandleServerCrashPart);
                 return;
             }
             if (!again)
             {
-                AppendServerLog("[守护] 10 分钟内已异常退出 " + _crashTimes.Count + " 次，停止自动重启，多半是存档或 mod 出了问题。");
-                AppendState("服务端连续异常退出，已停止自动重启，请看日志。" + (guess614.Length > 0 ? " 可能原因：" + guess614 + "。" : ""));
+                AppendServerLog(Txt.HandleServerCrashAppendServerLog3 + _crashTimes.Count + Txt.HandleServerCrashAppendServerLog4);
+                AppendState(Txt.HandleServerCrashAppendState2 + (guess614.Length > 0 ? Txt.HandleServerCrashStr4 + guess614 + "。" : ""));
                 return;
             }
-            AppendState("服务端异常退出，守护将在 5 秒后自动重启…");
+            AppendState(Txt.HandleServerCrashAppendState3);
             Delayed(5000, () => { if (!ProcAlive(_server) && !_stoppingIntentional) StartAll(); });
         }
 
@@ -5120,12 +6061,12 @@ namespace MinecraftLauncher
                 var tail = new System.Text.StringBuilder();
                 for (int i = Math.Max(0, n - 40); i < n; i++) tail.Append(_srvLines[i]).Append('\n');
                 string t = tail.ToString();
-                if (t.Contains("Failed to bind to port") || t.Contains("Address already in use")) return "端口 " + _cfg.Port + " 被占用，多半是还有一个服务端没关干净";
-                if (t.Contains("OutOfMemoryError") || t.Contains("Could not create the Java Virtual Machine") || t.Contains("insufficient memory")) return "内存不足或内存参数（-Xmx）设置有问题";
-                if (t.Contains("UnsupportedClassVersionError")) return "Java 版本不对，这个服务端需要 Java 17";
-                if (t.Contains("single server tick")) return "服务器卡死超过 60 秒，被游戏自带的看门狗停掉";
-                if (t.Contains("ModLoadingException") || t.Contains("Failed to load mod") || t.Contains("requires fabric") || t.Contains("Missing or unsupported mandatory dependencies")) return "有模组加载失败，看日志里报错的 mod 名";
-                if (t.Contains("Failed to load eula")) return "eula 未同意";
+                if (t.Contains("Failed to bind to port") || t.Contains("Address already in use")) return Txt.GuessCrash614Ret + _cfg.Port + Txt.GuessCrash614Part;
+                if (t.Contains("OutOfMemoryError") || t.Contains("Could not create the Java Virtual Machine") || t.Contains("insufficient memory")) return Txt.GuessCrash614Ret2;
+                if (t.Contains("UnsupportedClassVersionError")) return Txt.GuessCrash614Ret3;
+                if (t.Contains("single server tick")) return Txt.GuessCrash614Ret4;
+                if (t.Contains("ModLoadingException") || t.Contains("Failed to load mod") || t.Contains("requires fabric") || t.Contains("Missing or unsupported mandatory dependencies")) return Txt.GuessCrash614Ret5;
+                if (t.Contains("Failed to load eula")) return Txt.GuessCrash614Ret6;
             }
             catch { }
             return "";
@@ -5154,7 +6095,7 @@ namespace MinecraftLauncher
             _wizardOffered = true;
             bool need = !Directory.Exists(_cfg.ServerDir) || !File.Exists(Path.Combine(_cfg.ServerDir, _cfg.JarName));
             if (!need) return;
-            var r = InfoBox.Show("还没有可用的服务端：设置里的服务端目录不存在，或里面没有服务端 jar。\n\n「首次设置向导」可以自动下载匹配的 Java 和服务端（原版 / Fabric / Paper），并写好 EULA 与离线开服所需的 server.properties，全程带下载进度和哈希校验。", "首次设置向导", "打开向导", "以后再说");
+            var r = InfoBox.Show(Txt.OfferWizardIfNeededShow, Txt.WizardFormInitChrome, Txt.OfferWizardIfNeededShow2, Txt.OfferWizardIfNeededShow3);
             if (r == DialogResult.OK) OpenWizard();
         }
 
@@ -5164,7 +6105,7 @@ namespace MinecraftLauncher
             {
                 if (wf.ShowDialog(this) == DialogResult.OK)
                 {
-                    AppendState("首次设置向导已完成，服务端和 Java 都就绪了。");
+                    AppendState(Txt.OpenWizardAppendState);
                     RefreshStatus();
                 }
             }
@@ -5181,46 +6122,46 @@ namespace MinecraftLauncher
             int required = mcVer != null ? McJava.RequiredJava(mcVer) : 0;
             string javaExe = McJava.ResolveJavaExe(_cfg);
             int have = javaExe != null ? McJava.GetJavaMajor(javaExe) : 0;
-            string haveText = have > 0 ? have.ToString() : "未知";
+            string haveText = have > 0 ? have.ToString() : Txt.CheckJavaVersionStr;
             if (mcVer == null)
             {
-                AppendServerLog("[Java 检查] 读不到服务端 jar 的版本信息（version.json），跳过版本校验。当前 Java 大版本：" + haveText + "。");
+                AppendServerLog(Txt.CheckJavaVersionAppendServerLog + haveText + Txt.CheckJavaVersionAppendServerLog2);
                 return true;
             }
             if (required <= 0)
             {
-                AppendServerLog("[Java 检查] 服务端版本 " + mcVer + " 不在对照表内，跳过版本校验。当前 Java 大版本：" + haveText + "。");
+                AppendServerLog(Txt.CheckJavaVersionAppendServerLog3 + mcVer + Txt.CheckJavaVersionAppendServerLog4 + haveText + Txt.CheckJavaVersionAppendServerLog2);
                 return true;
             }
             if (have <= 0)
             {
-                AppendServerLog("[Java 检查] 服务端 " + mcVer + " 需要 Java " + required + "，但没测出当前 Java 的版本，放行启动（请留意服务端日志）。");
+                AppendServerLog(Txt.CheckJavaVersionAppendServerLog5 + mcVer + Txt.RunFail3 + required + Txt.CheckJavaVersionAppendServerLog6);
                 return true;
             }
             if (have >= required)
             {
-                AppendServerLog("[Java 检查] 通过：服务端 " + mcVer + " 需要 Java " + required + "，当前 Java " + have + "。");
+                AppendServerLog(Txt.CheckJavaVersionAppendServerLog7 + mcVer + Txt.RunFail3 + required + Txt.CheckJavaVersionAppendServerLog8 + have + Txt.CheckJavaVersionAppendServerLog2);
                 return true;
             }
-            AppendServerLog("[Java 检查] 不匹配：服务端 " + mcVer + " 需要 Java " + required + "，当前 Java 只有 " + have + "，已弹出提示等待确认。");
+            AppendServerLog(Txt.CheckJavaVersionAppendServerLog9 + mcVer + Txt.RunFail3 + required + Txt.CheckJavaVersionAppendServerLog10 + have + Txt.CheckJavaVersionAppendServerLog11);
             bool proceed = false;
             Ui(() =>
             {
-                string msg = "Java 版本不够，服务端大概率起不来。\n\n服务端版本：" + mcVer + "，需要 Java " + required + " 或更高；当前将要使用的 Java 大版本是 " + have + "。\n\n建议：到「设置」里换一个 Java " + required + " 的 java.exe，或用「首次设置向导」自动下载匹配的 Java。\n选「仍然启动」会按现在的 Java 硬启动，报错请看服务端日志。";
-                proceed = InfoBox.Show(msg, "Java 版本不匹配", "仍然启动", "取消启动") == DialogResult.OK;
+                string msg = Txt.Msg2 + mcVer + Txt.CheckJavaVersionPart + required + Txt.CheckJavaVersionPart2 + have + Txt.CheckJavaVersionPart3 + required + Txt.CheckJavaVersionPart4;
+                proceed = InfoBox.Show(msg, Txt.CheckJavaVersionShow, Txt.CheckJavaVersionShow2, Txt.CheckJavaVersionShow3) == DialogResult.OK;
             });
-            AppendServerLog(proceed ? "[Java 检查] 用户选择仍然启动。" : "[Java 检查] 用户取消了启动。");
+            AppendServerLog(proceed ? Txt.CheckJavaVersionAppendServerLog12 : Txt.CheckJavaVersionAppendServerLog13);
             return proceed;
         }
 
         void StartAll()
         {
             if (_starting) return;
-            if (ProcAlive(_server) && _serverDone) { AppendState("服务端已在运行，无需重复启动。"); btnStart.Text = "联机运行中"; btnStart.BackColor = Color.FromArgb(71, 77, 88); RefreshStatus(); return; }
+            if (ProcAlive(_server) && _serverDone) { AppendState(Txt.StartAllAppendState); btnStart.Text = Txt.BtnStartText3; btnStart.BackColor = Color.FromArgb(71, 77, 88); RefreshStatus(); return; }
 
             _starting = true;
             btnStart.Enabled = false;
-            btnStart.Text = "启动中…";
+            btnStart.Text = Txt.BtnStartText4;
             btnStart.BackColor = Color.FromArgb(72, 144, 245);
             Thread t = new Thread(() => DoStart());
             t.IsBackground = true;
@@ -5232,19 +6173,19 @@ namespace MinecraftLauncher
             try
             {
                 // 1. 检查目录和文件
-                if (!Directory.Exists(_cfg.ServerDir)) { FailState("服务端目录不存在：" + _cfg.ServerDir + "，请到「设置」里检查服务端目录。"); return; }
-                if (!File.Exists(Path.Combine(_cfg.ServerDir, _cfg.JarName))) { FailState("找不到服务端 jar：" + _cfg.JarName + "，请到「设置」里检查 jar 文件名。"); return; }
-                if (string.IsNullOrEmpty(_cfg.JavaPath) || !File.Exists(_cfg.JavaPath)) { FailState("找不到 Java（java.exe）。请到「设置」里重新选择 Java 路径，通常是 .minecraft\\runtime 下或安装目录里。"); return; }
+                if (!Directory.Exists(_cfg.ServerDir)) { FailState(Txt.DoStartFailState + _cfg.ServerDir + Txt.DoStartFailState2); return; }
+                if (!File.Exists(Path.Combine(_cfg.ServerDir, _cfg.JarName))) { FailState(Txt.DoStartFailState3 + _cfg.JarName + Txt.DoStartFailState4); return; }
+                if (string.IsNullOrEmpty(_cfg.JavaPath) || !File.Exists(_cfg.JavaPath)) { FailState(Txt.DoStartFailState5); return; }
 
                 // v6.20: Java 版本校验（版本过低会弹窗，用户可坚持启动）
-                if (!CheckJavaVersion(Path.Combine(_cfg.ServerDir, _cfg.JarName))) { FailState("已取消启动：Java 版本低于服务端要求。换匹配的 Java，或用「首次设置向导」自动下载后再试。"); return; }
+                if (!CheckJavaVersion(Path.Combine(_cfg.ServerDir, _cfg.JarName))) { FailState(Txt.DoStartFailState6); return; }
 
                 // 2. 端口检查
                 if (!ProcAlive(_server))
                 {
                     if (PortInUse(_cfg.Port))
                     {
-                        FailState("端口 " + _cfg.Port + " 已被占用。可能是上次服务端没关干净，请点「安全关服」或重启本应用，不要自己去任务管理器乱杀 Java。");
+                        FailState(Txt.GuessCrash614Ret + _cfg.Port + Txt.DoStartFailState7);
                         return;
                     }
                 }
@@ -5254,14 +6195,14 @@ namespace MinecraftLauncher
                 if (_cfg.BackupOnStart && !_backupBusy)
                 {
                     _backupBusy = true;
-                    try { Ui(() => AppendState("开服前自动备份中…")); BackupCore("开服前自动备份"); }
+                    try { Ui(() => AppendState(Txt.DoStartAppendState)); BackupCore(Txt.BuildBackupPanelBkCheck2); }
                     catch { }
                     _backupBusy = false;
                     Ui(() => SetBackupUi());
                 }
 
                 // 3. 启动服务端
-                AppendState("正在启动 Minecraft 服务端…");
+                AppendState(Txt.DoStartAppendState2);
                 _serverDone = false;
                 _stoppingIntentional = false;
                 ProcessStartInfo psi = new ProcessStartInfo();
@@ -5286,28 +6227,29 @@ namespace MinecraftLauncher
                     bool wasDone = _serverDone;
                     Ui(() =>
                     {
-                        AppendServerLog("[进程已退出]");
+                        AppendServerLog(Txt.DoStartAppendServerLog);
+                        CancelSparkProfile();
                         if (!_stoppingIntentional && wasDone) HandleServerCrash(code);
                         RefreshStatus();
                     });
                 };
                 _server.EnableRaisingEvents = true;
-                if (!_server.Start()) { FailState("无法启动 Java 进程，请检查 Java 路径是否正确。"); return; }
+                if (!_server.Start()) { FailState(Txt.DoStartFailState8); return; }
                 _server.BeginOutputReadLine();
                 _server.BeginErrorReadLine();
 
                 // 等待 Done，最多 90 秒
-                AppendState("等待服务端就绪（出现 Done）…");
+                AppendState(Txt.DoStartAppendState3);
                 int waited = 0;
                 while (!_serverDone && waited <= 90)
                 {
-                    if (!ProcAlive(_server)) { FailState("服务端进程在出现 Done 之前就退出了。最可能：1) Java 路径或内存参数不对；2) 存档/world 或 mods 报错（请看服务端日志最底部）。不要动 world 和 mods。"); return; }
+                    if (!ProcAlive(_server)) { FailState(Txt.DoStartFailState9); return; }
                     Thread.Sleep(1000);
                     waited++;
                 }
-                if (!_serverDone) { FailState("服务端 90 秒还没出现 Done。可能内存不够、世界过大、或启动卡住。请看服务端日志最底部，别动 world 和 mods。"); return; }
+                if (!_serverDone) { FailState(Txt.DoStartFailState10); return; }
 
-                Ui(() => { btnStart.BackColor = Color.FromArgb(59, 165, 93); btnStart.Text = "联机运行中"; RefreshStatus(); });
+                Ui(() => { btnStart.BackColor = Color.FromArgb(59, 165, 93); btnStart.Text = Txt.BtnStartText3; RefreshStatus(); });
 
                 // 4. 启动隧道
                 StartTunnel();
@@ -5315,21 +6257,21 @@ namespace MinecraftLauncher
                 // 5. 全成功
                 if (_tunnelUp && !string.IsNullOrEmpty(_cfg.PublicAddr))
                 {
-                    Ui(() => { btnStart.BackColor = Color.FromArgb(71, 77, 88); AppendState("已就绪，点「复制地址发给朋友」把地址发给朋友即可。"); });
+                    Ui(() => { btnStart.BackColor = Color.FromArgb(71, 77, 88); AppendState(Txt.DoStartAppendState4); });
                 }
                 else
                 {
-                    Ui(() => { btnStart.Text = "一键启动联机"; btnStart.BackColor = Color.FromArgb(59, 165, 93); });
+                    Ui(() => { btnStart.Text = Txt.BtnStartText2; btnStart.BackColor = Color.FromArgb(59, 165, 93); });
                 }
             }
             catch (Exception ex)
             {
-                FailState("启动出错：" + ex.Message);
+                FailState(Txt.DoStartFailState11 + ex.Message);
             }
             finally
             {
                 _starting = false;
-                Ui(() => { btnStart.Enabled = true; if (btnStart.Text == "启动中…") btnStart.Text = "一键启动联机"; RefreshStatus(); });
+                Ui(() => { btnStart.Enabled = true; if (btnStart.Text == Txt.BtnStartText4) btnStart.Text = Txt.BtnStartText2; RefreshStatus(); });
             }
         }
 
@@ -5337,19 +6279,19 @@ namespace MinecraftLauncher
         {
             if (_cfg.TunnelMode == "launcher")
             {
-                Ui(() => AppendTunnelLog("[备用方案] 正在打开官方 SakuraFrp 启动器，请你在启动器里点一下启动隧道。"));
+                Ui(() => AppendTunnelLog(Txt.StartTunnelAppendTunnelLog));
                 try { Process.Start(new ProcessStartInfo(_cfg.FrpcPath) { WorkingDirectory = Path.GetDirectoryName(_cfg.FrpcPath) }); }
-                catch (Exception ex) { Ui(() => AppendTunnelLog("打开 SakuraFrp 启动器失败：" + ex.Message)); }
+                catch (Exception ex) { Ui(() => AppendTunnelLog(Txt.StartTunnelAppendTunnelLog2 + ex.Message)); }
                 return;
             }
 
             // frpc 命令行
-            if (!File.Exists(_cfg.FrpcPath)) { Ui(() => AppendTunnelLog("找不到 frpc.exe：" + _cfg.FrpcPath + "，请到「设置」里检查，或把隧道方式切到官方启动器。")); return; }
-            if (string.IsNullOrEmpty(_cfg.FrpKey)) { Ui(() => AppendTunnelLog("还没填访问密钥，请到「设置」里填写 SakuraFrp 访问密钥。")); return; }
-            if (string.IsNullOrEmpty(_cfg.TunnelId)) { Ui(() => AppendTunnelLog("还没填隧道 ID，请到「设置」里填写。")); return; }
+            if (!File.Exists(_cfg.FrpcPath)) { Ui(() => AppendTunnelLog(Txt.StartTunnelAppendTunnelLog3 + _cfg.FrpcPath + Txt.StartTunnelAppendTunnelLog4)); return; }
+            if (string.IsNullOrEmpty(_cfg.FrpKey)) { Ui(() => AppendTunnelLog(Txt.StartTunnelAppendTunnelLog5)); return; }
+            if (string.IsNullOrEmpty(_cfg.TunnelId)) { Ui(() => AppendTunnelLog(Txt.StartTunnelAppendTunnelLog6)); return; }
 
             if (ProcAlive(_frpc)) { StartVoiceTunnel(); return; }
-            AppendState("正在启动 SakuraFrp 隧道…");
+            AppendState(Txt.StartTunnelAppendState);
             _tunnelUp = false;
             ProcessStartInfo psi = new ProcessStartInfo();
             psi.FileName = _cfg.FrpcPath;
@@ -5369,15 +6311,15 @@ namespace MinecraftLauncher
             _frpc.EnableRaisingEvents = true;
             _frpc.Exited += (s, e) => { Ui(() =>
             {
-                AppendTunnelLog("[frpc 已退出]");
+                AppendTunnelLog(Txt.StartTunnelAppendTunnelLog7);
                 if (!_stoppingIntentional && _serverDone && ProcAlive(_server) && _cfg.TunnelMode == "frpc")
                 {
-                    AppendTunnelLog("[守护] 游戏隧道异常退出，5 秒后自动重连。");
+                    AppendTunnelLog(Txt.StartTunnelAppendTunnelLog8);
                     Delayed(5000, () => { if (!_stoppingIntentional && ProcAlive(_server)) StartTunnel(); });
                 }
                 RefreshStatus();
             }); };
-            if (!_frpc.Start()) { Ui(() => AppendTunnelLog("frpc 启动失败，请检查 frpc.exe 路径。")); return; }
+            if (!_frpc.Start()) { Ui(() => AppendTunnelLog(Txt.StartTunnelAppendTunnelLog9)); return; }
             _frpc.BeginOutputReadLine();
             _frpc.BeginErrorReadLine();
 
@@ -5388,11 +6330,11 @@ namespace MinecraftLauncher
                 {
                     if (_frpcBundled)
                     {
-                        Ui(() => AppendTunnelLog("检测到当前 frpc.exe 是 SakuraFrp 启动器自带的套装版，这个版本不能由外部程序直接运行（只能由 SakuraFrp Service 启动），所以直接调用会退出。这与访问密钥、隧道 ID、节点都无关。请到「设置」把 frpc 路径改成独立版 frpc，或把隧道方式切到官方启动器。"));
+                        Ui(() => AppendTunnelLog(Txt.StartTunnelAppendTunnelLog10));
                     }
                     else
                     {
-                        Ui(() => AppendTunnelLog("frpc 进程退出了。可能：1) 访问密钥或隧道 ID 错误；2) 节点异常；3) 账号需实名/签到。请到「设置」检查密钥和隧道 ID，或把隧道方式切到官方启动器。"));
+                        Ui(() => AppendTunnelLog(Txt.StartTunnelAppendTunnelLog11));
                     }
                     break;
                 }
@@ -5401,7 +6343,7 @@ namespace MinecraftLauncher
             }
             if (_frpcBundled && !_tunnelUp)
             {
-                Ui(() => { AppendState("frpc 是启动器套装版，不能直接运行。请到「设置」改独立版 frpc 或切官方启动器。"); });
+                Ui(() => { AppendState(Txt.StartTunnelAppendState2); });
             }
 
             StartVoiceTunnel();
@@ -5409,7 +6351,7 @@ namespace MinecraftLauncher
 
         void StartVoiceTunnel()
         {
-            if (string.IsNullOrEmpty(_cfg.VoiceTunnelId)) { Ui(() => AppendTunnelLog("[语音] 未填写语音隧道 ID，跳过语音隧道。")); return; }
+            if (string.IsNullOrEmpty(_cfg.VoiceTunnelId)) { Ui(() => AppendTunnelLog(Txt.StartVoiceTunnelAppendTunnelLog)); return; }
             if (ProcAlive(_frpcVoice)) return;
             _voiceUp = false;
             ProcessStartInfo psi = new ProcessStartInfo();
@@ -5430,38 +6372,38 @@ namespace MinecraftLauncher
             _frpcVoice.EnableRaisingEvents = true;
             _frpcVoice.Exited += (s, e) => { Ui(() =>
             {
-                AppendTunnelLog("[语音 frpc 已退出]");
+                AppendTunnelLog(Txt.StartVoiceTunnelAppendTunnelLog2);
                 if (!_stoppingIntentional && _serverDone && ProcAlive(_server))
                 {
-                    AppendTunnelLog("[守护] 语音隧道异常退出，5 秒后自动重连。");
+                    AppendTunnelLog(Txt.StartVoiceTunnelAppendTunnelLog3);
                     Delayed(5000, () => { if (!_stoppingIntentional && ProcAlive(_server)) StartVoiceTunnel(); });
                 }
                 RefreshStatus();
             }); };
-            if (!_frpcVoice.Start()) { Ui(() => AppendTunnelLog("[语音] frpc 启动失败，请检查 frpc.exe 路径。")); return; }
+            if (!_frpcVoice.Start()) { Ui(() => AppendTunnelLog(Txt.StartVoiceTunnelAppendTunnelLog4)); return; }
             _frpcVoice.BeginOutputReadLine();
             _frpcVoice.BeginErrorReadLine();
 
             int waited = 0;
             while (!_voiceUp && waited <= 20)
             {
-                if (!ProcAlive(_frpcVoice)) { Ui(() => AppendTunnelLog("[语音] frpc 进程退出了，请检查语音隧道 ID 是否正确。")); break; }
+                if (!ProcAlive(_frpcVoice)) { Ui(() => AppendTunnelLog(Txt.StartVoiceTunnelAppendTunnelLog5)); break; }
                 Thread.Sleep(1000);
                 waited++;
             }
-            if (_voiceUp) Ui(() => AppendState("语音隧道已连接。"));
+            if (_voiceUp) Ui(() => AppendState(Txt.StartVoiceTunnelAppendState));
         }
 
         void VoiceFrpcOutput(object s, DataReceivedEventArgs e)
         {
             if (e.Data == null) return;
-            AppendTunnelLog("[语音] " + e.Data);
+            AppendTunnelLog(Txt.VoiceFrpcOutputAppendTunnelLog + e.Data);
             TryParseVoice(e.Data);
         }
         void VoiceFrpcError(object s, DataReceivedEventArgs e)
         {
             if (e.Data == null) return;
-            AppendTunnelLog("[语音][ERR] " + e.Data);
+            AppendTunnelLog(Txt.VoiceFrpcErrorAppendTunnelLog + e.Data);
             TryParseVoice(e.Data);
         }
         void TryParseVoice(string line)
@@ -5542,7 +6484,7 @@ namespace MinecraftLauncher
                     string addr = m.Value;
                     _cfg.PublicAddr = addr;
                     _cfg.Save();
-                    Ui(() => { tbAddr.Text = addr; AppendState("已自动获取公网地址：" + addr); RefreshStatus(); });
+                    Ui(() => { tbAddr.Text = addr; AppendState(Txt.TryParseFrpcAppendState + addr); RefreshStatus(); });
                 }
             }
         }
@@ -5551,9 +6493,9 @@ namespace MinecraftLauncher
         {
             Ui(() => {
                 AppendState(msg);
-                InfoBox.Show(msg, "出错");
-                if (statusCard != null) { statusCard.ServerText = "服务端：出错"; statusCard.ServerColor = Color.Red; statusCard.TunnelText = "SakuraFrp 隧道：出错"; statusCard.TunnelColor = Color.Red; statusCard.SetPulse(0, false); statusCard.SetPulse(1, false); statusCard.Invalidate(); }
-                btnStart.Text = "一键启动联机"; btnStart.BackColor = Color.FromArgb(59, 165, 93);
+                InfoBox.Show(msg, Txt.OnHandleCreatedStr);
+                if (statusCard != null) { statusCard.ServerText = Txt.ServerText4; statusCard.ServerColor = Color.Red; statusCard.TunnelText = Txt.TunnelText4; statusCard.TunnelColor = Color.Red; statusCard.SetPulse(0, false); statusCard.SetPulse(1, false); statusCard.Invalidate(); }
+                btnStart.Text = Txt.BtnStartText2; btnStart.BackColor = Color.FromArgb(59, 165, 93);
             });
         }
 
@@ -5564,16 +6506,16 @@ namespace MinecraftLauncher
             if (!ProcAlive(_server))
             {
                 KillFrpc();
-                Ui(() => { AppendState("服务端未在运行，已停止隧道。"); RefreshStatus(); });
+                Ui(() => { AppendState(Txt.SafeStopAppendState); RefreshStatus(); });
                 return;
             }
 
             Ui(() => { btnStop.Enabled = false; });
-            AppendState("正在安全关服：向服务端发送 stop，等待存档保存…");
+            AppendState(Txt.SafeStopAppendState2);
             try { _server.StandardInput.WriteLine("stop"); _server.StandardInput.Flush(); }
             catch { }
 
-            AppendServerLog(">> 已发送 stop，等待存档保存并退出（最多 60 秒）");
+            AppendServerLog(Txt.SafeStopAppendServerLog);
 
             // 最多等 60 秒
             int waited = 0;
@@ -5587,27 +6529,27 @@ namespace MinecraftLauncher
 
             if (exited)
             {
-                AppendState("服务端已正常停止（存档已保存）。正在关闭隧道…");
-                Ui(() => AppendServerLog("[服务端进程已正常退出]"));
+                AppendState(Txt.SafeStopAppendState3);
+                Ui(() => AppendServerLog(Txt.SafeStopAppendServerLog2));
             }
             else
             {
                 DialogResult res = DialogResult.Cancel;
-                Ui(() => { res = InfoBox.Show("服务端 60 秒还没退出。强制结束可能丢失最近几分钟的进度。是否强制结束？", "安全关服超时", "强制结束", "再等等"); });
+                Ui(() => { res = InfoBox.Show(Txt.SafeStopShow, Txt.SafeStopShow2, Txt.SafeStopShow3, Txt.SafeStopShow4); });
                 if (res == DialogResult.OK)
                 {
                     try { _server.Kill(); } catch { }
-                    AppendState("已强制结束服务端进程（可能丢失最近进度）。");
+                    AppendState(Txt.SafeStopAppendState4);
                 }
                 else
                 {
-                    AppendState("已取消强制结束，服务端仍在运行。");
+                    AppendState(Txt.SafeStopAppendState5);
                 }
             }
 
             KillFrpc();
             bool serverGone = !ProcAlive(_server);
-            Ui(() => { btnStart.Text = "一键启动联机"; btnStart.BackColor = Color.FromArgb(59, 165, 93); btnStop.Enabled = true; RefreshStatus(); if (serverGone) AppendState("已全部停止：服务端和隧道均已关闭。"); });
+            Ui(() => { btnStart.Text = Txt.BtnStartText2; btnStart.BackColor = Color.FromArgb(59, 165, 93); btnStop.Enabled = true; RefreshStatus(); if (serverGone) AppendState(Txt.SafeStopAppendState6); });
         }
 
         // HasExited throws on a Process that was constructed but whose
@@ -5644,7 +6586,7 @@ namespace MinecraftLauncher
             bool frpcRunning = ProcAlive(_frpc) || ProcAlive(_frpcVoice);
             if (serverRunning || frpcRunning)
             {
-                using (var c = new ConfirmBox("服务端还在运行，直接关可能不存档，要先安全关服吗？"))
+                using (var c = new ConfirmBox(Txt.OnClosingConfirmBox))
                 {
                     var r = c.ShowDialog(this);
                     if (r == DialogResult.OK && c.ChoiceYes)
