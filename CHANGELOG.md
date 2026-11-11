@@ -4,6 +4,24 @@
 
 All notable changes are documented here. From v6.20 on: any change to release binaries requires a version bump, an entry in this file, and SHA256 checksums in the release notes — no more silent asset replacement under the same tag.
 
+## [v6.22] - 2026-11-12
+
+### 新增 / Added
+
+- **界面语言增至 10 种**：简体中文、繁體中文、English、日本語、한국어、Español、Português、Русский、Deutsch、Français。首次启动时先弹出语言选择窗口，选定后写入配置。
+  Ten UI languages: Simplified Chinese, Traditional Chinese, English, Japanese, Korean, Spanish, Portuguese, Russian, German and French. A language picker opens on first launch and stores the choice in the configuration.
+- **设置中可更改语言**：设置页新增界面语言选项，改选后重启程序生效。
+  The language can be changed later in Settings; the new language applies after a restart.
+
+### 变更 / Changed
+
+- **中英文版合并为单一可执行文件**：原先分开的中文版 `MCLauncherApp.exe` 与英文版 `MCLauncherApp_EN.exe` 合并为一个文件，英文版文件停止单独发布。界面语言在运行时读取，不再按语言分别编译。
+  The separate Chinese and English executables are merged into a single `MCLauncherApp.exe`; `MCLauncherApp_EN.exe` is no longer published separately. The UI language is read at runtime instead of being fixed at compile time.
+
+### 附件 / Assets
+
+- `MCLauncherApp.exe` SHA256: `EBDF7B0673BFF3572552A2DD8BB9E1263490139BFD3CEBD7B7B65820E5735660`
+
 ## [v6.21] - 2026-11-12
 
 ### 新增 / Added
