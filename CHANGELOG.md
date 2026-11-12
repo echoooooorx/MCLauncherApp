@@ -4,6 +4,17 @@
 
 All notable changes are documented here. From v6.20 on: any change to release binaries requires a version bump, an entry in this file, and SHA256 checksums in the release notes — no more silent asset replacement under the same tag.
 
+## [v6.22.1] - 2026-11-12
+
+### 修复 / Fixed
+
+- **首次启动语言选择窗口放大并统一外观**：窗口尺寸由 360×400 增大至 520×600，标题、语言列表与确认按钮统一改用 14pt 微软雅黑 UI 字体，解决高分辨率屏幕下文字过小、难以辨认的问题；窗口标题栏改为与主界面一致的深色，不再是系统默认的白色标题栏。
+  First-launch language picker enlarged and restyled: the window grows from 360×400 to 520×600, and the heading, the language list and the confirm button now use 14 pt Microsoft YaHei UI, fixing text that was too small to read on high-resolution displays. The title bar is now dark, matching the main window, instead of the default white system title bar.
+
+### 附件 / Assets
+
+- `MCLauncherApp.exe` SHA256: `42D84E2896EB6E949CFCDF94BB8D2A35A3D0CC55464C2DE695CDE5DED620C48A`
+
 ## [v6.22] - 2026-11-12
 
 ### 新增 / Added
