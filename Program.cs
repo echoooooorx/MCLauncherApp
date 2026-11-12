@@ -111,7 +111,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "The frpc.exe path does not exist. Check it.";
         public const string ValidateSettingsMarkInvalid7 = "In frpc mode, the tunnel ID cannot be empty.";
         public const string ValidateSettingsMarkInvalid8 = "The PCL2 path does not exist. Check it.";
-        public const string TitleText = "Minecraft Multiplayer Helper v6.22.2";
+        public const string TitleText = "Minecraft Multiplayer Helper v6.22.4";
         public const string SubText = "Dual tunnel · Game + Voice";
         public const string ServerText = "Server: Not running";
         public const string TunnelText = "SakuraFrp tunnel: Not running";
@@ -289,8 +289,8 @@ namespace MinecraftLauncher
         public const string BtnPcl2Text = "Open PCL2";
         public const string BtnStopText = "Stop server safely";
         public const string LogToggleLblCaption = "▾  Log";
-        public const string BuildUiStr = "Server Log";
-        public const string BuildUiStr2 = "Tunnel Log";
+        public const string BuildUiStr = "Server";
+        public const string BuildUiStr2 = "Tunnel";
         public const string BuildUiStr3 = "Status";
         public const string BuildUiStr4 = "Backups";
         public const string BuildUiMakeLogBox = "No logs yet · Server output will appear here";
@@ -535,7 +535,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "frpc.exe 路径不存在，请检查。";
         public const string ValidateSettingsMarkInvalid7 = "frpc 模式下隧道 ID 不能为空。";
         public const string ValidateSettingsMarkInvalid8 = "PCL2 路径不存在，请检查。";
-        public const string TitleText = "Minecraft 联机助手 v6.22.2";
+        public const string TitleText = "Minecraft 联机助手 v6.22.4";
         public const string SubText = "双隧道版 · 游戏 + 语音";
         public const string ServerText = "服务端：未启动";
         public const string TunnelText = "SakuraFrp 隧道：未启动";
@@ -959,7 +959,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "frpc.exe 路徑不存在，請檢查。";
         public const string ValidateSettingsMarkInvalid7 = "frpc 模式下隧道 ID 不能為空。";
         public const string ValidateSettingsMarkInvalid8 = "PCL2 路徑不存在，請檢查。";
-        public const string TitleText = "Minecraft 多人連線助手 v6.22.2";
+        public const string TitleText = "Minecraft 多人連線助手 v6.22.4";
         public const string SubText = "雙隧道版 · 遊戲 + 語音";
         public const string ServerText = "伺服器：未啟動";
         public const string TunnelText = "SakuraFrp 隧道：未啟動";
@@ -1383,7 +1383,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "frpc.exe のパスが存在しません。確認してください。";
         public const string ValidateSettingsMarkInvalid7 = "frpc モードではトンネル ID は空にできません。";
         public const string ValidateSettingsMarkInvalid8 = "PCL2 のパスが存在しません。確認してください。";
-        public const string TitleText = "Minecraft マルチプレイヘルパー v6.22.2";
+        public const string TitleText = "Minecraft マルチプレイヘルパー v6.22.4";
         public const string SubText = "デュアルトンネル · ゲーム + 音声";
         public const string ServerText = "サーバー：停止中";
         public const string TunnelText = "SakuraFrp トンネル：停止中";
@@ -1561,9 +1561,9 @@ namespace MinecraftLauncher
         public const string BtnPcl2Text = "PCL2 を開く";
         public const string BtnStopText = "サーバーを安全に停止";
         public const string LogToggleLblCaption = "▾  ログ";
-        public const string BuildUiStr = "サーバーログ";
-        public const string BuildUiStr2 = "トンネルログ";
-        public const string BuildUiStr3 = "ステータス";
+        public const string BuildUiStr = "サーバー";
+        public const string BuildUiStr2 = "トンネル";
+        public const string BuildUiStr3 = "状態";
         public const string BuildUiStr4 = "バックアップ";
         public const string BuildUiMakeLogBox = "まだログはありません · サーバーの出力がここに表示されます";
         public const string BuildUiMakeLogBox2 = "まだログはありません · トンネルの出力がここに表示されます";
@@ -1807,7 +1807,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "frpc.exe 경로가 존재하지 않습니다. 확인하세요.";
         public const string ValidateSettingsMarkInvalid7 = "frpc 모드에서는 터널 ID를 비워 둘 수 없습니다.";
         public const string ValidateSettingsMarkInvalid8 = "PCL2 경로가 존재하지 않습니다. 확인하세요.";
-        public const string TitleText = "Minecraft 멀티플레이 도우미 v6.22.2";
+        public const string TitleText = "Minecraft 멀티플레이 도우미 v6.22.4";
         public const string SubText = "듀얼 터널 · 게임 + 음성";
         public const string ServerText = "서버: 실행 중 아님";
         public const string TunnelText = "SakuraFrp 터널: 실행 중 아님";
@@ -1985,8 +1985,8 @@ namespace MinecraftLauncher
         public const string BtnPcl2Text = "PCL2 열기";
         public const string BtnStopText = "서버 안전하게 중지";
         public const string LogToggleLblCaption = "▾  로그";
-        public const string BuildUiStr = "서버 로그";
-        public const string BuildUiStr2 = "터널 로그";
+        public const string BuildUiStr = "서버";
+        public const string BuildUiStr2 = "터널";
         public const string BuildUiStr3 = "상태";
         public const string BuildUiStr4 = "백업";
         public const string BuildUiMakeLogBox = "아직 로그가 없습니다 · 서버 출력이 여기에 표시됩니다";
@@ -2231,7 +2231,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "La ruta de frpc.exe no existe. Revísala.";
         public const string ValidateSettingsMarkInvalid7 = "En modo frpc, el ID del túnel no puede estar vacío.";
         public const string ValidateSettingsMarkInvalid8 = "La ruta de PCL2 no existe. Revísala.";
-        public const string TitleText = "Asistente multijugador de Minecraft v6.22.2";
+        public const string TitleText = "Asistente multijugador de Minecraft v6.22.4";
         public const string SubText = "Túnel doble · Juego + Voz";
         public const string ServerText = "Servidor: detenido";
         public const string TunnelText = "Túnel SakuraFrp: detenido";
@@ -2409,10 +2409,10 @@ namespace MinecraftLauncher
         public const string BtnPcl2Text = "Abrir PCL2";
         public const string BtnStopText = "Detener el servidor de forma segura";
         public const string LogToggleLblCaption = "▾  Registro";
-        public const string BuildUiStr = "Registro del servidor";
-        public const string BuildUiStr2 = "Registro del túnel";
+        public const string BuildUiStr = "Servidor";
+        public const string BuildUiStr2 = "Túnel";
         public const string BuildUiStr3 = "Estado";
-        public const string BuildUiStr4 = "Copias de seguridad";
+        public const string BuildUiStr4 = "Copias";
         public const string BuildUiMakeLogBox = "Aún no hay registros · La salida del servidor aparecerá aquí";
         public const string BuildUiMakeLogBox2 = "Aún no hay registros · La salida del túnel aparecerá aquí";
         public const string BtnJumpBottomText = "↓ Volver abajo";
@@ -2655,7 +2655,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "O caminho do frpc.exe não existe. Verifica-o.";
         public const string ValidateSettingsMarkInvalid7 = "No modo frpc, o ID do túnel não pode estar vazio.";
         public const string ValidateSettingsMarkInvalid8 = "O caminho do PCL2 não existe. Verifica-o.";
-        public const string TitleText = "Assistente multijogador do Minecraft v6.22.2";
+        public const string TitleText = "Assistente multijogador do Minecraft v6.22.4";
         public const string SubText = "Túnel duplo · Jogo + Voz";
         public const string ServerText = "Servidor: parado";
         public const string TunnelText = "Túnel SakuraFrp: parado";
@@ -2833,10 +2833,10 @@ namespace MinecraftLauncher
         public const string BtnPcl2Text = "Abrir PCL2";
         public const string BtnStopText = "Parar o servidor em segurança";
         public const string LogToggleLblCaption = "▾  Registo";
-        public const string BuildUiStr = "Registo do servidor";
-        public const string BuildUiStr2 = "Registo do túnel";
+        public const string BuildUiStr = "Servidor";
+        public const string BuildUiStr2 = "Túnel";
         public const string BuildUiStr3 = "Estado";
-        public const string BuildUiStr4 = "Cópias de segurança";
+        public const string BuildUiStr4 = "Cópias";
         public const string BuildUiMakeLogBox = "Ainda sem registos · A saída do servidor aparecerá aqui";
         public const string BuildUiMakeLogBox2 = "Ainda sem registos · A saída do túnel aparecerá aqui";
         public const string BtnJumpBottomText = "↓ Voltar ao fundo";
@@ -3079,7 +3079,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "Путь к frpc.exe не существует. Проверьте его.";
         public const string ValidateSettingsMarkInvalid7 = "В режиме frpc ID туннеля не может быть пустым.";
         public const string ValidateSettingsMarkInvalid8 = "Путь к PCL2 не существует. Проверьте его.";
-        public const string TitleText = "Помощник для сетевой игры Minecraft v6.22.2";
+        public const string TitleText = "Помощник для сетевой игры Minecraft v6.22.4";
         public const string SubText = "Двойной туннель · Игра + Голос";
         public const string ServerText = "Сервер: остановлен";
         public const string TunnelText = "Туннель SakuraFrp: остановлен";
@@ -3257,10 +3257,10 @@ namespace MinecraftLauncher
         public const string BtnPcl2Text = "Открыть PCL2";
         public const string BtnStopText = "Безопасно остановить сервер";
         public const string LogToggleLblCaption = "▾  Лог";
-        public const string BuildUiStr = "Лог сервера";
-        public const string BuildUiStr2 = "Лог туннеля";
-        public const string BuildUiStr3 = "Состояние";
-        public const string BuildUiStr4 = "Резервные копии";
+        public const string BuildUiStr = "Сервер";
+        public const string BuildUiStr2 = "Туннель";
+        public const string BuildUiStr3 = "Статус";
+        public const string BuildUiStr4 = "Копии";
         public const string BuildUiMakeLogBox = "Логов пока нет · Вывод сервера появится здесь";
         public const string BuildUiMakeLogBox2 = "Логов пока нет · Вывод туннеля появится здесь";
         public const string BtnJumpBottomText = "↓ Вернуться вниз";
@@ -3268,7 +3268,7 @@ namespace MinecraftLauncher
         public const string BuildUiSetToolTip = "Назад";
         public const string BuildUiSetToolTip2 = "Вперёд";
         public const string BuildUiSetToolTip3 = "Поиск по логу; Enter — переход к следующему совпадению";
-        public const string ChkErrOnlyText = "Только предупреждения/ошибки";
+        public const string ChkErrOnlyText = "Только ошибки";
         public const string CmdLblCaption = "Команда сервера";
         public const string BtnCmdSendText = "Отправить";
         public const string BuildUiAppendState = "Первое использование: заполните ключ доступа SakuraFrp и ID туннеля в Настройках и проверьте путь к PCL2.";
@@ -3503,7 +3503,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "Der Pfad zu frpc.exe existiert nicht. Prüfe ihn.";
         public const string ValidateSettingsMarkInvalid7 = "Im frpc-Modus darf die Tunnel-ID nicht leer sein.";
         public const string ValidateSettingsMarkInvalid8 = "Der PCL2-Pfad existiert nicht. Prüfe ihn.";
-        public const string TitleText = "Minecraft Mehrspieler-Helfer v6.22.2";
+        public const string TitleText = "Minecraft Mehrspieler-Helfer v6.22.4";
         public const string SubText = "Doppeltunnel · Spiel + Sprache";
         public const string ServerText = "Server: Gestoppt";
         public const string TunnelText = "SakuraFrp Tunnel: Gestoppt";
@@ -3681,8 +3681,8 @@ namespace MinecraftLauncher
         public const string BtnPcl2Text = "PCL2 öffnen";
         public const string BtnStopText = "Server sicher stoppen";
         public const string LogToggleLblCaption = "▾  Protokoll";
-        public const string BuildUiStr = "Serverprotokoll";
-        public const string BuildUiStr2 = "Tunnelprotokoll";
+        public const string BuildUiStr = "Server";
+        public const string BuildUiStr2 = "Tunnel";
         public const string BuildUiStr3 = "Status";
         public const string BuildUiStr4 = "Sicherungen";
         public const string BuildUiMakeLogBox = "Noch keine Protokolle · Die Ausgabe des Servers erscheint hier";
@@ -3927,7 +3927,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "Le chemin de frpc.exe n'existe pas. Vérifie-le.";
         public const string ValidateSettingsMarkInvalid7 = "En mode frpc, l'ID du tunnel ne peut pas être vide.";
         public const string ValidateSettingsMarkInvalid8 = "Le chemin de PCL2 n'existe pas. Vérifie-le.";
-        public const string TitleText = "Assistant multijoueur Minecraft v6.22.2";
+        public const string TitleText = "Assistant multijoueur Minecraft v6.22.4";
         public const string SubText = "Double tunnel · Jeu + Voix";
         public const string ServerText = "Serveur : arrêté";
         public const string TunnelText = "Tunnel SakuraFrp : arrêté";
@@ -4105,8 +4105,8 @@ namespace MinecraftLauncher
         public const string BtnPcl2Text = "Ouvrir PCL2";
         public const string BtnStopText = "Arrêter le serveur en sécurité";
         public const string LogToggleLblCaption = "▾  Journal";
-        public const string BuildUiStr = "Journal du serveur";
-        public const string BuildUiStr2 = "Journal du tunnel";
+        public const string BuildUiStr = "Serveur";
+        public const string BuildUiStr2 = "Tunnel";
         public const string BuildUiStr3 = "État";
         public const string BuildUiStr4 = "Sauvegardes";
         public const string BuildUiMakeLogBox = "Aucun journal pour l'instant · La sortie du serveur apparaîtra ici";
@@ -5059,18 +5059,28 @@ namespace MinecraftLauncher
         RoundButton _yes, _no;
         Font _msgFont;
         Rectangle _msgRect, _dotRect;
+        int _baseW = 440; // v6.22.3: 按钮译文更长时对话框按需加宽
 
         public ConfirmBox(string message)
         {
             _message = message ?? "";
-            InitChrome(Txt.ShowFriendlyErrorShow, 440, 190);
+            // v6.22.3: 确认按钮按当前语言实测宽度，对话框不足时加宽
+            int yesW, noW;
+            using (var bf = new Font("Microsoft YaHei UI", 9f))
+            {
+                yesW = Math.Max(180, TextFit.Measure(Txt.YesText, bf) + 28);
+                noW = Math.Max(100, TextFit.Measure(Txt.NoText, bf) + 28);
+            }
+            _baseW = Math.Max(440, yesW + noW + 56);
+            InitChrome(Txt.ShowFriendlyErrorShow, _baseW, 190);
             _yes = new RoundButton();
             _yes.Primary = true;
             _yes.Text = Txt.YesText;
             _yes.BackColor = Pal.Green;
             _yes.ForeColor = Color.White;
             _yes.BackdropColor = Pal.Bg;
-            _yes.SetBounds(20, 95, 180, 34);
+            int yesX = Math.Max(20, (_baseW - (yesW + noW + 16)) / 2);
+            _yes.SetBounds(yesX, 95, yesW, 34);
             _yes.Click += (s, e) => { ChoiceYes = true; DialogResult = DialogResult.OK; };
             Controls.Add(_yes);
             _no = new RoundButton();
@@ -5078,7 +5088,7 @@ namespace MinecraftLauncher
             _no.BackColor = Pal.Surface;
             _no.ForeColor = Color.White;
             _no.BackdropColor = Pal.Bg;
-            _no.SetBounds(220, 95, 100, 34);
+            _no.SetBounds(yesX + yesW + 16, 95, noW, 34);
             _no.Click += (s, e) => { DialogResult = DialogResult.Cancel; };
             Controls.Add(_no);
             AcceptButton = _yes;
@@ -5091,7 +5101,7 @@ namespace MinecraftLauncher
             base.OnLoad(e);
             try
             {
-                float sf = ClientSize.Width / 440f;
+                float sf = ClientSize.Width / (float)_baseW;
                 _msgFont = new Font(Font.FontFamily, Font.Size + 1f, FontStyle.Regular);
                 int textX = (int)Math.Round(42 * sf);
                 int textW = ClientSize.Width - textX - (int)Math.Round(24 * sf);
@@ -5141,17 +5151,33 @@ namespace MinecraftLauncher
         private ComboBox cbLanguage;
         private Config _cfg;
         private TextLabel _errLbl;
+        private int _labelW = 140;
         public bool ServerRunning = false;
         public bool RestartRequested = false;
 
         public SettingsForm(Config cfg)
         {
             _cfg = cfg;
-            InitChrome(Txt.SettingsFormInitChrome, 620, 620);
+            // v6.22.3: 标签列按当前语言实测（下限 140 / 上限 210），窗口随需加宽，
+            // 输入框 x 与宽度随之联动，避免德/俄/西长标签压到输入框上。
+            using (var lf = new Font("Microsoft YaHei UI", 9f))
+            {
+                string[] labels = {
+                    Txt.SettingsFormAddField, Txt.SettingsFormAddField2, Txt.SettingsFormAddField3,
+                    Txt.SettingsFormAddField4, Txt.SettingsFormAddField5, Txt.SettingsFormAddField6,
+                    Txt.LbModeCaption, Txt.LbKeyCaption, Txt.SettingsFormAddField7,
+                    Txt.SettingsFormAddField8, Txt.SettingsFormAddField9, Txt.SettingsFormAddField10,
+                    Txt.LangCaption };
+                for (int i = 0; i < labels.Length; i++) _labelW = Math.Max(_labelW, TextFit.Measure(labels[i], lf) + 6);
+            }
+            if (_labelW > 210) _labelW = 210;
+            int lx = 20, tx = lx + _labelW + 10;
+            int formW = Math.Max(620, tx + 420 + 30);
+            int tw = formW - tx - 30;
+            InitChrome(Txt.SettingsFormInitChrome, formW, 620);
             AutoScroll = true;
 
             int y = 14;
-            int lx = 20, tx = 170, tw = 420;
 
             AddField(Txt.SettingsFormAddField, "tbServerDir", cfg.ServerDir, ref y, lx, tx, tw, out tbServerDir);
             AddField(Txt.SettingsFormAddField2, "tbJava", cfg.JavaPath, ref y, lx, tx, tw, out tbJava);
@@ -5164,7 +5190,7 @@ namespace MinecraftLauncher
             lbMode.TopAlign = true;
             lbMode.Caption = Txt.LbModeCaption;
             lbMode.TextShiftX = 2f; lbMode.TextShiftY = -0.67f;
-            lbMode.SetBounds(lx, y, 140, 26);
+            lbMode.SetBounds(lx, y, _labelW, 26);
             lbMode.BackColor = Color.Transparent; lbMode.BackdropColor = Pal.Bg; lbMode.ForeColor = Pal.Sub;
             Controls.Add(lbMode);
             cbTunnelMode = new ComboBox();
@@ -5184,7 +5210,7 @@ namespace MinecraftLauncher
             lbKey.TopAlign = true;
             lbKey.Caption = Txt.LbKeyCaption;
             lbKey.TextShiftX = 2f; lbKey.TextShiftY = -0.67f;
-            lbKey.SetBounds(lx, y, 140, 26);
+            lbKey.SetBounds(lx, y, _labelW, 26);
             lbKey.BackColor = Color.Transparent; lbKey.BackdropColor = Pal.Bg; lbKey.ForeColor = Pal.Sub;
             Controls.Add(lbKey);
             tbKey = new TextBox();
@@ -5206,7 +5232,7 @@ namespace MinecraftLauncher
             lbLang.TopAlign = true;
             lbLang.Caption = Txt.LangCaption;
             lbLang.TextShiftX = 2f; lbLang.TextShiftY = -0.67f;
-            lbLang.SetBounds(lx, y, 140, 26);
+            lbLang.SetBounds(lx, y, _labelW, 26);
             lbLang.BackColor = Color.Transparent; lbLang.BackdropColor = Pal.Bg; lbLang.ForeColor = Pal.Sub;
             Controls.Add(lbLang);
             cbLanguage = new ComboBox();
@@ -5231,11 +5257,18 @@ namespace MinecraftLauncher
             _errLbl.BackColor = Color.Transparent; _errLbl.BackdropColor = Pal.Bg;
             Controls.Add(_errLbl);
 
+            // v6.22.3: 底部四个按钮按译文比例分配（原固定 180/150/100/100）
+            int[] bw;
+            using (var bf = new Font("Microsoft YaHei UI", 9f))
+                bw = TextFit.Distribute(new string[] { Txt.BtnPropsText, Txt.BtnWizardText, Txt.BtnSaveText, Txt.NoText },
+                    bf, formW - 40, 12, 24, 84);
+            int bx0 = 20, bx1 = bx0 + bw[0] + 12, bx2 = bx1 + bw[1] + 12, bx3 = bx2 + bw[2] + 12;
+
             var btnProps = new RoundButton();
             btnProps.Text = Txt.BtnPropsText;
             btnProps.BackColor = Pal.Surface;
             btnProps.ForeColor = Color.White;
-            btnProps.SetBounds(20, y + 52, 180, 38);
+            btnProps.SetBounds(bx0, y + 52, bw[0], 38);
             btnProps.Click += (s, e) =>
             {
                 string dir = tbServerDir.Text.Trim();
@@ -5248,7 +5281,7 @@ namespace MinecraftLauncher
             btnWizard.Text = Txt.BtnWizardText;
             btnWizard.BackColor = Pal.Surface;
             btnWizard.ForeColor = Color.White;
-            btnWizard.SetBounds(212, y + 52, 150, 38);
+            btnWizard.SetBounds(bx1, y + 52, bw[1], 38);
             btnWizard.Click += (s, e) =>
             {
                 using (var wf = new WizardForm(_cfg, tbServerDir.Text.Trim()))
@@ -5269,7 +5302,7 @@ namespace MinecraftLauncher
             btnSave.Text = Txt.BtnSaveText;
             btnSave.BackColor = Pal.Green;
             btnSave.ForeColor = Color.White;
-            btnSave.SetBounds(374, y + 52, 100, 38);
+            btnSave.SetBounds(bx2, y + 52, bw[2], 38);
             btnSave.Click += (s, e) => { if (Save()) DialogResult = DialogResult.OK; };
             Controls.Add(btnSave);
 
@@ -5277,11 +5310,11 @@ namespace MinecraftLauncher
             btnCancel.Text = Txt.NoText;
             btnCancel.BackColor = Pal.Surface;
             btnCancel.ForeColor = Color.White;
-            btnCancel.SetBounds(486, y + 52, 100, 38);
+            btnCancel.SetBounds(bx3, y + 52, bw[3], 38);
             btnCancel.Click += (s, e) => { DialogResult = DialogResult.Cancel; };
             Controls.Add(btnCancel);
 
-            ClientSize = new Size(620, Math.Min(y + 130, 710) + 40);
+            ClientSize = new Size(formW, Math.Min(y + 130, 710) + 40);
             AcceptButton = btnSave;
             FinishChrome();
         }
@@ -5292,7 +5325,7 @@ namespace MinecraftLauncher
             lb.TopAlign = true;
             lb.Caption = label;
             lb.TextShiftX = 2f; lb.TextShiftY = -0.67f;
-            lb.SetBounds(lx, y, 140, 26);
+            lb.SetBounds(lx, y, _labelW, 26);
             lb.BackColor = Color.Transparent; lb.BackdropColor = Pal.Bg;
             lb.ForeColor = Pal.Sub;
             Controls.Add(lb);
@@ -5593,6 +5626,73 @@ namespace MinecraftLauncher
         }
     }
 
+    // ---------- v6.22.3: 多语言文本自适应 ----------
+    // 所有固定像素布局都是按中文/英文长度定的，法/德/俄/西/葡译文更长，
+    // 9pt 固定字号下会被裁掉或互相压叠。这里集中提供“按当前设备字体实测 +
+    // 逐级缩字号（下限 7pt）+ 必要时省略号”的能力，由各控件在绘制/排版时调用。
+    static class TextFit
+    {
+        public const float MinSize = 7f;
+        // 单行文本像素宽（不含内边距）
+        public static int Measure(string s, Font f)
+        {
+            if (string.IsNullOrEmpty(s) || f == null) return 0;
+            try
+            {
+                using (var g = Graphics.FromHwnd(IntPtr.Zero))
+                    return TextRenderer.MeasureText(g, s, f, new Size(int.MaxValue, int.MaxValue),
+                        TextFormatFlags.SingleLine | TextFormatFlags.NoPadding).Width;
+            }
+            catch { return 0; }
+        }
+        // 返回在 avail 宽内放得下的最大字号；都放不下时返回 MinSize
+        public static float FitSize(string s, Font baseFont, int avail, float minSize)
+        {
+            if (baseFont == null || string.IsNullOrEmpty(s) || avail <= 0) return baseFont == null ? minSize : baseFont.Size;
+            float size = baseFont.Size;
+            while (size > minSize)
+            {
+                using (var f = new Font(baseFont.FontFamily, size, baseFont.Style))
+                {
+                    if (Measure(s, f) <= avail) return size;
+                }
+                size -= 0.5f;
+            }
+            return minSize;
+        }
+        // 按文本比例把一组控件的宽度分配到 total 内（不足时等比压缩）
+        public static int[] Distribute(string[] texts, Font f, int total, int gap, int pad, int minW)
+        {
+            int n = texts == null ? 0 : texts.Length;
+            int[] w = new int[n];
+            if (n == 0) return w;
+            int[] want = new int[n];
+            int sum = 0;
+            for (int i = 0; i < n; i++)
+            {
+                want[i] = Math.Max(minW, Measure(texts[i], f) + pad);
+                sum += want[i];
+            }
+            int avail = total - gap * (n - 1);
+            if (avail < n) avail = n;
+            if (sum <= avail)
+            {
+                for (int i = 0; i < n; i++) w[i] = want[i];
+                return w;
+            }
+            double k = (double)avail / sum;
+            int used = 0;
+            for (int i = 0; i < n; i++)
+            {
+                w[i] = Math.Max(1, (int)Math.Floor(want[i] * k));
+                used += w[i];
+            }
+            w[n - 1] += avail - used; // 余数给最后一项，保证总宽一致
+            if (w[n - 1] < 1) w[n - 1] = 1;
+            return w;
+        }
+    }
+
     class CardPanel : Panel
     {
         public int Radius = 12;
@@ -5652,6 +5752,11 @@ namespace MinecraftLauncher
         public int Radius = 8;
         public Color BackdropColor = Pal.Bg;
         bool _hover = false, _down = false;
+        // v6.22.3: 译文自适应缓存（文本/宽度/字号不变时复用测量结果）
+        string _fitText = null;
+        int _fitWidth = -1;
+        float _fitSize = 0f;
+        Font _fitFont = null;
         // _shade: 0 = normal, +1 = full hover lighten, -1 = full press darken
         readonly AnimFloat _shade = new AnimFloat(0);
         public RoundButton()
@@ -5706,7 +5811,22 @@ namespace MinecraftLauncher
             if (!Enabled) tc = Gfx.Mix(tc, Pal.Mute, 0.4);
             if (DangerHover && Enabled && hAmt > 0) tc = Gfx.Mix(tc, Pal.Danger, hAmt);
             if (Enabled && Focused && ShowFocusCues) Gfx.DrawFocusRing(g, new Rectangle(0, 0, Width, Height), Radius, g.DpiX / 96f);
-            TextRenderer.DrawText(g, Text, Font, rect, tc, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine | TextFormatFlags.EndEllipsis);
+            // v6.22.3: 按译文实测宽度缩字号（下限 7pt），仍放不下才用省略号。
+            // 旧代码固定 9pt + EndEllipsis，法/西/俄等长译文会被直接截成“...”。
+            int avail = Math.Max(1, Width - 16);
+            if (_fitText != Text || _fitWidth != Width)
+            {
+                _fitText = Text;
+                _fitWidth = Width;
+                _fitSize = TextFit.FitSize(Text, Font, avail, TextFit.MinSize);
+                if (_fitFont != null) { try { _fitFont.Dispose(); } catch { } }
+                _fitFont = Math.Abs(_fitSize - Font.Size) > 0.01f
+                    ? new Font(Font.FontFamily, _fitSize, Font.Style) : null;
+            }
+            Font df = _fitFont != null ? _fitFont : Font;
+            var tflags = TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine;
+            if (TextFit.Measure(Text, df) > avail) tflags |= TextFormatFlags.EndEllipsis;
+            TextRenderer.DrawText(g, Text, df, rect, tc, tflags);
         }
     }
 
@@ -5960,7 +6080,11 @@ namespace MinecraftLauncher
             using (var p = Gfx.RoundRect(track, trackR))
             using (var b = new SolidBrush(BlendC(Pal.Inset))) g.FillPath(b, p);
             int n = Items.Length;
-            float segW = (float)Width / n;
+            int[] segB = SegBounds();
+            float segSize = SegFontSize();
+            Font segFont = Font;
+            bool ownSegFont = false;
+            if (Math.Abs(segSize - Font.Size) > 0.01f) { segFont = new Font(Font.FontFamily, segSize, Font.Style); ownSegFont = true; }
             double pos = _selPos.Value;
             if (pos < 0) pos = 0; if (pos > n - 1) pos = n - 1;
             // v6.5 filled bar: the segments partition the track exactly and
@@ -5972,24 +6096,96 @@ namespace MinecraftLauncher
             using (var clip = Gfx.RoundRect(track, trackR)) g.SetClip(clip);
             if (_hoverIdx >= 0 && _hoverIdx < n && _hoverAmt.Value > 0.003 && Math.Abs(pos - _hoverIdx) > 0.6)
             {
-                int hx0 = (int)Math.Round(_hoverIdx * segW), hx1 = (int)Math.Round((_hoverIdx + 1) * segW);
+                int hx0 = segB[_hoverIdx], hx1 = segB[_hoverIdx + 1];
                 using (var b = new SolidBrush(BlendC(Gfx.Mix(Pal.Inset, Color.White, 0.08 * _hoverAmt.Value)))) g.FillRectangle(b, hx0, 0, hx1 - hx0, Height);
             }
-            int tx0 = (int)Math.Round(pos * segW), tx1 = (int)Math.Round((pos + 1) * segW);
+            int tx0 = SegX(segB, pos), tx1 = SegX(segB, pos + 1.0);
             using (var b = new SolidBrush(BlendC(Color.FromArgb(52, 58, 68)))) g.FillRectangle(b, tx0, 0, tx1 - tx0, Height);
             g.Restore(clipState);
             using (var pen = new Pen(BlendC(Pal.Border), 1f))
             using (var p = Gfx.RoundRect(track, trackR)) g.DrawPath(pen, p);
+            Font segBold = null;
             for (int i = 0; i < n; i++)
             {
-                int bx0 = (int)Math.Round(i * segW);
-                var sr = new Rectangle(bx0, 0, (int)Math.Round((i + 1) * segW) - bx0, Height);
+                var sr = new Rectangle(segB[i], 0, Math.Max(1, segB[i + 1] - segB[i]), Height);
                 double emph = 1.0 - Math.Abs(pos - i); if (emph < 0) emph = 0;
                 Color c = Gfx.Mix(Pal.Sub, Pal.Text, emph);
                 if (i == _hoverIdx && emph < 0.5) c = Gfx.Mix(c, Pal.Text, _hoverAmt.Value * (1.0 - emph));
-                TextRenderer.DrawText(g, Items[i], emph > 0.5 ? BoldFont() : Font, sr, BlendC(c), TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
+                // v6.22.3: 段宽按译文实测分配（不再等分），每段独立裁剪 +
+                // 必要时省略号，法/西/俄长标题不会侵入相邻段。
+                Font useFont = segFont;
+                if (emph > 0.5)
+                {
+                    if (segBold == null) segBold = new Font(Font.FontFamily, segSize, FontStyle.Bold);
+                    useFont = segBold;
+                }
+                var segFlags = TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine;
+                if (TextFit.Measure(Items[i], useFont) > sr.Width - 4) segFlags |= TextFormatFlags.EndEllipsis;
+                var segClip = g.Save();
+                g.SetClip(sr);
+                TextRenderer.DrawText(g, Items[i], useFont, sr, BlendC(c), segFlags);
+                g.Restore(segClip);
             }
+            if (segBold != null) { try { segBold.Dispose(); } catch { } }
+            if (ownSegFont) { try { segFont.Dispose(); } catch { } }
             if (Focused && ShowFocusCues) Gfx.DrawFocusRing(g, new Rectangle(0, 0, Width, Height), trackR, g.DpiX / 96f);
+        }
+        // v6.22.3: 段宽按当前语言实测文本分配；总宽不够时整体降字号（下限 7pt）
+        int[] SegBounds()
+        {
+            int n = Items == null ? 0 : Items.Length;
+            int[] b = new int[n + 1];
+            if (n == 0) return b;
+            float size = SegFontSize();
+            int[] need = new int[n];
+            int sum = 0;
+            using (var mf = new Font(Font.FontFamily, size, Font.Style))
+            {
+                for (int i = 0; i < n; i++) { need[i] = TextFit.Measure(Items[i], mf) + 12; sum += need[i]; }
+            }
+            int total = Math.Max(1, Width);
+            int acc = 0;
+            for (int i = 0; i < n; i++)
+            {
+                int wi = sum >= total ? (int)Math.Floor((double)need[i] * total / sum) : need[i] + (total - sum) / n;
+                if (wi < 1) wi = 1;
+                b[i] = acc;
+                acc += wi;
+            }
+            b[n] = total;
+            return b;
+        }
+        float SegFontSize()
+        {
+            int n = Items == null ? 0 : Items.Length;
+            if (n == 0) return Font.Size;
+            float size = Font.Size;
+            while (size > TextFit.MinSize)
+            {
+                int need = 0;
+                using (var mf = new Font(Font.FontFamily, size, Font.Style))
+                    for (int i = 0; i < n; i++) need += TextFit.Measure(Items[i], mf) + 12;
+                if (need <= Width) break;
+                size -= 0.5f;
+            }
+            return size;
+        }
+        static int SegX(int[] b, double p)
+        {
+            int n = b.Length - 1;
+            if (n <= 0) return 0;
+            if (p <= 0) return b[0];
+            if (p >= n) return b[n];
+            int i = (int)Math.Floor(p);
+            double t = p - i;
+            return (int)Math.Round(b[i] + t * (b[i + 1] - b[i]));
+        }
+        int SegIndexAt(int x)
+        {
+            if (Items == null || Items.Length == 0) return 0;
+            int[] b = SegBounds();
+            for (int i = 0; i < Items.Length; i++) if (x < b[i + 1]) return i;
+            return Items.Length - 1;
         }
         void Select(int idx)
         {
@@ -6014,7 +6210,7 @@ namespace MinecraftLauncher
         {
             base.OnMouseMove(e);
             if (Items == null || Items.Length == 0) return;
-            int idx = (int)(e.X / ((float)Width / Items.Length));
+            int idx = SegIndexAt(e.X);
             if (idx < 0) idx = 0;
             if (idx >= Items.Length) idx = Items.Length - 1;
             if (idx != _hoverIdx)
@@ -6056,7 +6252,7 @@ namespace MinecraftLauncher
         {
             base.OnMouseDown(e);
             if (Items == null || Items.Length == 0) return;
-            int idx = (int)(e.X / ((float)Width / Items.Length));
+            int idx = SegIndexAt(e.X);
             if (idx < 0) idx = 0;
             if (idx >= Items.Length) idx = Items.Length - 1;
             Select(idx);
@@ -6101,11 +6297,24 @@ namespace MinecraftLauncher
             {
                 TextFormatFlags flags;
                 if (WordWrap) flags = TextFormatFlags.Left | TextFormatFlags.Top | TextFormatFlags.WordBreak | TextFormatFlags.NoPadding;
-                else flags = TextFormatFlags.Left | TextFormatFlags.SingleLine | TextFormatFlags.NoPadding | (TopAlign ? TextFormatFlags.Top : TextFormatFlags.VerticalCenter);
+                else flags = TextFormatFlags.Left | TextFormatFlags.SingleLine | TextFormatFlags.NoPadding | TextFormatFlags.EndEllipsis | (TopAlign ? TextFormatFlags.Top : TextFormatFlags.VerticalCenter);
                 float sc = e.Graphics.DpiX / 96f;
                 var rc = ClientRectangle;
                 rc.Offset((int)Math.Round(TextShiftX * sc), (int)Math.Round(TextShiftY * sc));
-                TextRenderer.DrawText(e.Graphics, _caption, Font, rc, ForeColor, flags);
+                // v6.22.3: 单行标签按可用宽度缩字号（下限 7pt），再省略；
+                // 换行标签保持原字号，由高度容纳多行。
+                Font useFont = Font;
+                Font tmpFont = null;
+                try
+                {
+                    if (!WordWrap)
+                    {
+                        float fs = TextFit.FitSize(_caption, Font, Math.Max(1, rc.Width), TextFit.MinSize);
+                        if (Math.Abs(fs - Font.Size) > 0.01f) { tmpFont = new Font(Font.FontFamily, fs, Font.Style); useFont = tmpFont; }
+                    }
+                    TextRenderer.DrawText(e.Graphics, _caption, useFont, rc, ForeColor, flags);
+                }
+                finally { if (tmpFont != null) tmpFont.Dispose(); }
             }
         }
     }
@@ -6129,7 +6338,27 @@ namespace MinecraftLauncher
             base.WndProc(ref m);
             if (m.Msg == 0x000F && TextLength == 0 && !Focused && Hint.Length > 0)
             {
-                try { using (var g = Graphics.FromHwnd(Handle)) TextRenderer.DrawText(g, Hint, Font, new Point(4, 3), Pal.Mute); } catch { }
+                // v6.22.4: 占位文字按可用宽度缩字号（下限 7pt），仍放不下才省略；
+                // 法/西/德/俄的长占位句不再被词中硬裁。
+                try
+                {
+                    using (var g = Graphics.FromHwnd(Handle))
+                    {
+                        int avail = Math.Max(1, ClientSize.Width - 8);
+                        float fs = TextFit.FitSize(Hint, Font, avail, TextFit.MinSize);
+                        Font hf = Font;
+                        bool own = false;
+                        if (Math.Abs(fs - Font.Size) > 0.01f) { hf = new Font(Font.FontFamily, fs, Font.Style); own = true; }
+                        try
+                        {
+                            var flags = TextFormatFlags.Left | TextFormatFlags.SingleLine;
+                            if (TextFit.Measure(Hint, hf) > avail) flags |= TextFormatFlags.EndEllipsis;
+                            TextRenderer.DrawText(g, Hint, hf, new Rectangle(4, 3, avail, Math.Max(1, Font.Height + 2)), Pal.Mute, flags);
+                        }
+                        finally { if (own) hf.Dispose(); }
+                    }
+                }
+                catch { }
             }
         }
     }
@@ -6207,7 +6436,17 @@ namespace MinecraftLauncher
             if (Focused && ShowFocusCues) Gfx.DrawFocusRing(g, new Rectangle(0, 0, Width, Height), 4, sc);
             Color tc = Enabled ? ForeColor : Pal.Mute;
             int tx = (int)(bs + 8 * sc);
-            TextRenderer.DrawText(g, Text, Font, new Rectangle(tx, 0, Width - tx, Height), tc, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine | TextFormatFlags.EndEllipsis);
+            // v6.22.3: 复选框文字按可用宽度缩字号（下限 7pt），仍放不下才省略，
+            // 德语/法语的长选项不再被硬裁。
+            float csz = TextFit.FitSize(Text, Font, Math.Max(1, Width - tx - 2), TextFit.MinSize);
+            Font cf = Font;
+            bool ownCf = false;
+            if (Math.Abs(csz - Font.Size) > 0.01f) { cf = new Font(Font.FontFamily, csz, Font.Style); ownCf = true; }
+            try
+            {
+                TextRenderer.DrawText(g, Text, cf, new Rectangle(tx, 0, Width - tx, Height), tc, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine | TextFormatFlags.EndEllipsis);
+            }
+            finally { if (ownCf) cf.Dispose(); }
         }
     }
 
@@ -6315,10 +6554,24 @@ namespace MinecraftLauncher
             {
                 if (TextLength == 0 && Placeholder.Length > 0)
                 {
+                    // v6.22.4: 占位文字按可用宽度缩字号（下限 7pt），仍放不下才省略
                     try
                     {
                         using (var g = Graphics.FromHwnd(Handle))
-                            TextRenderer.DrawText(g, Placeholder, Font, new Point(4, 3), Pal.Mute);
+                        {
+                            int avail = Math.Max(1, ClientSize.Width - 8);
+                            float fs = TextFit.FitSize(Placeholder, Font, avail, TextFit.MinSize);
+                            Font pf = Font;
+                            bool own = false;
+                            if (Math.Abs(fs - Font.Size) > 0.01f) { pf = new Font(Font.FontFamily, fs, Font.Style); own = true; }
+                            try
+                            {
+                                var flags = TextFormatFlags.Left | TextFormatFlags.SingleLine;
+                                if (TextFit.Measure(Placeholder, pf) > avail) flags |= TextFormatFlags.EndEllipsis;
+                                TextRenderer.DrawText(g, Placeholder, pf, new Rectangle(4, 3, avail, Math.Max(1, Font.Height + 2)), Pal.Mute, flags);
+                            }
+                            finally { if (own) pf.Dispose(); }
+                        }
                     }
                     catch { }
                 }
@@ -6516,7 +6769,9 @@ namespace MinecraftLauncher
             // v6.11: player management entry, sits on the players row
             var mb = new RoundButton();
             mb.Text = Txt.MbText;
-            mb.SetBounds(392, 120, 80, 24);
+            // v6.22.3: “玩家管理”按钮按当前语言实测宽度，右对齐到面板内缘
+            int mbW = Math.Max(80, TextFit.Measure(Txt.MbText, this.Font) + 26);
+            mb.SetBounds(472 - mbW, 120, mbW, 24);
             mb.BackColor = Pal.Surface;
             mb.ForeColor = Pal.Text;
             mb.Font = new Font("Microsoft YaHei UI", 9f);
@@ -6558,14 +6813,53 @@ namespace MinecraftLauncher
         {
             TextRenderer.DrawText(g, text, HdrFont(), new Rectangle(X(16), X(y), X(220), X(20)), Pal.Mute, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
         }
-        void Row(Graphics g, int y, string label, string value, Color vc)
+        // v6.22.4: 标签列按当前语言实测宽度（下限 92 设计像素，上限 186），
+        // 法/西/葡/俄的长标签（“Connexions des joueurs”等）不再在词中被截断。
+        int LabelW()
         {
-            TextRenderer.DrawText(g, label, Font, new Rectangle(X(16), X(y), X(92), X(21)), Pal.Sub, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
-            TextRenderer.DrawText(g, value, ValFont(), new Rectangle(X(112), X(y), Width - X(128), X(21)), vc, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
+            int lw = X(92);
+            string[] labels = { Txt.OnPaintRow, Txt.OnPaintRow2, Txt.OnPaintRow3, Txt.OnPaintDrawText, Txt.OnPaintRow4, Txt.OnPaintRow5, "CPU" };
+            for (int i = 0; i < labels.Length; i++)
+            {
+                int w = TextFit.Measure(labels[i], Font) + X(6);
+                if (w > lw) lw = w;
+            }
+            int max = X(186);
+            return lw > max ? max : lw;
         }
-        void Bar(Graphics g, int y, double frac, string cap)
+        // 放不下时先降字号（下限 7pt），仍放不下才省略
+        void FitLabel(Graphics g, Rectangle rc, string text)
         {
-            var track = new Rectangle(X(112), X(y), X(180), Math.Max(2, X(6)));
+            Font lf = Font;
+            Font tmp = null;
+            try
+            {
+                if (TextFit.Measure(text, Font) > rc.Width)
+                {
+                    float fs = TextFit.FitSize(text, Font, rc.Width, TextFit.MinSize);
+                    if (Math.Abs(fs - Font.Size) > 0.01f) { tmp = new Font(Font.FontFamily, fs, Font.Style); lf = tmp; }
+                }
+                var flags = TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine;
+                if (TextFit.Measure(text, lf) > rc.Width) flags |= TextFormatFlags.EndEllipsis;
+                TextRenderer.DrawText(g, text, lf, rc, Pal.Sub, flags);
+            }
+            finally { if (tmp != null) tmp.Dispose(); }
+        }
+        void Row(Graphics g, int y, int lw, int vx, string label, string value, Color vc)
+        {
+            FitLabel(g, new Rectangle(X(16), X(y), lw, X(21)), label);
+            TextRenderer.DrawText(g, value, ValFont(), new Rectangle(vx, X(y), Math.Max(1, Width - vx - X(16)), X(21)), vc, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
+        }
+        int TrackW(int vx)
+        {
+            int w = X(304) - vx;
+            if (w > X(180)) w = X(180);
+            if (w < X(60)) w = X(60);
+            return w;
+        }
+        void Bar(Graphics g, int y, int vx, double frac, string cap)
+        {
+            var track = new Rectangle(vx, X(y), TrackW(vx), Math.Max(2, X(6)));
             using (var p = Gfx.RoundRect(track, Math.Max(1, X(3))))
             using (var b = new SolidBrush(Color.FromArgb(41, 46, 55))) g.FillPath(b, p);
             if (frac > 0)
@@ -6576,13 +6870,13 @@ namespace MinecraftLauncher
                 using (var b = new SolidBrush(Pal.Green)) g.FillPath(b, p);
             }
             if (!string.IsNullOrEmpty(cap))
-                TextRenderer.DrawText(g, cap, Font, new Rectangle(X(304), X(y) - X(6), Width - X(320), X(18)), Pal.Mute, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
+                TextRenderer.DrawText(g, cap, Font, new Rectangle(X(304), X(y) - X(6), Math.Max(X(40), Width - X(320)), X(18)), Pal.Mute, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
         }
         // v6.9: sparkline of the server memory fraction (same 0..cap scale as
         // the bar above it), drawn in the strip under the bar.
-        void Spark(Graphics g, int y)
+        void Spark(Graphics g, int y, int vx)
         {
-            var rc = new Rectangle(X(112), X(y), X(180), X(10));
+            var rc = new Rectangle(vx, X(y), TrackW(vx), X(10));
             using (var b = new SolidBrush(Color.FromArgb(41, 46, 55)))
                 g.FillRectangle(b, new Rectangle(rc.X, rc.Bottom - 1, rc.Width, 1));
             var h = SrvMemHist;
@@ -6604,27 +6898,34 @@ namespace MinecraftLauncher
         {
             var g = e.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
+            // v6.22.4: 所有行标签共用一列实测宽度，值列随之右移
+            int lw = LabelW();
+            int vx = X(16) + lw + X(4);
             Header(g, 4, Txt.OnPaintHeader);
-            Row(g, 22, Txt.OnPaintRow, SrvState, SrvStateColor);
-            Row(g, 40, Txt.OnPaintRow2, SrvMem, Pal.Text);
-            Bar(g, 60, SrvMemFrac, SrvMemCap);
-            Spark(g, 71);
-            Row(g, 86, "CPU", SrvCpu, Pal.Text);
-            Row(g, 104, Txt.OnPaintRow3, SrvConn, Pal.Text);
+            Row(g, 22, lw, vx, Txt.OnPaintRow, SrvState, SrvStateColor);
+            Row(g, 40, lw, vx, Txt.OnPaintRow2, SrvMem, Pal.Text);
+            Bar(g, 60, vx, SrvMemFrac, SrvMemCap);
+            Spark(g, 71, vx);
+            Row(g, 86, lw, vx, "CPU", SrvCpu, Pal.Text);
+            Row(g, 104, lw, vx, Txt.OnPaintRow3, SrvConn, Pal.Text);
             // online player names (from the server log's join/leave lines)
-            TextRenderer.DrawText(g, Txt.OnPaintDrawText, Font, new Rectangle(X(16), X(122), X(92), X(21)), Pal.Sub, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
-            TextRenderer.DrawText(g, SrvPlayers, Font, new Rectangle(X(112), X(122), Width - X(212), X(21)), Pal.Text, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine | TextFormatFlags.EndEllipsis);
-            Row(g, 140, Txt.OnPaintRow4, SrvVerPing, Pal.Text);
+            FitLabel(g, new Rectangle(X(16), X(122), lw, X(21)), Txt.OnPaintDrawText);
+            TextRenderer.DrawText(g, SrvPlayers, Font, new Rectangle(vx, X(122), Math.Max(1, X(388) - vx), X(21)), Pal.Text, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine | TextFormatFlags.EndEllipsis);
+            Row(g, 140, lw, vx, Txt.OnPaintRow4, SrvVerPing, Pal.Text);
             Header(g, 162, Txt.OnPaintHeader2);
-            Row(g, 180, Txt.OnPaintRow2, TunMem, Pal.Text);
-            Row(g, 198, "CPU", TunCpu, Pal.Text);
+            Row(g, 180, lw, vx, Txt.OnPaintRow2, TunMem, Pal.Text);
+            Row(g, 198, lw, vx, "CPU", TunCpu, Pal.Text);
             Header(g, 220, Txt.OnPaintHeader3);
-            // net row: down/up side by side
-            TextRenderer.DrawText(g, Txt.OnPaintDrawText2, Font, new Rectangle(X(16), X(238), X(40), X(21)), Pal.Sub, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
-            TextRenderer.DrawText(g, NetDown, ValFont(), new Rectangle(X(58), X(238), X(150), X(21)), Pal.AddrGreen, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
-            TextRenderer.DrawText(g, Txt.OnPaintDrawText3, Font, new Rectangle(X(256), X(238), X(40), X(21)), Pal.Sub, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
-            TextRenderer.DrawText(g, NetUp, ValFont(), new Rectangle(X(298), X(238), X(150), X(21)), Pal.Text, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
-            Row(g, 256, Txt.OnPaintRow5, SysMem, Pal.Text);
+            // net row: down/up side by side (labels measured, values reflowed)
+            int ld = Math.Max(X(40), TextFit.Measure(Txt.OnPaintDrawText2, Font) + X(2));
+            int dvx = X(16) + ld + X(2);
+            FitLabel(g, new Rectangle(X(16), X(238), ld, X(21)), Txt.OnPaintDrawText2);
+            TextRenderer.DrawText(g, NetDown, ValFont(), new Rectangle(dvx, X(238), Math.Max(1, X(256) - X(8) - dvx), X(21)), Pal.AddrGreen, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
+            int lu = Math.Max(X(40), TextFit.Measure(Txt.OnPaintDrawText3, Font) + X(2));
+            FitLabel(g, new Rectangle(X(256), X(238), lu, X(21)), Txt.OnPaintDrawText3);
+            int uvx = X(256) + lu + X(2);
+            TextRenderer.DrawText(g, NetUp, ValFont(), new Rectangle(uvx, X(238), Math.Max(1, Width - uvx - X(16)), X(21)), Pal.Text, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
+            Row(g, 256, lw, vx, Txt.OnPaintRow5, SysMem, Pal.Text);
         }
     }
 
@@ -6747,6 +7048,10 @@ namespace MinecraftLauncher
             else if (_twoBtn) _dotColor = Pal.Amber;
             else _dotColor = InfoBlue;
             InitChrome(title, 440, 200);
+            // v6.22.3: 按钮宽度按当前语言实测（俄/法“立即重启”在 140px 下会被截）
+            int okW = Math.Max(140, TextFit.Measure(okText, this.Font) + 28);
+            int noW = Math.Max(110, TextFit.Measure(cancelText == null ? "" : cancelText, this.Font) + 28);
+            if (okW > 260) okW = 260;
             _ok = new RoundButton();
             _ok.Primary = true;
             _ok.Text = okText;
@@ -6756,21 +7061,21 @@ namespace MinecraftLauncher
             _ok.Click += (s, e) => { DialogResult = DialogResult.OK; };
             if (!_twoBtn)
             {
-                _ok.SetBounds(150, 124, 140, 34);
+                _ok.SetBounds((440 - okW) / 2, 124, okW, 34);
                 Controls.Add(_ok);
                 AcceptButton = _ok;
                 CancelButton = _ok;
             }
             else
             {
-                _ok.SetBounds(80, 124, 140, 34);
+                _ok.SetBounds(Math.Max(20, (440 - (okW + noW + 30)) / 2), 124, okW, 34);
                 Controls.Add(_ok);
                 _no = new RoundButton();
                 _no.Text = cancelText;
                 _no.BackColor = Pal.Surface;
                 _no.ForeColor = Color.White;
                 _no.BackdropColor = Pal.Bg;
-                _no.SetBounds(250, 124, 110, 34);
+                _no.SetBounds(_ok.Left + okW + 30, 124, noW, 34);
                 _no.Click += (s, e) => { DialogResult = DialogResult.Cancel; };
                 Controls.Add(_no);
                 AcceptButton = _ok;
@@ -6881,13 +7186,22 @@ namespace MinecraftLauncher
         System.Collections.Generic.List<string> _lines = new System.Collections.Generic.List<string>();
         System.Collections.Generic.Dictionary<string, string> _kv = new System.Collections.Generic.Dictionary<string, string>();
         ComboBox _cbDiff, _cbMode;
+        int _labelW = 140;
         TextBox _tbMax, _tbView, _tbSim, _tbSpawn, _tbMotd;
         DarkCheckBox _ckWhite, _ckPvp, _ckFly;
 
         public PropsForm(string serverDir, bool serverRunning)
         {
             _dir = serverDir; _running = serverRunning;
-            InitChrome(Txt.SettingsFormShow2, 480, 444);
+            InitChrome(Txt.SettingsFormShow2, 480, 462);
+            // v6.22.3: 标签列按当前语言实测，输入控件右移并压缩宽度
+            using (var lf = new Font("Microsoft YaHei UI", 9f))
+            {
+                string[] labs = { Txt.PropsFormAddCombo, Txt.PropsFormAddCombo2, Txt.PropsFormAddNum,
+                    Txt.PropsFormAddNum2, Txt.PropsFormAddNum3, Txt.PropsFormAddNum4, Txt.PropsFormAddText };
+                for (int i = 0; i < labs.Length; i++) _labelW = Math.Max(_labelW, TextFit.Measure(labs[i], lf) + 6);
+            }
+            if (_labelW > 210) _labelW = 210;
             string pf = System.IO.Path.Combine(_dir, "server.properties");
             bool have = System.IO.File.Exists(pf);
             if (have)
@@ -6917,10 +7231,11 @@ namespace MinecraftLauncher
             _ckPvp = AddCheck(Txt.PropsFormAddCheck2, y, Get("pvp", "true") == "true"); y += 32;
             _ckFly = AddCheck(Txt.PropsFormAddCheck3, y, Get("allow-flight", "false") == "true"); y += 36;
             var lbOn = new TextLabel();
+            lbOn.WordWrap = true;
             lbOn.Caption = Txt.LbOnCaption;
-            lbOn.SetBounds(20, y, 440, 22);
+            lbOn.SetBounds(20, y, 440, 40);
             lbOn.ForeColor = Pal.Mute; lbOn.BackColor = Pal.Bg; lbOn.Font = new Font("Microsoft YaHei UI", 9f);
-            Controls.Add(lbOn); y += 32;
+            Controls.Add(lbOn); y += 48;
             var btnSave = new RoundButton();
             btnSave.Primary = true;
             btnSave.Text = Txt.BtnSaveText;
@@ -6946,7 +7261,7 @@ namespace MinecraftLauncher
         {
             var l = new TextLabel();
             l.Caption = text;
-            l.SetBounds(20, y, 140, 26);
+            l.SetBounds(20, y, _labelW, 26);
             l.ForeColor = Pal.Sub; l.BackColor = Pal.Bg; l.Font = new Font("Microsoft YaHei UI", 9f);
             Controls.Add(l);
             return l;
@@ -6956,7 +7271,7 @@ namespace MinecraftLauncher
             AddLbl(label, y);
             var cb = new ComboBox();
             foreach (var it in items) cb.Items.Add(it);
-            cb.SetBounds(170, y, 280, 26);
+            cb.SetBounds(30 + _labelW, y, Math.Max(120, 430 - _labelW), 26);
             cb.DropDownStyle = ComboBoxStyle.DropDownList;
             cb.FlatStyle = FlatStyle.Flat;
             cb.BackColor = Pal.Surface; cb.ForeColor = Color.White;
@@ -6970,7 +7285,7 @@ namespace MinecraftLauncher
         TextBox AddBox(int y, string val, int w)
         {
             var t = new TextBox();
-            t.SetBounds(170, y, w, 26);
+            t.SetBounds(30 + _labelW, y, Math.Min(w, Math.Max(80, 430 - _labelW)), 26);
             t.BackColor = Color.FromArgb(17, 20, 24);
             t.ForeColor = Pal.Text;
             t.BorderStyle = BorderStyle.None;
@@ -6985,7 +7300,7 @@ namespace MinecraftLauncher
         {
             var c = new DarkCheckBox();
             c.Text = label;
-            c.SetBounds(20, y, 430, 24);
+            c.SetBounds(20, y, Math.Min(456, Math.Max(320, TextFit.Measure(label, this.Font) + 34)), 24);
             c.ForeColor = Pal.Text; c.BackColor = Pal.Bg;
             c.Font = new Font("Microsoft YaHei UI", 9f);
             c.Checked = val;
@@ -7057,10 +7372,10 @@ namespace MinecraftLauncher
             System.Collections.Generic.List<string> banned, string me, Action<string> exec)
         {
             _ops = ops; _banned = banned; _me = me; _exec = exec;
-            InitChrome(Txt.MbText, 460, 372);
+            InitChrome(Txt.MbText, 460, 404);
             var head = new TextLabel();
             head.Caption = online.Count > 0 ? (Txt.PlayerFormStr + online.Count + "）") : Txt.PlayerFormStr2;
-            head.SetBounds(20, 12, 300, 22);
+            head.SetBounds(20, 12, 420, 22);
             head.ForeColor = Pal.Sub; head.BackColor = Pal.Bg;
             head.Font = new Font("Microsoft YaHei UI", 9f, FontStyle.Bold);
             Controls.Add(head);
@@ -7086,12 +7401,14 @@ namespace MinecraftLauncher
             _lbOps = new TextLabel(); _lbOps.SetBounds(20, 244, 420, 20); _lbOps.ForeColor = Pal.Sub; _lbOps.BackColor = Pal.Bg; _lbOps.Font = new Font("Microsoft YaHei UI", 9f); Controls.Add(_lbOps);
             _lbBanned = new TextLabel(); _lbBanned.SetBounds(20, 268, 420, 20); _lbBanned.ForeColor = Pal.Sub; _lbBanned.BackColor = Pal.Bg; _lbBanned.Font = new Font("Microsoft YaHei UI", 9f); Controls.Add(_lbBanned);
             var hint = new TextLabel();
+            hint.WordWrap = true;
             hint.Caption = _me == null ? Txt.PlayerFormStr3 : Txt.PlayerFormStr4;
-            hint.SetBounds(20, 292, 420, 20); hint.ForeColor = Pal.Mute; hint.BackColor = Pal.Bg; hint.Font = new Font("Microsoft YaHei UI", 9f);
+            hint.SetBounds(20, 292, 420, 40); hint.ForeColor = Pal.Mute; hint.BackColor = Pal.Bg; hint.Font = new Font("Microsoft YaHei UI", 9f);
             Controls.Add(hint);
             var close = new RoundButton();
             close.Text = Txt.CloseText;
-            close.SetBounds(340, 322, 100, 32);
+            int closeW = Math.Max(100, TextFit.Measure(Txt.CloseText, this.Font) + 26);
+            close.SetBounds(440 - closeW, 356, closeW, 32);
             close.BackColor = Pal.Surface; close.ForeColor = Color.White; close.BackdropColor = Pal.Bg;
             close.Font = new Font("Microsoft YaHei UI", 9f);
             close.Click += (s2, e2) => { DialogResult = DialogResult.Cancel; };
@@ -7355,7 +7672,7 @@ namespace MinecraftLauncher
         {
             try { ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12; } catch { }
             var wc = new WebClient();
-            wc.Headers[HttpRequestHeader.UserAgent] = "MCLauncherApp/6.22.2";
+            wc.Headers[HttpRequestHeader.UserAgent] = "MCLauncherApp/6.22.4";
             wc.Encoding = Encoding.UTF8;
             return wc;
         }
@@ -7557,31 +7874,32 @@ namespace MinecraftLauncher
         public WizardForm(Config cfg, string initialDir)
         {
             _cfg = cfg;
-            InitChrome(Txt.WizardFormInitChrome, 660, 612);
+            InitChrome(Txt.WizardFormInitChrome, 660, 646);
 
             int lx = 20, tx = 170;
-            AddLabel(Txt.WizardFormAddLabel, lx, 18);
+            AddLabel(Txt.WizardFormAddLabel, lx, 12, 140);
             cbVersion = new ComboBox();
             cbVersion.DropDownStyle = ComboBoxStyle.DropDown;
             cbVersion.Items.AddRange(new object[] { "1.20.1", "1.21.1", "1.21.11", "1.21.4", "1.20.4", "1.20.6", "1.19.4", "1.18.2" });
             cbVersion.Text = "1.20.1";
-            cbVersion.SetBounds(tx, 14, 300, 26);
+            cbVersion.SetBounds(tx, 8, 300, 26);
             cbVersion.FlatStyle = FlatStyle.Flat;
             cbVersion.BackColor = Pal.Surface;
             cbVersion.ForeColor = Color.White;
             Controls.Add(cbVersion);
             ThemedCombo.Attach(cbVersion);
-            AddHint(Txt.WizardFormAddHint, tx + 308, 18);
+            // v6.22.3: 提示改为整行换行，不再挤在版本框右侧的 300px 单行里
+            AddHint(Txt.WizardFormAddHint, lx, 42, 620, 34);
 
-            AddLabel(Txt.WizardFormAddLabel2, lx, 56);
-            rbVanilla = AddRadio(Txt.WizardFormAddRadio, tx, 54);
-            rbFabric = AddRadio("Fabric", tx + 90, 54);
-            rbPaper = AddRadio("Paper", tx + 180, 54);
+            AddLabel(Txt.WizardFormAddLabel2, lx, 84, 140);
+            rbVanilla = AddRadio(Txt.WizardFormAddRadio, tx, 82);
+            rbFabric = AddRadio("Fabric", tx + 90, 82);
+            rbPaper = AddRadio("Paper", tx + 180, 82);
             rbFabric.Checked = true;
 
-            AddLabel(Txt.WizardFormAddLabel3, lx, 94);
+            AddLabel(Txt.WizardFormAddLabel3, lx, 122, 140);
             tbDir = new TextBox();
-            tbDir.SetBounds(tx, 90, 340, 26);
+            tbDir.SetBounds(tx, 118, 340, 26);
             tbDir.BackColor = Pal.Surface;
             tbDir.ForeColor = Color.White;
             tbDir.BorderStyle = BorderStyle.FixedSingle;
@@ -7592,7 +7910,7 @@ namespace MinecraftLauncher
             btnBrowse.BackColor = Pal.Surface;
             btnBrowse.ForeColor = Color.White;
             btnBrowse.BackdropColor = Pal.Bg;
-            btnBrowse.SetBounds(520, 88, 110, 30);
+            btnBrowse.SetBounds(520, 116, 110, 30);
             btnBrowse.Click += (s, e) =>
             {
                 using (var fbd = new FolderBrowserDialog())
@@ -7608,28 +7926,34 @@ namespace MinecraftLauncher
             chkEula.Text = Txt.ChkEulaText;
             chkEula.ForeColor = Color.White;
             chkEula.BackColor = Color.Transparent;
-            chkEula.SetBounds(tx, 128, Txt.EulaAgreeWidth, 24);
+            // v6.22.3: 宽度按当前语言实测（原来只有 190/230 两档常量）
+            int eulaW = TextFit.Measure(Txt.ChkEulaText, Font) + 30;
+            if (eulaW < 190) eulaW = 190;
+            if (eulaW > 400) eulaW = 400;
+            chkEula.SetBounds(tx, 156, eulaW, 24);
             Controls.Add(chkEula);
             var lnkEula = new LinkLabel();
             lnkEula.Text = Txt.LnkEulaText;
             lnkEula.LinkColor = Color.FromArgb(120, 180, 255);
             lnkEula.ActiveLinkColor = Color.FromArgb(160, 200, 255);
             lnkEula.BackColor = Color.Transparent;
-            lnkEula.SetBounds(tx + Txt.EulaLinkDx, 130, 120, 24);
+            int lnkW = Math.Max(120, TextFit.Measure(Txt.LnkEulaText, Font) + 6);
+            lnkEula.SetBounds(tx + eulaW + 8, 158, lnkW, 24);
             lnkEula.LinkClicked += (s, e) => { try { Process.Start("https://www.minecraft.net/en-us/eula"); } catch { } };
             Controls.Add(lnkEula);
-            AddHint(Txt.WizardFormAddHint2, tx, 154);
+            AddHint(Txt.WizardFormAddHint2, lx, 186, 620, 34);
 
             lblStep = new TextLabel();
             lblStep.TopAlign = true;
+            lblStep.WordWrap = true;
             lblStep.Caption = Txt.LblStepCaption;
             lblStep.TextShiftX = 2f; lblStep.TextShiftY = -0.67f;
-            lblStep.SetBounds(20, 186, 620, 24);
+            lblStep.SetBounds(20, 226, 620, 34);
             lblStep.BackColor = Color.Transparent; lblStep.BackdropColor = Pal.Bg; lblStep.ForeColor = Pal.Sub;
             Controls.Add(lblStep);
 
             pb = new ProgressBar();
-            pb.SetBounds(20, 212, 620, 16);
+            pb.SetBounds(20, 266, 620, 16);
             pb.Minimum = 0; pb.Maximum = 100; pb.Value = 0;
             Controls.Add(pb);
 
@@ -7637,7 +7961,7 @@ namespace MinecraftLauncher
             tbLog.Multiline = true;
             tbLog.ReadOnly = true;
             tbLog.ScrollBars = ScrollBars.Vertical;
-            tbLog.SetBounds(20, 238, 620, 300);
+            tbLog.SetBounds(20, 292, 620, 280);
             tbLog.BackColor = Pal.Surface;
             tbLog.ForeColor = Color.White;
             tbLog.BorderStyle = BorderStyle.FixedSingle;
@@ -7649,7 +7973,7 @@ namespace MinecraftLauncher
             btnStart.BackColor = Pal.Green;
             btnStart.ForeColor = Color.White;
             btnStart.BackdropColor = Pal.Bg;
-            btnStart.SetBounds(20, 552, 140, 36);
+            btnStart.SetBounds(20, 588, 140, 36);
             btnStart.Click += (s, e) => StartInstall();
             Controls.Add(btnStart);
 
@@ -7658,7 +7982,7 @@ namespace MinecraftLauncher
             btnCancelDl.BackColor = Pal.Surface;
             btnCancelDl.ForeColor = Color.White;
             btnCancelDl.BackdropColor = Pal.Bg;
-            btnCancelDl.SetBounds(172, 552, 100, 36);
+            btnCancelDl.SetBounds(172, 588, 100, 36);
             btnCancelDl.Enabled = false;
             btnCancelDl.Click += (s, e) =>
             {
@@ -7673,31 +7997,33 @@ namespace MinecraftLauncher
             btnClose.BackColor = Pal.Surface;
             btnClose.ForeColor = Color.White;
             btnClose.BackdropColor = Pal.Bg;
-            btnClose.SetBounds(520, 552, 120, 36);
+            btnClose.SetBounds(520, 588, 120, 36);
             btnClose.Click += (s, e) => { DialogResult = InstalledOk ? DialogResult.OK : DialogResult.Cancel; };
             Controls.Add(btnClose);
 
             FinishChrome();
         }
 
-        void AddLabel(string text, int x, int y)
+        void AddLabel(string text, int x, int y, int w)
         {
             var lb = new TextLabel();
             lb.TopAlign = true;
             lb.Caption = text;
             lb.TextShiftX = 2f; lb.TextShiftY = -0.67f;
-            lb.SetBounds(x, y, 140, 26);
+            lb.SetBounds(x, y, w, 26);
             lb.BackColor = Color.Transparent; lb.BackdropColor = Pal.Bg; lb.ForeColor = Pal.Sub;
             Controls.Add(lb);
         }
 
-        void AddHint(string text, int x, int y)
+        // v6.22.3: 提示行整行换行显示（原来固定 300px 单行，长译文必然被裁）
+        void AddHint(string text, int x, int y, int w, int h)
         {
             var lb = new TextLabel();
             lb.TopAlign = true;
+            lb.WordWrap = true;
             lb.Caption = text;
             lb.TextShiftX = 2f; lb.TextShiftY = -0.67f;
-            lb.SetBounds(x, y, 300, 24);
+            lb.SetBounds(x, y, w, h);
             lb.BackColor = Color.Transparent; lb.BackdropColor = Pal.Bg; lb.ForeColor = Pal.Sub;
             Controls.Add(lb);
         }
@@ -8043,6 +8369,8 @@ namespace MinecraftLauncher
         private Config _cfg;
         private StatusCard statusCard;
         private RoundButton btnStart, btnPcl2, btnStop, btnSettings, btnCopy;
+        private RoundButton btnPrevSearch, btnNextSearch;
+        private TextLabel addrLbl;
         private HintTextBox tbAddr;
         private NotifyIcon _tray;
         private SegControl segLog;
@@ -8092,7 +8420,7 @@ namespace MinecraftLauncher
         private volatile bool _slpBusy = false;
         private System.Windows.Forms.Timer _copyTimer;
         private CardPanel logPanel;
-        private InsetPanel logInset, cmdInset;
+        private InsetPanel logInset, cmdInset, addrInset;
         private TextLabel logToggleLbl, cmdLbl;
         private int _goodW = 0, _goodH = 0;
         private float _uiScale = 1f;
@@ -8116,6 +8444,8 @@ namespace MinecraftLauncher
         private RoundButton btnBackupNow, btnRestoreBackup, btnDeleteBackup;
         private ListBox backupList;
         private TextLabel lblBackupState, lblBackupInfo;
+        // v6.22.4: 备份页实测排版所需的标签引用
+        private TextLabel lblBackupHead, lblBkKeepPrefix, lblBkKeepSuffix, lblBkHint;
         private TextBox tbKeep, tbDailyTime, tbTimedTime, tbTimedCmd;
         private DarkCheckBox chkAutoRestart, chkBackupOnStart, chkDailyBackup, chkTimedCmd;
         private readonly System.Collections.Generic.List<string> _backupFiles = new System.Collections.Generic.List<string>();
@@ -8237,6 +8567,10 @@ namespace MinecraftLauncher
                 MinimumSize = new Size(ClientSize.Width, (int)(494 * _uiScale));
             }
             catch { }
+            // v6.22.3: 按当前语言实测宽度重排固定像素行
+            ApplyLangLayout();
+            // v6.22.4: 备份页同样按当前语言实测重排
+            ApplyBackupLayout();
             // v6.6: command history + a slow sync for the overlay scrollbars
             LoadCmdHistory();
             try
@@ -8463,20 +8797,22 @@ namespace MinecraftLauncher
             Controls.Add(btnStart);
 
             // ---- 公网地址 ----
-            var addrLbl = new TextLabel();
-            addrLbl.BackdropColor = Pal.Bg;
-            addrLbl.TopAlign = true;
-            addrLbl.Caption = Txt.AddrLblCaption;
-            addrLbl.TextShiftX = 1.33f; addrLbl.TextShiftY = -0.67f;
-            addrLbl.SetBounds(20, 290, 220, 18);
-            addrLbl.BackColor = Color.Transparent;
-            addrLbl.ForeColor = Pal.Sub;
-            addrLbl.Font = new Font("Microsoft YaHei UI", 9f, FontStyle.Bold);
-            Controls.Add(addrLbl);
+            var addrLblLocal = new TextLabel();
+            addrLblLocal.BackdropColor = Pal.Bg;
+            addrLblLocal.TopAlign = true;
+            addrLblLocal.Caption = Txt.AddrLblCaption;
+            addrLblLocal.TextShiftX = 1.33f; addrLblLocal.TextShiftY = -0.67f;
+            addrLblLocal.SetBounds(20, 290, 500, 18);
+            addrLblLocal.BackColor = Color.Transparent;
+            addrLblLocal.ForeColor = Pal.Sub;
+            addrLblLocal.Font = new Font("Microsoft YaHei UI", 9f, FontStyle.Bold);
+            Controls.Add(addrLblLocal);
+            addrLbl = addrLblLocal;
 
-            var addrInset = new InsetPanel();
-            addrInset.SetBounds(20, 314, 392, 38);
-            Controls.Add(addrInset);
+            var addrInsetLocal = new InsetPanel();
+            addrInsetLocal.SetBounds(20, 314, 392, 38);
+            Controls.Add(addrInsetLocal);
+            addrInset = addrInsetLocal;
 
             tbAddr = new HintTextBox();
             tbAddr.Hint = Txt.Hint;
@@ -8605,23 +8941,23 @@ namespace MinecraftLauncher
             tbSearch.KeyDown += (s2, e2) => { if (e2.KeyCode == Keys.Enter) { e2.SuppressKeyPress = true; FindInLog(!e2.Shift); } };
             tbSearch.TextChanged += (s2, e2) => { if (lblFind != null) lblFind.Caption = ""; };
             searchRow.Controls.Add(tbSearch);
-            var btnPrev = new RoundButton();
-            btnPrev.Text = "↑";
-            btnPrev.SetBounds(224, 0, 44, 28);
-            btnPrev.BackColor = Pal.Surface; btnPrev.ForeColor = Pal.Text; btnPrev.BackdropColor = Pal.Card;
-            btnPrev.Font = new Font("Microsoft YaHei UI", 9f);
-            btnPrev.Click += (s2, e2) => FindInLog(false);
-            searchRow.Controls.Add(btnPrev);
-            var btnNext = new RoundButton();
-            btnNext.Text = "↓";
-            btnNext.SetBounds(272, 0, 44, 28);
-            btnNext.BackColor = Pal.Surface; btnNext.ForeColor = Pal.Text; btnNext.BackdropColor = Pal.Card;
-            btnNext.Font = new Font("Microsoft YaHei UI", 9f);
-            btnNext.Click += (s2, e2) => FindInLog(true);
-            searchRow.Controls.Add(btnNext);
+            btnPrevSearch = new RoundButton();
+            btnPrevSearch.Text = "↑";
+            btnPrevSearch.SetBounds(224, 0, 44, 28);
+            btnPrevSearch.BackColor = Pal.Surface; btnPrevSearch.ForeColor = Pal.Text; btnPrevSearch.BackdropColor = Pal.Card;
+            btnPrevSearch.Font = new Font("Microsoft YaHei UI", 9f);
+            btnPrevSearch.Click += (s2, e2) => FindInLog(false);
+            searchRow.Controls.Add(btnPrevSearch);
+            btnNextSearch = new RoundButton();
+            btnNextSearch.Text = "↓";
+            btnNextSearch.SetBounds(272, 0, 44, 28);
+            btnNextSearch.BackColor = Pal.Surface; btnNextSearch.ForeColor = Pal.Text; btnNextSearch.BackdropColor = Pal.Card;
+            btnNextSearch.Font = new Font("Microsoft YaHei UI", 9f);
+            btnNextSearch.Click += (s2, e2) => FindInLog(true);
+            searchRow.Controls.Add(btnNextSearch);
             _tips = new ToolTip();
-            _tips.SetToolTip(btnPrev, Txt.BuildUiSetToolTip);
-            _tips.SetToolTip(btnNext, Txt.BuildUiSetToolTip2);
+            _tips.SetToolTip(btnPrevSearch, Txt.BuildUiSetToolTip);
+            _tips.SetToolTip(btnNextSearch, Txt.BuildUiSetToolTip2);
             _tips.SetToolTip(tbSearch, Txt.BuildUiSetToolTip3);
             lblFind = new TextLabel();
             lblFind.Caption = "";
@@ -8650,8 +8986,9 @@ namespace MinecraftLauncher
             logPanel.Controls.Add(statsPanel);
 
             // v6.11: backup tab (world backups + schedules + watchdog toggle)
+            // v6.22.4: 290 → 302，为底部整句提示留出两行高度
             backupPanel = new InsetPanel();
-            backupPanel.SetBounds(16, 52, 488, 290);
+            backupPanel.SetBounds(16, 52, 488, 302);
             backupPanel.BackdropColor = Pal.Card;
             backupPanel.Visible = false;
             logPanel.Controls.Add(backupPanel);
@@ -8738,6 +9075,136 @@ namespace MinecraftLauncher
             FormClosing += OnClosing;
         }
 
+        // v6.22.3: 主窗口固定像素行的多语言重排。
+        // 设计坐标按中/英译文确定，法/西/葡/俄更长时会截断或压叠；
+        // 这里在 DPI 缩放之后用真实字体实测，把宽度让给更长的译文，
+        // 中/英布局与原来完全一致（实测宽度未超过设计宽度时保持原值）。
+        void ApplyLangLayout()
+        {
+            if (btnCopy == null || addrInset == null || segLog == null) return;
+            float sc = _uiScale > 0 ? _uiScale : 1f;
+            Func<double, int> D = v => (int)Math.Round(v * sc);
+            Font f9 = null, f8 = null;
+            try
+            {
+                f9 = new Font("Microsoft YaHei UI", 9f);
+                f8 = new Font("Microsoft YaHei UI", 8f);
+                // 1) 公网地址行：复制按钮按译文加宽，地址框让位
+                int copyW = Math.Min(D(240), Math.Max(D(120), TextFit.Measure(Txt.BtnCopyText, f9) + D(26)));
+                int copyX = D(540) - copyW;
+                btnCopy.SetBounds(copyX, D(314), copyW, D(38));
+                int insetW = Math.Max(D(180), copyX - D(8) - D(20));
+                addrInset.SetBounds(D(20), D(314), insetW, D(38));
+                tbAddr.SetBounds(D(12), D(10), Math.Max(D(80), insetW - D(24)), D(22));
+                // 2) 三个次要按钮：520px 内按译文比例分配
+                int[] w3 = TextFit.Distribute(
+                    new string[] { Txt.BtnPcl2Text, Txt.BtnStopText, Txt.SettingsFormInitChrome },
+                    f9, D(520), D(8), D(24), D(96));
+                int bx = D(20);
+                btnPcl2.SetBounds(bx, D(368), w3[0], D(38)); bx += w3[0] + D(8);
+                btnStop.SetBounds(bx, D(368), w3[1], D(38)); bx += w3[1] + D(8);
+                btnSettings.SetBounds(bx, D(368), w3[2], D(38));
+                // 3) 日志区：折叠标签与页签条（288 → 312，段宽由 SegControl 自算）
+                logToggleLbl.SetBounds(D(16), D(10),
+                    Math.Min(D(168), Math.Max(D(120), TextFit.Measure(Txt.LogToggleLblCaption, f9) + D(12))), D(32));
+                segLog.SetBounds(D(196), D(10), D(312), D(32));
+                // 4) 搜索行：错误过滤复选框按译文加宽，其余控件左移让位
+                // v6.22.4: 上限 204 → 236，长译文（俄/德）不再被上限截断，宽度从 tbSearch 让出
+                int chkW = Math.Min(D(236), Math.Max(D(102), TextFit.Measure(Txt.ChkErrOnlyText, f8) + D(46)));
+                int chkX = D(488) - chkW;
+                chkErrOnly.SetBounds(chkX, D(2), chkW, D(24));
+                int findX = chkX - D(56);
+                lblFind.SetBounds(findX, D(2), D(52), D(24));
+                int nextX = findX - D(48);
+                btnNextSearch.SetBounds(nextX, D(0), D(44), D(28));
+                int prevX = nextX - D(48);
+                btnPrevSearch.SetBounds(prevX, D(0), D(44), D(28));
+                tbSearch.SetBounds(D(0), D(2), Math.Max(D(90), prevX - D(6)), D(24));
+                // 5) 指令行 / 性能诊断行：左侧标签加宽，输入区右移
+                int cmdW = Math.Min(D(124), Math.Max(D(72), TextFit.Measure(Txt.CmdLblCaption, f9) + D(8)));
+                cmdLbl.SetBounds(D(16), D(312), cmdW, D(26));
+                int cmdX = D(16) + cmdW + D(4);
+                cmdInset.SetBounds(cmdX, D(308), Math.Max(D(140), D(412) - cmdX), D(34));
+                tbCmd.SetBounds(D(10), D(7), Math.Max(D(60), cmdInset.Width - D(20)), D(22));
+                int sparkW = Math.Min(D(124), Math.Max(D(72), TextFit.Measure(Txt.SparkLblCaption, f9) + D(8)));
+                sparkLbl.SetBounds(D(16), D(262), sparkW, D(26));
+                int spX = D(16) + sparkW + D(4);
+                int tpsW = Math.Min(D(190), Math.Max(D(130), TextFit.Measure(Txt.BtnSparkTpsText, f9) + D(26)));
+                btnSparkTps.SetBounds(spX, D(258), tpsW, D(34));
+                int profW = Math.Min(D(220), Math.Max(D(150), TextFit.Measure(Txt.BtnSparkProfileText, f9) + D(26)));
+                if (spX + tpsW + D(8) + profW > D(504)) profW = Math.Max(D(110), D(504) - spX - tpsW - D(8));
+                btnSparkProfile.SetBounds(spX + tpsW + D(8), D(258), profW, D(34));
+                // 6) 地址标签与“回到最底部”按钮
+                addrLbl.SetBounds(D(20), D(290), D(500), D(18));
+                int jumpW = Math.Max(D(96), TextFit.Measure(Txt.BtnJumpBottomText, f9) + D(26));
+                btnJumpBottom.SetBounds(D(474) - jumpW, D(120), jumpW, D(26));
+            }
+            catch { }
+            finally
+            {
+                if (f9 != null) f9.Dispose();
+                if (f8 != null) f8.Dispose();
+            }
+        }
+
+        // v6.22.4: 备份页按当前语言实测重排——三个按钮按译文分配、四个复选框按译文加宽、
+        // 底部整句提示改为整行换行；法/德/西/葡/俄的长译文不再被裁。
+        void ApplyBackupLayout()
+        {
+            if (backupPanel == null || btnBackupNow == null || backupList == null || lblBkHint == null) return;
+            float sc = _uiScale > 0 ? _uiScale : 1f;
+            Func<double, int> D = v => (int)Math.Round(v * sc);
+            Font f9 = null;
+            try
+            {
+                f9 = new Font("Microsoft YaHei UI", 9f);
+                // 标题 + 右上角“立即备份”
+                int hw = Math.Min(D(260), Math.Max(D(180), TextFit.Measure(Txt.BuildBackupPanelBkLabel, f9) + D(12)));
+                lblBackupHead.SetBounds(D(16), D(10), hw, D(24));
+                int bw = Math.Min(D(240), Math.Max(D(116), TextFit.Measure(Txt.BtnBackupNowText, f9) + D(26)));
+                btnBackupNow.SetBounds(D(472) - bw, D(8), bw, D(28));
+                lblBackupState.SetBounds(D(16), D(38), D(456), D(24));
+                backupList.SetBounds(D(16), D(62), D(456), D(74));
+                // 还原 / 删除：456px 内按译文比例分配，信息标签接在右侧
+                int[] w2 = TextFit.Distribute(
+                    new string[] { Txt.BtnRestoreBackupText, Txt.BtnDeleteBackupText },
+                    f9, D(456), D(8), D(24), D(104));
+                int bx = D(16);
+                btnRestoreBackup.SetBounds(bx, D(140), w2[0], D(28)); bx += w2[0] + D(8);
+                btnDeleteBackup.SetBounds(bx, D(140), w2[1], D(28));
+                int infoX = bx + w2[1] + D(8);
+                lblBackupInfo.SetBounds(infoX, D(142), Math.Max(D(40), D(472) - infoX), D(24));
+                // 保留份数行 + 右侧“崩溃自动重启”
+                int pfxW = Math.Max(D(40), TextFit.Measure(Txt.BuildBackupPanelBkLabel2, f9) + D(4));
+                lblBkKeepPrefix.SetBounds(D(16), D(170), pfxW, D(24));
+                int keepX = D(16) + pfxW + D(4);
+                tbKeep.SetBounds(keepX, D(170), D(44), D(24));
+                int sfxX = keepX + D(44) + D(4);
+                int sfxW = Math.Max(D(20), TextFit.Measure(Txt.BuildBackupPanelBkLabel3, f9) + D(4));
+                lblBkKeepSuffix.SetBounds(sfxX, D(170), sfxW, D(24));
+                int cbW = Math.Min(D(340), Math.Max(D(128), TextFit.Measure(Txt.BuildBackupPanelBkCheck, f9) + D(30)));
+                int cbX = Math.Max(sfxX + sfxW + D(10), D(472) - cbW);
+                cbW = Math.Max(D(90), D(472) - cbX);
+                chkAutoRestart.SetBounds(cbX, D(170), cbW, D(24));
+                // 其余三个复选框各自按译文加宽（本版各语言单行均放得下）
+                int wA = Math.Min(D(456), Math.Max(D(140), TextFit.Measure(Txt.BuildBackupPanelBkCheck2, f9) + D(30)));
+                chkBackupOnStart.SetBounds(D(16), D(196), wA, D(24));
+                int wB = Math.Min(D(456), Math.Max(D(118), TextFit.Measure(Txt.BuildBackupPanelBkCheck3, f9) + D(30)));
+                chkDailyBackup.SetBounds(D(16), D(222), wB, D(24));
+                tbDailyTime.SetBounds(D(16) + wB + D(8), D(222), D(56), D(24));
+                int wC = Math.Min(D(456), Math.Max(D(118), TextFit.Measure(Txt.BuildBackupPanelBkCheck4, f9) + D(30)));
+                chkTimedCmd.SetBounds(D(16), D(248), wC, D(24));
+                int ttx = D(16) + wC + D(8);
+                tbTimedTime.SetBounds(ttx, D(248), D(56), D(24));
+                int tcx = ttx + D(56) + D(8);
+                tbTimedCmd.SetBounds(tcx, D(248), Math.Max(D(120), D(472) - tcx), D(24));
+                // 底部整句提示：整行换行，两行高度
+                lblBkHint.SetBounds(D(16), D(274), D(456), Math.Max(D(24), D(302) - D(274)));
+            }
+            catch { }
+            finally { if (f9 != null) f9.Dispose(); }
+        }
+
         // v6.11: page 0 carries the search row, so the log inset sits
         // lower and shorter there; the other log page keeps the full area.
         void LayoutLogChrome(int page)
@@ -8756,7 +9223,7 @@ namespace MinecraftLauncher
                 tbTunnelLog.SetBounds(D(8), D(6), D(472), D(154));
                 sbSrvV.SetBounds(D(472), D(6), D(8), D(146)); sbSrvH.SetBounds(D(8), D(152), D(464), D(8));
                 sbTunV.SetBounds(D(472), D(6), D(8), D(146)); sbTunH.SetBounds(D(8), D(152), D(464), D(8));
-                if (btnJumpBottom != null) btnJumpBottom.SetBounds(D(378), D(120), D(96), D(26));
+                if (btnJumpBottom != null) btnJumpBottom.SetBounds(D(474) - btnJumpBottom.Width, D(120), btnJumpBottom.Width, D(26));
             }
             else
             {
@@ -8765,7 +9232,7 @@ namespace MinecraftLauncher
                 tbTunnelLog.SetBounds(D(8), D(6), D(472), D(188));
                 sbSrvV.SetBounds(D(472), D(6), D(8), D(180)); sbSrvH.SetBounds(D(8), D(186), D(464), D(8));
                 sbTunV.SetBounds(D(472), D(6), D(8), D(180)); sbTunH.SetBounds(D(8), D(186), D(464), D(8));
-                if (btnJumpBottom != null) btnJumpBottom.SetBounds(D(378), D(154), D(96), D(26));
+                if (btnJumpBottom != null) btnJumpBottom.SetBounds(D(474) - btnJumpBottom.Width, D(154), btnJumpBottom.Width, D(26));
             }
         }
 
@@ -9767,9 +10234,9 @@ namespace MinecraftLauncher
         void BuildBackupPanel()
         {
             _bkInit = true;
-            var head = BkLabel(16, 10, 220, Txt.BuildBackupPanelBkLabel, Pal.Text);
-            head.Font = new Font("Microsoft YaHei UI", 9f, FontStyle.Bold);
-            backupPanel.Controls.Add(head);
+            lblBackupHead = BkLabel(16, 10, 220, Txt.BuildBackupPanelBkLabel, Pal.Text);
+            lblBackupHead.Font = new Font("Microsoft YaHei UI", 9f, FontStyle.Bold);
+            backupPanel.Controls.Add(lblBackupHead);
             btnBackupNow = new RoundButton();
             btnBackupNow.Text = Txt.BtnBackupNowText;
             btnBackupNow.SetBounds(356, 8, 116, 28);
@@ -9780,7 +10247,7 @@ namespace MinecraftLauncher
             lblBackupState = BkLabel(16, 38, 456, "—", Pal.Sub);
             backupPanel.Controls.Add(lblBackupState);
             backupList = new ListBox();
-            backupList.SetBounds(16, 62, 456, 92);
+            backupList.SetBounds(16, 62, 456, 74);
             backupList.BackColor = Color.FromArgb(17, 20, 24);
             backupList.ForeColor = Pal.Text;
             backupList.BorderStyle = BorderStyle.None;
@@ -9792,14 +10259,14 @@ namespace MinecraftLauncher
             backupPanel.Controls.Add(backupList);
             btnRestoreBackup = new RoundButton();
             btnRestoreBackup.Text = Txt.BtnRestoreBackupText;
-            btnRestoreBackup.SetBounds(16, 160, 104, 28);
+            btnRestoreBackup.SetBounds(16, 140, 104, 28);
             btnRestoreBackup.BackColor = Pal.Surface; btnRestoreBackup.ForeColor = Pal.Text; btnRestoreBackup.BackdropColor = Pal.Inset;
             btnRestoreBackup.Font = new Font("Microsoft YaHei UI", 9f);
             btnRestoreBackup.Click += (s, e) => { int i = backupList.SelectedIndex; if (i >= 0 && i < _backupFiles.Count) RestoreBackup(_backupFiles[i]); else InfoBox.Show(Txt.BuildBackupPanelShow, Txt.RestoreBackupShow2); };
             backupPanel.Controls.Add(btnRestoreBackup);
             btnDeleteBackup = new RoundButton();
             btnDeleteBackup.Text = Txt.BtnDeleteBackupText;
-            btnDeleteBackup.SetBounds(128, 160, 104, 28);
+            btnDeleteBackup.SetBounds(128, 140, 104, 28);
             btnDeleteBackup.BackColor = Pal.Surface; btnDeleteBackup.ForeColor = Pal.Text; btnDeleteBackup.BackdropColor = Pal.Inset;
             btnDeleteBackup.Font = new Font("Microsoft YaHei UI", 9f);
             btnDeleteBackup.Click += (s, e) =>
@@ -9814,37 +10281,43 @@ namespace MinecraftLauncher
                 RefreshBackupList();
             };
             backupPanel.Controls.Add(btnDeleteBackup);
-            lblBackupInfo = BkLabel(244, 162, 228, "", Pal.Sub);
+            lblBackupInfo = BkLabel(244, 142, 228, "", Pal.Sub);
             backupPanel.Controls.Add(lblBackupInfo);
-            backupPanel.Controls.Add(BkLabel(16, 198, 62, Txt.BuildBackupPanelBkLabel2, Pal.Sub));
-            tbKeep = BkBox(142, 198, 44); tbKeep.Text = _cfg.BackupKeep.ToString(); tbKeep.TextAlign = HorizontalAlignment.Center;
+            lblBkKeepPrefix = BkLabel(16, 170, 62, Txt.BuildBackupPanelBkLabel2, Pal.Sub);
+            backupPanel.Controls.Add(lblBkKeepPrefix);
+            tbKeep = BkBox(142, 170, 44); tbKeep.Text = _cfg.BackupKeep.ToString(); tbKeep.TextAlign = HorizontalAlignment.Center;
             tbKeep.Leave += (s, e) => { int v; if (int.TryParse(tbKeep.Text.Trim(), out v) && v >= 1 && v <= 99) { _cfg.BackupKeep = v; _cfg.Save(); PruneBackups(); RefreshBackupList(); } tbKeep.Text = _cfg.BackupKeep.ToString(); };
             backupPanel.Controls.Add(tbKeep);
-            backupPanel.Controls.Add(BkLabel(192, 198, 20, Txt.BuildBackupPanelBkLabel3, Pal.Sub));
-            chkAutoRestart = BkCheck(218, 198, 128, Txt.BuildBackupPanelBkCheck);
+            lblBkKeepSuffix = BkLabel(192, 170, 20, Txt.BuildBackupPanelBkLabel3, Pal.Sub);
+            backupPanel.Controls.Add(lblBkKeepSuffix);
+            chkAutoRestart = BkCheck(218, 170, 128, Txt.BuildBackupPanelBkCheck);
             chkAutoRestart.Checked = _cfg.AutoRestart;
             chkAutoRestart.CheckedChanged += (s, e) => { if (_bkInit) return; _cfg.AutoRestart = chkAutoRestart.Checked; _cfg.Save(); };
             backupPanel.Controls.Add(chkAutoRestart);
-            chkBackupOnStart = BkCheck(352, 198, 120, Txt.BuildBackupPanelBkCheck2);
+            chkBackupOnStart = BkCheck(352, 196, 120, Txt.BuildBackupPanelBkCheck2);
             chkBackupOnStart.Checked = _cfg.BackupOnStart;
             chkBackupOnStart.CheckedChanged += (s, e) => { if (_bkInit) return; _cfg.BackupOnStart = chkBackupOnStart.Checked; _cfg.Save(); };
             backupPanel.Controls.Add(chkBackupOnStart);
-            chkDailyBackup = BkCheck(16, 226, 118, Txt.BuildBackupPanelBkCheck3);
+            chkDailyBackup = BkCheck(16, 222, 118, Txt.BuildBackupPanelBkCheck3);
             chkDailyBackup.Checked = _cfg.DailyBackup;
             chkDailyBackup.CheckedChanged += (s, e) => { if (_bkInit) return; _cfg.DailyBackup = chkDailyBackup.Checked; _cfg.Save(); };
             backupPanel.Controls.Add(chkDailyBackup);
-            tbDailyTime = BkBox(142, 226, 56); tbDailyTime.Text = _cfg.DailyBackupTime; tbDailyTime.TextAlign = HorizontalAlignment.Center;
+            tbDailyTime = BkBox(142, 222, 56); tbDailyTime.Text = _cfg.DailyBackupTime; tbDailyTime.TextAlign = HorizontalAlignment.Center;
             tbDailyTime.Leave += (s, e) => { TimeSpan ts; if (TimeSpan.TryParse(tbDailyTime.Text.Trim(), out ts)) { _cfg.DailyBackupTime = tbDailyTime.Text.Trim(); _cfg.Save(); } tbDailyTime.Text = _cfg.DailyBackupTime; };
             backupPanel.Controls.Add(tbDailyTime);
-            backupPanel.Controls.Add(BkLabel(206, 226, 266, Txt.BuildBackupPanelBkLabel4, Pal.Sub)); // v6.14: meaningful text
-            chkTimedCmd = BkCheck(16, 254, 118, Txt.BuildBackupPanelBkCheck4);
+            // v6.22.4: 整句提示改为整行换行（宽度 456、8pt、两行高度），不再挤在 266px 单行里
+            lblBkHint = BkLabel(16, 274, 456, Txt.BuildBackupPanelBkLabel4, Pal.Sub);
+            lblBkHint.Font = new Font("Microsoft YaHei UI", 8f);
+            lblBkHint.WordWrap = true;
+            backupPanel.Controls.Add(lblBkHint); // v6.14: meaningful text
+            chkTimedCmd = BkCheck(16, 248, 118, Txt.BuildBackupPanelBkCheck4);
             chkTimedCmd.Checked = _cfg.TimedCmdEnabled;
             chkTimedCmd.CheckedChanged += (s, e) => { if (_bkInit) return; _cfg.TimedCmdEnabled = chkTimedCmd.Checked; _cfg.Save(); };
             backupPanel.Controls.Add(chkTimedCmd);
-            tbTimedTime = BkBox(142, 254, 56); tbTimedTime.Text = _cfg.TimedCmdTime; tbTimedTime.TextAlign = HorizontalAlignment.Center;
+            tbTimedTime = BkBox(142, 248, 56); tbTimedTime.Text = _cfg.TimedCmdTime; tbTimedTime.TextAlign = HorizontalAlignment.Center;
             tbTimedTime.Leave += (s, e) => { TimeSpan ts; if (TimeSpan.TryParse(tbTimedTime.Text.Trim(), out ts)) { _cfg.TimedCmdTime = tbTimedTime.Text.Trim(); _cfg.Save(); } tbTimedTime.Text = _cfg.TimedCmdTime; };
             backupPanel.Controls.Add(tbTimedTime);
-            tbTimedCmd = BkBox(206, 254, 266); tbTimedCmd.Text = _cfg.TimedCmdText;
+            tbTimedCmd = BkBox(206, 248, 266); tbTimedCmd.Text = _cfg.TimedCmdText;
             tbTimedCmd.Leave += (s, e) => { if (_bkInit) return; _cfg.TimedCmdText = tbTimedCmd.Text; _cfg.Save(); };
             backupPanel.Controls.Add(tbTimedCmd);
             _bkInit = false;

@@ -4,6 +4,26 @@
 
 All notable changes are documented here. From v6.20 on: any change to release binaries requires a version bump, an entry in this file, and SHA256 checksums in the release notes — no more silent asset replacement under the same tag.
 
+## [v6.22.4] - 2026-11-12
+
+### 修复 / Fixed
+
+- **长语言下多处文字截断**：v6.22.2 之后在法语界面实测发现，主窗口「复制地址」「停止服务器」按钮、日志分段标签在法语、西班牙语、葡萄牙语、俄语、德语等较长语言下仍有截断；现引入按文字实际宽度自适应字号的绘制方式，分段标签改用短文案，并按各标签的实际宽度分配比例，不再平均切分造成重叠或省略。
+  Text clipping in longer languages: hands-on testing of the French UI after v6.22.2 showed the main window's Copy Address and Stop Server buttons and the log segment tabs still clipped in French, Spanish, Portuguese, Russian and German. Controls now fit their font size to the measured text width; the segment tabs use shorter labels and are laid out in proportion to each label's measured width instead of an even split, so they no longer overlap or get ellipsized.
+
+- **状态页标签列截断**：状态页的标签列宽度原为固定值，内存占用、玩家连接等标签在所有语言下都被截断；现按当前语言下最长标签的实际宽度计算列宽，并相应右移数值列与网络行标签。
+  Status panel labels clipped: the label column had a fixed width, and labels such as memory usage and player connections were clipped in every language. The column width is now computed from the widest label in the current language, and the value column and the network row labels shift to match.
+
+- **备份页布局重排**：「立即备份」「恢复所选」「删除所选」按钮改为按文字实际宽度排版，先前被截断的按钮文字现可完整显示；保留份数一行、总数标签与底部提示一并重新排版，提示改为整行换行显示。
+  Backups view layout rework: the Back Up Now, Restore Selected and Delete Selected buttons are laid out by measured text width, so the previously clipped button labels now display in full; the keep-count row, the total label and the bottom hint were rearranged with it, and the hint now wraps across the full width.
+
+- **俄语「仅错误」标签与搜索框占位文字**：俄语「仅显示错误」勾选标签过长被截断，已改短并放宽其宽度上限；搜索框占位文字改为按框宽自适应绘制，不再在词中间断开。
+  Russian "errors only" label and search placeholder: the Russian errors-only checkbox label was too long and clipped; it has been shortened and its width cap raised. The search box placeholder now fits itself to the box width instead of breaking off mid-word.
+
+### 附件 / Assets
+
+- `MCLauncherApp.exe` SHA256: `4C5BAF7D8D56EF3D7649AEFCDAD1DF291CF2EBA23FC87C65F26B99E585B42701`
+
 ## [v6.22.2] - 2026-11-12
 
 ### 修复 / Fixed
