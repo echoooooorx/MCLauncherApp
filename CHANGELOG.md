@@ -4,6 +4,20 @@
 
 All notable changes are documented here. From v6.20 on: any change to release binaries requires a version bump, an entry in this file, and SHA256 checksums in the release notes — no more silent asset replacement under the same tag.
 
+## [v6.22.2] - 2026-11-12
+
+### 修复 / Fixed
+
+- **标题栏标题截断**：主窗口与首次启动窗口的标题原固定绘制在 260px 宽区域内，英文、西班牙语、俄语等较长标题显示不全；现改为按文字实际宽度自适应排版，空间不足时自动缩小字号、右侧副标题让位，10 种语言的标题均可完整显示。
+  Title bar titles are no longer clipped: the fixed 260px drawing area is replaced with width-aware layout that scales the font down and yields the right-side subtitle when space runs short, so titles fit in all 10 languages.
+
+- **切换语言后的重启提示**：切换界面语言并保存后，原提示仅有一个「确定」按钮；现改为「立即重启」与「取消」，点「立即重启」直接重启应用生效，但服务端或隧道正在运行时仍显示原提示、不执行重启，以免中断正在运行的服务。
+  The restart prompt shown after changing the interface language now offers Restart Now and Cancel instead of a single OK button, so the new language can be applied without a manual restart; when a server or tunnel is running, the original prompt is still shown and no restart is triggered, so the running service is not interrupted.
+
+### 附件 / Assets
+
+- `MCLauncherApp.exe` SHA256: `6A5C749970EE71DDB0EFE56315F924BBC18DD99D30B7D99FA790DCE79E946678`
+
 ## [v6.22.1] - 2026-11-12
 
 ### 修复 / Fixed

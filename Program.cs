@@ -111,7 +111,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "The frpc.exe path does not exist. Check it.";
         public const string ValidateSettingsMarkInvalid7 = "In frpc mode, the tunnel ID cannot be empty.";
         public const string ValidateSettingsMarkInvalid8 = "The PCL2 path does not exist. Check it.";
-        public const string TitleText = "Minecraft Multiplayer Helper v6.22.1";
+        public const string TitleText = "Minecraft Multiplayer Helper v6.22.2";
         public const string SubText = "Dual tunnel · Game + Voice";
         public const string ServerText = "Server: Not running";
         public const string TunnelText = "SakuraFrp tunnel: Not running";
@@ -493,6 +493,7 @@ namespace MinecraftLauncher
         public const string SparkProfileCancelled = "[Diagnostics] The server stopped; this profiling run was cancelled.";
         public const string LangCaption = "Language";
         public const string LangRestartHint = "Language saved. Restart the app to apply.";
+        public const string LangRestartNow = "Restart now";
         public const int EulaAgreeWidth = 230;
         public const int EulaLinkDx = 232;
     }
@@ -534,7 +535,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "frpc.exe 路径不存在，请检查。";
         public const string ValidateSettingsMarkInvalid7 = "frpc 模式下隧道 ID 不能为空。";
         public const string ValidateSettingsMarkInvalid8 = "PCL2 路径不存在，请检查。";
-        public const string TitleText = "Minecraft 联机助手 v6.22.1";
+        public const string TitleText = "Minecraft 联机助手 v6.22.2";
         public const string SubText = "双隧道版 · 游戏 + 语音";
         public const string ServerText = "服务端：未启动";
         public const string TunnelText = "SakuraFrp 隧道：未启动";
@@ -916,6 +917,7 @@ namespace MinecraftLauncher
         public const string SparkProfileCancelled = "[诊断] 服务器已停止，本次诊断已取消。";
         public const string LangCaption = "界面语言";
         public const string LangRestartHint = "语言设置已保存，重启程序后生效";
+        public const string LangRestartNow = "立即重启";
         public const int EulaAgreeWidth = 190;
         public const int EulaLinkDx = 190;
     }
@@ -957,7 +959,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "frpc.exe 路徑不存在，請檢查。";
         public const string ValidateSettingsMarkInvalid7 = "frpc 模式下隧道 ID 不能為空。";
         public const string ValidateSettingsMarkInvalid8 = "PCL2 路徑不存在，請檢查。";
-        public const string TitleText = "Minecraft 多人連線助手 v6.22.1";
+        public const string TitleText = "Minecraft 多人連線助手 v6.22.2";
         public const string SubText = "雙隧道版 · 遊戲 + 語音";
         public const string ServerText = "伺服器：未啟動";
         public const string TunnelText = "SakuraFrp 隧道：未啟動";
@@ -1339,6 +1341,7 @@ namespace MinecraftLauncher
         public const string SparkProfileCancelled = "[診斷] 伺服器已停止，本次診斷已取消。";
         public const string LangCaption = "介面語言";
         public const string LangRestartHint = "語言設定已儲存，重新啟動程式後生效";
+        public const string LangRestartNow = "立即重啟";
         public const int EulaAgreeWidth = 190;
         public const int EulaLinkDx = 190;
     }
@@ -1380,7 +1383,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "frpc.exe のパスが存在しません。確認してください。";
         public const string ValidateSettingsMarkInvalid7 = "frpc モードではトンネル ID は空にできません。";
         public const string ValidateSettingsMarkInvalid8 = "PCL2 のパスが存在しません。確認してください。";
-        public const string TitleText = "Minecraft マルチプレイヘルパー v6.22.1";
+        public const string TitleText = "Minecraft マルチプレイヘルパー v6.22.2";
         public const string SubText = "デュアルトンネル · ゲーム + 音声";
         public const string ServerText = "サーバー：停止中";
         public const string TunnelText = "SakuraFrp トンネル：停止中";
@@ -1762,6 +1765,7 @@ namespace MinecraftLauncher
         public const string SparkProfileCancelled = "[診断] サーバーが停止したため、今回のプロファイリングはキャンセルされました。";
         public const string LangCaption = "表示言語";
         public const string LangRestartHint = "言語を保存しました。適用するにはアプリを再起動してください。";
+        public const string LangRestartNow = "今すぐ再起動";
         public const int EulaAgreeWidth = 190;
         public const int EulaLinkDx = 190;
     }
@@ -1803,7 +1807,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "frpc.exe 경로가 존재하지 않습니다. 확인하세요.";
         public const string ValidateSettingsMarkInvalid7 = "frpc 모드에서는 터널 ID를 비워 둘 수 없습니다.";
         public const string ValidateSettingsMarkInvalid8 = "PCL2 경로가 존재하지 않습니다. 확인하세요.";
-        public const string TitleText = "Minecraft 멀티플레이 도우미 v6.22.1";
+        public const string TitleText = "Minecraft 멀티플레이 도우미 v6.22.2";
         public const string SubText = "듀얼 터널 · 게임 + 음성";
         public const string ServerText = "서버: 실행 중 아님";
         public const string TunnelText = "SakuraFrp 터널: 실행 중 아님";
@@ -2185,6 +2189,7 @@ namespace MinecraftLauncher
         public const string SparkProfileCancelled = "[진단] 서버가 중지되어 이번 프로파일링이 취소되었습니다.";
         public const string LangCaption = "언어";
         public const string LangRestartHint = "언어가 저장되었습니다. 적용하려면 앱을 다시 시작하세요.";
+        public const string LangRestartNow = "지금 다시 시작";
         public const int EulaAgreeWidth = 190;
         public const int EulaLinkDx = 190;
     }
@@ -2226,7 +2231,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "La ruta de frpc.exe no existe. Revísala.";
         public const string ValidateSettingsMarkInvalid7 = "En modo frpc, el ID del túnel no puede estar vacío.";
         public const string ValidateSettingsMarkInvalid8 = "La ruta de PCL2 no existe. Revísala.";
-        public const string TitleText = "Asistente multijugador de Minecraft v6.22.1";
+        public const string TitleText = "Asistente multijugador de Minecraft v6.22.2";
         public const string SubText = "Túnel doble · Juego + Voz";
         public const string ServerText = "Servidor: detenido";
         public const string TunnelText = "Túnel SakuraFrp: detenido";
@@ -2608,6 +2613,7 @@ namespace MinecraftLauncher
         public const string SparkProfileCancelled = "[Diagnóstico] El servidor se detuvo; esta sesión de diagnóstico se canceló.";
         public const string LangCaption = "Idioma";
         public const string LangRestartHint = "Idioma guardado. Reinicia la app para aplicarlo.";
+        public const string LangRestartNow = "Reiniciar ahora";
         public const int EulaAgreeWidth = 230;
         public const int EulaLinkDx = 232;
     }
@@ -2649,7 +2655,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "O caminho do frpc.exe não existe. Verifica-o.";
         public const string ValidateSettingsMarkInvalid7 = "No modo frpc, o ID do túnel não pode estar vazio.";
         public const string ValidateSettingsMarkInvalid8 = "O caminho do PCL2 não existe. Verifica-o.";
-        public const string TitleText = "Assistente multijogador do Minecraft v6.22.1";
+        public const string TitleText = "Assistente multijogador do Minecraft v6.22.2";
         public const string SubText = "Túnel duplo · Jogo + Voz";
         public const string ServerText = "Servidor: parado";
         public const string TunnelText = "Túnel SakuraFrp: parado";
@@ -3031,6 +3037,7 @@ namespace MinecraftLauncher
         public const string SparkProfileCancelled = "[Diagnóstico] O servidor parou; esta sessão de diagnóstico foi cancelada.";
         public const string LangCaption = "Idioma";
         public const string LangRestartHint = "Idioma salvo. Reinicia a app para o aplicar.";
+        public const string LangRestartNow = "Reiniciar agora";
         public const int EulaAgreeWidth = 230;
         public const int EulaLinkDx = 232;
     }
@@ -3072,7 +3079,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "Путь к frpc.exe не существует. Проверьте его.";
         public const string ValidateSettingsMarkInvalid7 = "В режиме frpc ID туннеля не может быть пустым.";
         public const string ValidateSettingsMarkInvalid8 = "Путь к PCL2 не существует. Проверьте его.";
-        public const string TitleText = "Помощник для сетевой игры Minecraft v6.22.1";
+        public const string TitleText = "Помощник для сетевой игры Minecraft v6.22.2";
         public const string SubText = "Двойной туннель · Игра + Голос";
         public const string ServerText = "Сервер: остановлен";
         public const string TunnelText = "Туннель SakuraFrp: остановлен";
@@ -3453,7 +3460,8 @@ namespace MinecraftLauncher
         public const string SparkProfileStopped = "[Диагностика] Диагностика завершена; ссылка на отчёт spark появится в логе сервера выше.";
         public const string SparkProfileCancelled = "[Диагностика] Сервер остановился; этот сеанс диагностики отменён.";
         public const string LangCaption = "Язык";
-        public const string LangRestartHint = "Язык сохранён. Перезапустите приложение, чтобы применить.";
+        public const string LangRestartHint = "Настройки языка сохранены. Перезапустите приложение, чтобы применить изменения.";
+        public const string LangRestartNow = "Перезапустить сейчас";
         public const int EulaAgreeWidth = 230;
         public const int EulaLinkDx = 232;
     }
@@ -3495,7 +3503,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "Der Pfad zu frpc.exe existiert nicht. Prüfe ihn.";
         public const string ValidateSettingsMarkInvalid7 = "Im frpc-Modus darf die Tunnel-ID nicht leer sein.";
         public const string ValidateSettingsMarkInvalid8 = "Der PCL2-Pfad existiert nicht. Prüfe ihn.";
-        public const string TitleText = "Minecraft Mehrspieler-Helfer v6.22.1";
+        public const string TitleText = "Minecraft Mehrspieler-Helfer v6.22.2";
         public const string SubText = "Doppeltunnel · Spiel + Sprache";
         public const string ServerText = "Server: Gestoppt";
         public const string TunnelText = "SakuraFrp Tunnel: Gestoppt";
@@ -3877,6 +3885,7 @@ namespace MinecraftLauncher
         public const string SparkProfileCancelled = "[Diagnose] Der Server ist gestoppt; diese Diagnosesitzung wurde abgebrochen.";
         public const string LangCaption = "Sprache";
         public const string LangRestartHint = "Sprache gespeichert. Starte die App neu, um sie anzuwenden.";
+        public const string LangRestartNow = "Jetzt neu starten";
         public const int EulaAgreeWidth = 230;
         public const int EulaLinkDx = 232;
     }
@@ -3918,7 +3927,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "Le chemin de frpc.exe n'existe pas. Vérifie-le.";
         public const string ValidateSettingsMarkInvalid7 = "En mode frpc, l'ID du tunnel ne peut pas être vide.";
         public const string ValidateSettingsMarkInvalid8 = "Le chemin de PCL2 n'existe pas. Vérifie-le.";
-        public const string TitleText = "Assistant multijoueur Minecraft v6.22.1";
+        public const string TitleText = "Assistant multijoueur Minecraft v6.22.2";
         public const string SubText = "Double tunnel · Jeu + Voix";
         public const string ServerText = "Serveur : arrêté";
         public const string TunnelText = "Tunnel SakuraFrp : arrêté";
@@ -4300,6 +4309,7 @@ namespace MinecraftLauncher
         public const string SparkProfileCancelled = "[Diagnostic] Le serveur s'est arrêté ; cette session de diagnostic a été annulée.";
         public const string LangCaption = "Langue";
         public const string LangRestartHint = "Langue enregistrée. Redémarre l'application pour l'appliquer.";
+        public const string LangRestartNow = "Redémarrer maintenant";
         public const int EulaAgreeWidth = 230;
         public const int EulaLinkDx = 232;
     }
@@ -4724,6 +4734,7 @@ namespace MinecraftLauncher
         public static string SparkProfileCancelled { get { switch (Lang.Code) { case "tw": return TxtTw.SparkProfileCancelled; case "en": return TxtEn.SparkProfileCancelled; case "ja": return TxtJa.SparkProfileCancelled; case "ko": return TxtKo.SparkProfileCancelled; case "es": return TxtEs.SparkProfileCancelled; case "pt": return TxtPt.SparkProfileCancelled; case "ru": return TxtRu.SparkProfileCancelled; case "de": return TxtDe.SparkProfileCancelled; case "fr": return TxtFr.SparkProfileCancelled; default: return TxtCn.SparkProfileCancelled; } } }
         public static string LangCaption { get { switch (Lang.Code) { case "tw": return TxtTw.LangCaption; case "en": return TxtEn.LangCaption; case "ja": return TxtJa.LangCaption; case "ko": return TxtKo.LangCaption; case "es": return TxtEs.LangCaption; case "pt": return TxtPt.LangCaption; case "ru": return TxtRu.LangCaption; case "de": return TxtDe.LangCaption; case "fr": return TxtFr.LangCaption; default: return TxtCn.LangCaption; } } }
         public static string LangRestartHint { get { switch (Lang.Code) { case "tw": return TxtTw.LangRestartHint; case "en": return TxtEn.LangRestartHint; case "ja": return TxtJa.LangRestartHint; case "ko": return TxtKo.LangRestartHint; case "es": return TxtEs.LangRestartHint; case "pt": return TxtPt.LangRestartHint; case "ru": return TxtRu.LangRestartHint; case "de": return TxtDe.LangRestartHint; case "fr": return TxtFr.LangRestartHint; default: return TxtCn.LangRestartHint; } } }
+        public static string LangRestartNow { get { switch (Lang.Code) { case "tw": return TxtTw.LangRestartNow; case "en": return TxtEn.LangRestartNow; case "ja": return TxtJa.LangRestartNow; case "ko": return TxtKo.LangRestartNow; case "es": return TxtEs.LangRestartNow; case "pt": return TxtPt.LangRestartNow; case "ru": return TxtRu.LangRestartNow; case "de": return TxtDe.LangRestartNow; case "fr": return TxtFr.LangRestartNow; default: return TxtCn.LangRestartNow; } } }
         public static int EulaAgreeWidth { get { switch (Lang.Code) { case "tw": return TxtTw.EulaAgreeWidth; case "en": return TxtEn.EulaAgreeWidth; case "ja": return TxtJa.EulaAgreeWidth; case "ko": return TxtKo.EulaAgreeWidth; case "es": return TxtEs.EulaAgreeWidth; case "pt": return TxtPt.EulaAgreeWidth; case "ru": return TxtRu.EulaAgreeWidth; case "de": return TxtDe.EulaAgreeWidth; case "fr": return TxtFr.EulaAgreeWidth; default: return TxtCn.EulaAgreeWidth; } } }
         public static int EulaLinkDx { get { switch (Lang.Code) { case "tw": return TxtTw.EulaLinkDx; case "en": return TxtEn.EulaLinkDx; case "ja": return TxtJa.EulaLinkDx; case "ko": return TxtKo.EulaLinkDx; case "es": return TxtEs.EulaLinkDx; case "pt": return TxtPt.EulaLinkDx; case "ru": return TxtRu.EulaLinkDx; case "de": return TxtDe.EulaLinkDx; case "fr": return TxtFr.EulaLinkDx; default: return TxtCn.EulaLinkDx; } } }
     }
@@ -5131,6 +5142,7 @@ namespace MinecraftLauncher
         private Config _cfg;
         private TextLabel _errLbl;
         public bool ServerRunning = false;
+        public bool RestartRequested = false;
 
         public SettingsForm(Config cfg)
         {
@@ -5343,7 +5355,18 @@ namespace MinecraftLauncher
             bool langChanged = newLang != _cfg.Language;
             if (langChanged) _cfg.Language = newLang;
             _cfg.Save();
-            if (langChanged) InfoBox.Show(Txt.LangRestartHint, Txt.SettingsFormInitChrome);
+            if (langChanged)
+            {
+                if (ServerRunning)
+                {
+                    InfoBox.Show(Txt.LangRestartHint, Txt.SettingsFormInitChrome);
+                }
+                else
+                {
+                    var rr = InfoBox.Show(Txt.LangRestartHint, Txt.SettingsFormInitChrome, Txt.LangRestartNow, Txt.NoText);
+                    if (rr == DialogResult.OK) RestartRequested = true;
+                }
+            }
             return true;
         }
     }
@@ -5778,9 +5801,33 @@ namespace MinecraftLauncher
                 using (var b = new SolidBrush(fill)) g.FillRectangle(b, Width - 92 * s, 0, 46 * s, Height);
             }
             if (_icon != null) g.DrawImage(_icon, new RectangleF(12 * s, 11 * s, 18 * s, 18 * s));
-            TextRenderer.DrawText(g, TitleText, _titleFont, new Rectangle((int)(38 * s), 0, (int)(260 * s), Height), Pal.Text, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
+            int rightEdge = (int)(Width - (ShowMin ? 100 : 54) * s);
+            int titleX = (int)(38 * s);
+            int avail = Math.Max(0, rightEdge - titleX);
+            Font tFont = _titleFont;
+            bool ownFont = false;
+            int tW = TextRenderer.MeasureText(g, TitleText, tFont, new Size(int.MaxValue, (int)Height), TextFormatFlags.SingleLine | TextFormatFlags.NoPadding).Width;
+            float[] shrinkSizes = { 11f, 10f, 9.5f };
+            int si2 = 0;
+            while (tW > avail && si2 < shrinkSizes.Length)
+            {
+                var nf = new Font("Microsoft YaHei UI", shrinkSizes[si2], FontStyle.Bold);
+                int w2 = TextRenderer.MeasureText(g, TitleText, nf, new Size(int.MaxValue, (int)Height), TextFormatFlags.SingleLine | TextFormatFlags.NoPadding).Width;
+                if (ownFont) tFont.Dispose();
+                tFont = nf; ownFont = true; tW = w2; si2++;
+            }
+            var tFlags = TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine;
+            if (tW > avail) tFlags |= TextFormatFlags.EndEllipsis;
+            TextRenderer.DrawText(g, TitleText, tFont, new Rectangle(titleX, 0, Math.Min(tW + 6, avail), (int)Height), Pal.Text, tFlags);
+            if (ownFont) tFont.Dispose();
             if (!string.IsNullOrEmpty(SubText))
-                TextRenderer.DrawText(g, SubText, _verFont, new Rectangle((int)(270 * s), 0, Math.Max(0, (int)(Width - 100 * s - 270 * s)), Height), Pal.Mute, TextFormatFlags.Right | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
+            {
+                int subX = titleX + Math.Min(tW, avail) + (int)(12 * s);
+                int subAvail = rightEdge - subX;
+                int subNeed = TextRenderer.MeasureText(g, SubText, _verFont, new Size(int.MaxValue, (int)Height), TextFormatFlags.SingleLine | TextFormatFlags.NoPadding).Width;
+                if (subNeed > 0 && subAvail >= subNeed)
+                    TextRenderer.DrawText(g, SubText, _verFont, new Rectangle(subX, 0, subAvail, (int)Height), Pal.Mute, TextFormatFlags.Right | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
+            }
             int half = Math.Max(4, Height / 10);
             if (ShowMin) DrawGlyph(g, (int)(Width - 69 * s), Height / 2, false, _minAmt.Value, half);
             DrawGlyph(g, (int)(Width - 23 * s), Height / 2, true, _closeAmt.Value, half);
@@ -7308,7 +7355,7 @@ namespace MinecraftLauncher
         {
             try { ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12; } catch { }
             var wc = new WebClient();
-            wc.Headers[HttpRequestHeader.UserAgent] = "MCLauncherApp/6.22.1";
+            wc.Headers[HttpRequestHeader.UserAgent] = "MCLauncherApp/6.22.2";
             wc.Encoding = Encoding.UTF8;
             return wc;
         }
@@ -10010,11 +10057,17 @@ namespace MinecraftLauncher
 
         void OpenSettings()
         {
+            bool restart = false;
             using (var f = new SettingsForm(_cfg) { ServerRunning = ProcAlive(_server) })
             {
                 f.ShowDialog(this);
+                restart = f.RestartRequested;
             }
             RefreshStatus();
+            if (restart && !ProcAlive(_server) && !ProcAlive(_frpc) && !ProcAlive(_frpcVoice))
+            {
+                try { Application.Restart(); } catch { }
+            }
         }
 
         // v6.11: run an action once after a delay, on the UI thread
