@@ -4,6 +4,17 @@
 
 All notable changes are documented here. From v6.20 on: any change to release binaries requires a version bump, an entry in this file, and SHA256 checksums in the release notes — no more silent asset replacement under the same tag.
 
+## [v6.22.5] - 2026-11-13
+
+### 修复 / Fixed
+
+- **主窗口与设置窗口按钮行缩成内容宽度**：v6.22.4 的自适应排版在文字较短的语言（如中文、日文、韩文）下，只按文字实际宽度分配按钮、未占满整行，主窗口「打开 PCL2」「安全关服」「设置」三个按钮与设置窗口底部四个按钮挤在左侧一小段，与原固定布局不符；现改为按各按钮文字宽度比例分配并占满整行，短文案语言恢复整行排布，长文案语言仍按比例收窄、不截断。备份页「恢复所选」「删除所选」按钮对保持原有排版（其后紧接总数标签，不占满整行）。
+  Button rows collapsed to content width in short-text languages: the adaptive layout introduced in v6.22.4 sized buttons to their measured text width without filling the row, so in languages with short labels (such as Chinese, Japanese and Korean) the main window's Open PCL2, Safe Stop and Settings buttons and the Settings dialog's four bottom buttons were squeezed into a short segment on the left instead of spanning the row as in the original fixed layout. The distribution now scales in proportion to each label's measured width and fills the full row; longer labels still shrink proportionally without clipping. The Backups view's Restore Selected / Delete Selected button pair is intentionally unchanged, as the total label follows immediately after it.
+
+### 附件 / Assets
+
+- `MCLauncherApp.exe` SHA256: `DBB7DA628013A3F273BD873BA7AA38FBAFCA2FAB902DF5403EEABF5DC66E61BB`
+
 ## [v6.22.4] - 2026-11-12
 
 ### 修复 / Fixed

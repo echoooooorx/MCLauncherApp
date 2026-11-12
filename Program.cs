@@ -111,7 +111,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "The frpc.exe path does not exist. Check it.";
         public const string ValidateSettingsMarkInvalid7 = "In frpc mode, the tunnel ID cannot be empty.";
         public const string ValidateSettingsMarkInvalid8 = "The PCL2 path does not exist. Check it.";
-        public const string TitleText = "Minecraft Multiplayer Helper v6.22.4";
+        public const string TitleText = "Minecraft Multiplayer Helper v6.22.5";
         public const string SubText = "Dual tunnel · Game + Voice";
         public const string ServerText = "Server: Not running";
         public const string TunnelText = "SakuraFrp tunnel: Not running";
@@ -535,7 +535,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "frpc.exe 路径不存在，请检查。";
         public const string ValidateSettingsMarkInvalid7 = "frpc 模式下隧道 ID 不能为空。";
         public const string ValidateSettingsMarkInvalid8 = "PCL2 路径不存在，请检查。";
-        public const string TitleText = "Minecraft 联机助手 v6.22.4";
+        public const string TitleText = "Minecraft 联机助手 v6.22.5";
         public const string SubText = "双隧道版 · 游戏 + 语音";
         public const string ServerText = "服务端：未启动";
         public const string TunnelText = "SakuraFrp 隧道：未启动";
@@ -959,7 +959,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "frpc.exe 路徑不存在，請檢查。";
         public const string ValidateSettingsMarkInvalid7 = "frpc 模式下隧道 ID 不能為空。";
         public const string ValidateSettingsMarkInvalid8 = "PCL2 路徑不存在，請檢查。";
-        public const string TitleText = "Minecraft 多人連線助手 v6.22.4";
+        public const string TitleText = "Minecraft 多人連線助手 v6.22.5";
         public const string SubText = "雙隧道版 · 遊戲 + 語音";
         public const string ServerText = "伺服器：未啟動";
         public const string TunnelText = "SakuraFrp 隧道：未啟動";
@@ -1383,7 +1383,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "frpc.exe のパスが存在しません。確認してください。";
         public const string ValidateSettingsMarkInvalid7 = "frpc モードではトンネル ID は空にできません。";
         public const string ValidateSettingsMarkInvalid8 = "PCL2 のパスが存在しません。確認してください。";
-        public const string TitleText = "Minecraft マルチプレイヘルパー v6.22.4";
+        public const string TitleText = "Minecraft マルチプレイヘルパー v6.22.5";
         public const string SubText = "デュアルトンネル · ゲーム + 音声";
         public const string ServerText = "サーバー：停止中";
         public const string TunnelText = "SakuraFrp トンネル：停止中";
@@ -1807,7 +1807,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "frpc.exe 경로가 존재하지 않습니다. 확인하세요.";
         public const string ValidateSettingsMarkInvalid7 = "frpc 모드에서는 터널 ID를 비워 둘 수 없습니다.";
         public const string ValidateSettingsMarkInvalid8 = "PCL2 경로가 존재하지 않습니다. 확인하세요.";
-        public const string TitleText = "Minecraft 멀티플레이 도우미 v6.22.4";
+        public const string TitleText = "Minecraft 멀티플레이 도우미 v6.22.5";
         public const string SubText = "듀얼 터널 · 게임 + 음성";
         public const string ServerText = "서버: 실행 중 아님";
         public const string TunnelText = "SakuraFrp 터널: 실행 중 아님";
@@ -2231,7 +2231,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "La ruta de frpc.exe no existe. Revísala.";
         public const string ValidateSettingsMarkInvalid7 = "En modo frpc, el ID del túnel no puede estar vacío.";
         public const string ValidateSettingsMarkInvalid8 = "La ruta de PCL2 no existe. Revísala.";
-        public const string TitleText = "Asistente multijugador de Minecraft v6.22.4";
+        public const string TitleText = "Asistente multijugador de Minecraft v6.22.5";
         public const string SubText = "Túnel doble · Juego + Voz";
         public const string ServerText = "Servidor: detenido";
         public const string TunnelText = "Túnel SakuraFrp: detenido";
@@ -2655,7 +2655,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "O caminho do frpc.exe não existe. Verifica-o.";
         public const string ValidateSettingsMarkInvalid7 = "No modo frpc, o ID do túnel não pode estar vazio.";
         public const string ValidateSettingsMarkInvalid8 = "O caminho do PCL2 não existe. Verifica-o.";
-        public const string TitleText = "Assistente multijogador do Minecraft v6.22.4";
+        public const string TitleText = "Assistente multijogador do Minecraft v6.22.5";
         public const string SubText = "Túnel duplo · Jogo + Voz";
         public const string ServerText = "Servidor: parado";
         public const string TunnelText = "Túnel SakuraFrp: parado";
@@ -3079,7 +3079,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "Путь к frpc.exe не существует. Проверьте его.";
         public const string ValidateSettingsMarkInvalid7 = "В режиме frpc ID туннеля не может быть пустым.";
         public const string ValidateSettingsMarkInvalid8 = "Путь к PCL2 не существует. Проверьте его.";
-        public const string TitleText = "Помощник для сетевой игры Minecraft v6.22.4";
+        public const string TitleText = "Помощник для сетевой игры Minecraft v6.22.5";
         public const string SubText = "Двойной туннель · Игра + Голос";
         public const string ServerText = "Сервер: остановлен";
         public const string TunnelText = "Туннель SakuraFrp: остановлен";
@@ -3503,7 +3503,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "Der Pfad zu frpc.exe existiert nicht. Prüfe ihn.";
         public const string ValidateSettingsMarkInvalid7 = "Im frpc-Modus darf die Tunnel-ID nicht leer sein.";
         public const string ValidateSettingsMarkInvalid8 = "Der PCL2-Pfad existiert nicht. Prüfe ihn.";
-        public const string TitleText = "Minecraft Mehrspieler-Helfer v6.22.4";
+        public const string TitleText = "Minecraft Mehrspieler-Helfer v6.22.5";
         public const string SubText = "Doppeltunnel · Spiel + Sprache";
         public const string ServerText = "Server: Gestoppt";
         public const string TunnelText = "SakuraFrp Tunnel: Gestoppt";
@@ -3927,7 +3927,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "Le chemin de frpc.exe n'existe pas. Vérifie-le.";
         public const string ValidateSettingsMarkInvalid7 = "En mode frpc, l'ID du tunnel ne peut pas être vide.";
         public const string ValidateSettingsMarkInvalid8 = "Le chemin de PCL2 n'existe pas. Vérifie-le.";
-        public const string TitleText = "Assistant multijoueur Minecraft v6.22.4";
+        public const string TitleText = "Assistant multijoueur Minecraft v6.22.5";
         public const string SubText = "Double tunnel · Jeu + Voix";
         public const string ServerText = "Serveur : arrêté";
         public const string TunnelText = "Tunnel SakuraFrp : arrêté";
@@ -5261,7 +5261,7 @@ namespace MinecraftLauncher
             int[] bw;
             using (var bf = new Font("Microsoft YaHei UI", 9f))
                 bw = TextFit.Distribute(new string[] { Txt.BtnPropsText, Txt.BtnWizardText, Txt.BtnSaveText, Txt.NoText },
-                    bf, formW - 40, 12, 24, 84);
+                    bf, formW - 40, 12, 24, 84, true);
             int bx0 = 20, bx1 = bx0 + bw[0] + 12, bx2 = bx1 + bw[1] + 12, bx3 = bx2 + bw[2] + 12;
 
             var btnProps = new RoundButton();
@@ -5661,7 +5661,7 @@ namespace MinecraftLauncher
             return minSize;
         }
         // 按文本比例把一组控件的宽度分配到 total 内（不足时等比压缩）
-        public static int[] Distribute(string[] texts, Font f, int total, int gap, int pad, int minW)
+        public static int[] Distribute(string[] texts, Font f, int total, int gap, int pad, int minW, bool fill = false)
         {
             int n = texts == null ? 0 : texts.Length;
             int[] w = new int[n];
@@ -5675,7 +5675,7 @@ namespace MinecraftLauncher
             }
             int avail = total - gap * (n - 1);
             if (avail < n) avail = n;
-            if (sum <= avail)
+            if (sum <= avail && !fill)
             {
                 for (int i = 0; i < n; i++) w[i] = want[i];
                 return w;
@@ -7672,7 +7672,7 @@ namespace MinecraftLauncher
         {
             try { ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12; } catch { }
             var wc = new WebClient();
-            wc.Headers[HttpRequestHeader.UserAgent] = "MCLauncherApp/6.22.4";
+            wc.Headers[HttpRequestHeader.UserAgent] = "MCLauncherApp/6.22.5";
             wc.Encoding = Encoding.UTF8;
             return wc;
         }
@@ -9099,7 +9099,7 @@ namespace MinecraftLauncher
                 // 2) 三个次要按钮：520px 内按译文比例分配
                 int[] w3 = TextFit.Distribute(
                     new string[] { Txt.BtnPcl2Text, Txt.BtnStopText, Txt.SettingsFormInitChrome },
-                    f9, D(520), D(8), D(24), D(96));
+                    f9, D(520), D(8), D(24), D(96), true);
                 int bx = D(20);
                 btnPcl2.SetBounds(bx, D(368), w3[0], D(38)); bx += w3[0] + D(8);
                 btnStop.SetBounds(bx, D(368), w3[1], D(38)); bx += w3[1] + D(8);
