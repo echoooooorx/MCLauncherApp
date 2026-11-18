@@ -111,7 +111,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "The frpc.exe path does not exist. Check it.";
         public const string ValidateSettingsMarkInvalid7 = "In frpc mode, the tunnel ID cannot be empty.";
         public const string ValidateSettingsMarkInvalid8 = "The PCL2 path does not exist. Check it.";
-        public const string TitleText = "Minecraft Multiplayer Helper v6.22.5";
+        public const string TitleText = "Minecraft Multiplayer Helper v6.22.6";
         public const string SubText = "Dual tunnel · Game + Voice";
         public const string ServerText = "Server: Not running";
         public const string TunnelText = "SakuraFrp tunnel: Not running";
@@ -355,6 +355,8 @@ namespace MinecraftLauncher
         public const string BuildBackupPanelBkLabel2 = "Keep the latest ";
         public const string BuildBackupPanelBkLabel3 = " backups";
         public const string BuildBackupPanelBkCheck = "Auto-restart on crash";
+        public const string ChkAutoStartServer = "Start the server automatically when the launcher opens";
+        public const string AutoStartAppendState = "Auto-start on open is enabled; starting the server and tunnels…";
         public const string BuildBackupPanelBkCheck2 = "Auto-backup before server start";
         public const string BuildBackupPanelBkCheck3 = "Daily auto-backup";
         public const string BuildBackupPanelBkLabel4 = "While the app is open, back up automatically at the set time";
@@ -535,7 +537,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "frpc.exe 路径不存在，请检查。";
         public const string ValidateSettingsMarkInvalid7 = "frpc 模式下隧道 ID 不能为空。";
         public const string ValidateSettingsMarkInvalid8 = "PCL2 路径不存在，请检查。";
-        public const string TitleText = "Minecraft 联机助手 v6.22.5";
+        public const string TitleText = "Minecraft 联机助手 v6.22.6";
         public const string SubText = "双隧道版 · 游戏 + 语音";
         public const string ServerText = "服务端：未启动";
         public const string TunnelText = "SakuraFrp 隧道：未启动";
@@ -779,6 +781,8 @@ namespace MinecraftLauncher
         public const string BuildBackupPanelBkLabel2 = "保留最近";
         public const string BuildBackupPanelBkLabel3 = "份";
         public const string BuildBackupPanelBkCheck = "崩溃自动重启";
+        public const string ChkAutoStartServer = "打开启动器时自动启动服务器";
+        public const string AutoStartAppendState = "已启用打开时自动开服，正在启动服务器与隧道…";
         public const string BuildBackupPanelBkCheck2 = "开服前自动备份";
         public const string BuildBackupPanelBkCheck3 = "每日自动备份";
         public const string BuildBackupPanelBkLabel4 = "应用开着时，到点自动备份一次";
@@ -959,7 +963,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "frpc.exe 路徑不存在，請檢查。";
         public const string ValidateSettingsMarkInvalid7 = "frpc 模式下隧道 ID 不能為空。";
         public const string ValidateSettingsMarkInvalid8 = "PCL2 路徑不存在，請檢查。";
-        public const string TitleText = "Minecraft 多人連線助手 v6.22.5";
+        public const string TitleText = "Minecraft 多人連線助手 v6.22.6";
         public const string SubText = "雙隧道版 · 遊戲 + 語音";
         public const string ServerText = "伺服器：未啟動";
         public const string TunnelText = "SakuraFrp 隧道：未啟動";
@@ -1203,6 +1207,8 @@ namespace MinecraftLauncher
         public const string BuildBackupPanelBkLabel2 = "保留最近";
         public const string BuildBackupPanelBkLabel3 = "份";
         public const string BuildBackupPanelBkCheck = "崩潰自動重啟";
+        public const string ChkAutoStartServer = "開啟啟動器時自動啟動伺服器";
+        public const string AutoStartAppendState = "已啟用開啟時自動開服，正在啟動伺服器與隧道…";
         public const string BuildBackupPanelBkCheck2 = "開服前自動備份";
         public const string BuildBackupPanelBkCheck3 = "每日自動備份";
         public const string BuildBackupPanelBkLabel4 = "應用程式開著時，到點自動備份一次";
@@ -1383,7 +1389,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "frpc.exe のパスが存在しません。確認してください。";
         public const string ValidateSettingsMarkInvalid7 = "frpc モードではトンネル ID は空にできません。";
         public const string ValidateSettingsMarkInvalid8 = "PCL2 のパスが存在しません。確認してください。";
-        public const string TitleText = "Minecraft マルチプレイヘルパー v6.22.5";
+        public const string TitleText = "Minecraft マルチプレイヘルパー v6.22.6";
         public const string SubText = "デュアルトンネル · ゲーム + 音声";
         public const string ServerText = "サーバー：停止中";
         public const string TunnelText = "SakuraFrp トンネル：停止中";
@@ -1627,6 +1633,8 @@ namespace MinecraftLauncher
         public const string BuildBackupPanelBkLabel2 = "最新のバックアップを ";
         public const string BuildBackupPanelBkLabel3 = " 件保持";
         public const string BuildBackupPanelBkCheck = "クラッシュ時に自動再起動";
+        public const string ChkAutoStartServer = "ランチャーを開いたときにサーバーを自動起動";
+        public const string AutoStartAppendState = "開いたときの自動起動が有効です。サーバーとトンネルを起動しています…";
         public const string BuildBackupPanelBkCheck2 = "サーバー起動前に自動バックアップ";
         public const string BuildBackupPanelBkCheck3 = "毎日自動バックアップ";
         public const string BuildBackupPanelBkLabel4 = "アプリを開いている間、設定時刻に自動でバックアップします";
@@ -1807,7 +1815,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "frpc.exe 경로가 존재하지 않습니다. 확인하세요.";
         public const string ValidateSettingsMarkInvalid7 = "frpc 모드에서는 터널 ID를 비워 둘 수 없습니다.";
         public const string ValidateSettingsMarkInvalid8 = "PCL2 경로가 존재하지 않습니다. 확인하세요.";
-        public const string TitleText = "Minecraft 멀티플레이 도우미 v6.22.5";
+        public const string TitleText = "Minecraft 멀티플레이 도우미 v6.22.6";
         public const string SubText = "듀얼 터널 · 게임 + 음성";
         public const string ServerText = "서버: 실행 중 아님";
         public const string TunnelText = "SakuraFrp 터널: 실행 중 아님";
@@ -2051,6 +2059,8 @@ namespace MinecraftLauncher
         public const string BuildBackupPanelBkLabel2 = "최근 ";
         public const string BuildBackupPanelBkLabel3 = "개 유지";
         public const string BuildBackupPanelBkCheck = "충돌 시 자동 재시작";
+        public const string ChkAutoStartServer = "런처를 열 때 서버 자동 시작";
+        public const string AutoStartAppendState = "열 때 자동 시작이 활성화되어 서버와 터널을 시작합니다…";
         public const string BuildBackupPanelBkCheck2 = "서버 시작 전 자동 백업";
         public const string BuildBackupPanelBkCheck3 = "매일 자동 백업";
         public const string BuildBackupPanelBkLabel4 = "앱이 열려 있는 동안 설정한 시각에 자동으로 한 번 백업합니다";
@@ -2231,7 +2241,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "La ruta de frpc.exe no existe. Revísala.";
         public const string ValidateSettingsMarkInvalid7 = "En modo frpc, el ID del túnel no puede estar vacío.";
         public const string ValidateSettingsMarkInvalid8 = "La ruta de PCL2 no existe. Revísala.";
-        public const string TitleText = "Asistente multijugador de Minecraft v6.22.5";
+        public const string TitleText = "Asistente multijugador de Minecraft v6.22.6";
         public const string SubText = "Túnel doble · Juego + Voz";
         public const string ServerText = "Servidor: detenido";
         public const string TunnelText = "Túnel SakuraFrp: detenido";
@@ -2475,6 +2485,8 @@ namespace MinecraftLauncher
         public const string BuildBackupPanelBkLabel2 = "Conservar las últimas ";
         public const string BuildBackupPanelBkLabel3 = " copias";
         public const string BuildBackupPanelBkCheck = "Reinicio automático si se cuelga";
+        public const string ChkAutoStartServer = "Iniciar el servidor automáticamente al abrir el lanzador";
+        public const string AutoStartAppendState = "El inicio automático al abrir está activado; iniciando el servidor y los túneles…";
         public const string BuildBackupPanelBkCheck2 = "Copia automática antes de iniciar el servidor";
         public const string BuildBackupPanelBkCheck3 = "Copia automática diaria";
         public const string BuildBackupPanelBkLabel4 = "Mientras la app esté abierta, hace una copia automática a la hora fijada";
@@ -2655,7 +2667,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "O caminho do frpc.exe não existe. Verifica-o.";
         public const string ValidateSettingsMarkInvalid7 = "No modo frpc, o ID do túnel não pode estar vazio.";
         public const string ValidateSettingsMarkInvalid8 = "O caminho do PCL2 não existe. Verifica-o.";
-        public const string TitleText = "Assistente multijogador do Minecraft v6.22.5";
+        public const string TitleText = "Assistente multijogador do Minecraft v6.22.6";
         public const string SubText = "Túnel duplo · Jogo + Voz";
         public const string ServerText = "Servidor: parado";
         public const string TunnelText = "Túnel SakuraFrp: parado";
@@ -2899,6 +2911,8 @@ namespace MinecraftLauncher
         public const string BuildBackupPanelBkLabel2 = "Manter as últimas ";
         public const string BuildBackupPanelBkLabel3 = " cópias";
         public const string BuildBackupPanelBkCheck = "Reinício automático em caso de falha";
+        public const string ChkAutoStartServer = "Iniciar o servidor automaticamente ao abrir o iniciador";
+        public const string AutoStartAppendState = "O início automático ao abrir está ativado; iniciando o servidor e os túneis…";
         public const string BuildBackupPanelBkCheck2 = "Cópia automática antes do arranque do servidor";
         public const string BuildBackupPanelBkCheck3 = "Cópia automática diária";
         public const string BuildBackupPanelBkLabel4 = "Enquanto a app estiver aberta, faz uma cópia automática à hora definida";
@@ -3079,7 +3093,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "Путь к frpc.exe не существует. Проверьте его.";
         public const string ValidateSettingsMarkInvalid7 = "В режиме frpc ID туннеля не может быть пустым.";
         public const string ValidateSettingsMarkInvalid8 = "Путь к PCL2 не существует. Проверьте его.";
-        public const string TitleText = "Помощник для сетевой игры Minecraft v6.22.5";
+        public const string TitleText = "Помощник для сетевой игры Minecraft v6.22.6";
         public const string SubText = "Двойной туннель · Игра + Голос";
         public const string ServerText = "Сервер: остановлен";
         public const string TunnelText = "Туннель SakuraFrp: остановлен";
@@ -3323,6 +3337,8 @@ namespace MinecraftLauncher
         public const string BuildBackupPanelBkLabel2 = "Хранить последние ";
         public const string BuildBackupPanelBkLabel3 = " копий";
         public const string BuildBackupPanelBkCheck = "Автоперезапуск при сбое";
+        public const string ChkAutoStartServer = "Автоматически запускать сервер при открытии лаунчера";
+        public const string AutoStartAppendState = "Автозапуск при открытии включён; запуск сервера и туннелей…";
         public const string BuildBackupPanelBkCheck2 = "Автокопия перед запуском сервера";
         public const string BuildBackupPanelBkCheck3 = "Ежедневная автокопия";
         public const string BuildBackupPanelBkLabel4 = "Пока приложение открыто, делать копию автоматически в заданное время";
@@ -3503,7 +3519,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "Der Pfad zu frpc.exe existiert nicht. Prüfe ihn.";
         public const string ValidateSettingsMarkInvalid7 = "Im frpc-Modus darf die Tunnel-ID nicht leer sein.";
         public const string ValidateSettingsMarkInvalid8 = "Der PCL2-Pfad existiert nicht. Prüfe ihn.";
-        public const string TitleText = "Minecraft Mehrspieler-Helfer v6.22.5";
+        public const string TitleText = "Minecraft Mehrspieler-Helfer v6.22.6";
         public const string SubText = "Doppeltunnel · Spiel + Sprache";
         public const string ServerText = "Server: Gestoppt";
         public const string TunnelText = "SakuraFrp Tunnel: Gestoppt";
@@ -3747,6 +3763,8 @@ namespace MinecraftLauncher
         public const string BuildBackupPanelBkLabel2 = "Die neuesten ";
         public const string BuildBackupPanelBkLabel3 = " Sicherungen behalten";
         public const string BuildBackupPanelBkCheck = "Bei Absturz automatisch neu starten";
+        public const string ChkAutoStartServer = "Server beim Öffnen des Launchers automatisch starten";
+        public const string AutoStartAppendState = "Automatischer Start beim Öffnen ist aktiviert; Server und Tunnel werden gestartet…";
         public const string BuildBackupPanelBkCheck2 = "Vor dem Serverstart automatisch sichern";
         public const string BuildBackupPanelBkCheck3 = "Täglich automatisch sichern";
         public const string BuildBackupPanelBkLabel4 = "Solange die App geöffnet ist, zur eingestellten Zeit einmal automatisch sichern";
@@ -3927,7 +3945,7 @@ namespace MinecraftLauncher
         public const string ValidateSettingsMarkInvalid6 = "Le chemin de frpc.exe n'existe pas. Vérifie-le.";
         public const string ValidateSettingsMarkInvalid7 = "En mode frpc, l'ID du tunnel ne peut pas être vide.";
         public const string ValidateSettingsMarkInvalid8 = "Le chemin de PCL2 n'existe pas. Vérifie-le.";
-        public const string TitleText = "Assistant multijoueur Minecraft v6.22.5";
+        public const string TitleText = "Assistant multijoueur Minecraft v6.22.6";
         public const string SubText = "Double tunnel · Jeu + Voix";
         public const string ServerText = "Serveur : arrêté";
         public const string TunnelText = "Tunnel SakuraFrp : arrêté";
@@ -4171,6 +4189,8 @@ namespace MinecraftLauncher
         public const string BuildBackupPanelBkLabel2 = "Conserver les ";
         public const string BuildBackupPanelBkLabel3 = " dernières sauvegardes";
         public const string BuildBackupPanelBkCheck = "Redémarrage automatique en cas de plantage";
+        public const string ChkAutoStartServer = "Démarrer le serveur automatiquement à l'ouverture du lanceur";
+        public const string AutoStartAppendState = "Le démarrage automatique à l'ouverture est activé ; démarrage du serveur et des tunnels…";
         public const string BuildBackupPanelBkCheck2 = "Sauvegarde automatique avant le démarrage du serveur";
         public const string BuildBackupPanelBkCheck3 = "Sauvegarde automatique quotidienne";
         public const string BuildBackupPanelBkLabel4 = "Pendant que l'application est ouverte, sauvegarde automatique à l'heure définie";
@@ -4596,6 +4616,8 @@ namespace MinecraftLauncher
         public static string BuildBackupPanelBkLabel2 { get { switch (Lang.Code) { case "tw": return TxtTw.BuildBackupPanelBkLabel2; case "en": return TxtEn.BuildBackupPanelBkLabel2; case "ja": return TxtJa.BuildBackupPanelBkLabel2; case "ko": return TxtKo.BuildBackupPanelBkLabel2; case "es": return TxtEs.BuildBackupPanelBkLabel2; case "pt": return TxtPt.BuildBackupPanelBkLabel2; case "ru": return TxtRu.BuildBackupPanelBkLabel2; case "de": return TxtDe.BuildBackupPanelBkLabel2; case "fr": return TxtFr.BuildBackupPanelBkLabel2; default: return TxtCn.BuildBackupPanelBkLabel2; } } }
         public static string BuildBackupPanelBkLabel3 { get { switch (Lang.Code) { case "tw": return TxtTw.BuildBackupPanelBkLabel3; case "en": return TxtEn.BuildBackupPanelBkLabel3; case "ja": return TxtJa.BuildBackupPanelBkLabel3; case "ko": return TxtKo.BuildBackupPanelBkLabel3; case "es": return TxtEs.BuildBackupPanelBkLabel3; case "pt": return TxtPt.BuildBackupPanelBkLabel3; case "ru": return TxtRu.BuildBackupPanelBkLabel3; case "de": return TxtDe.BuildBackupPanelBkLabel3; case "fr": return TxtFr.BuildBackupPanelBkLabel3; default: return TxtCn.BuildBackupPanelBkLabel3; } } }
         public static string BuildBackupPanelBkCheck { get { switch (Lang.Code) { case "tw": return TxtTw.BuildBackupPanelBkCheck; case "en": return TxtEn.BuildBackupPanelBkCheck; case "ja": return TxtJa.BuildBackupPanelBkCheck; case "ko": return TxtKo.BuildBackupPanelBkCheck; case "es": return TxtEs.BuildBackupPanelBkCheck; case "pt": return TxtPt.BuildBackupPanelBkCheck; case "ru": return TxtRu.BuildBackupPanelBkCheck; case "de": return TxtDe.BuildBackupPanelBkCheck; case "fr": return TxtFr.BuildBackupPanelBkCheck; default: return TxtCn.BuildBackupPanelBkCheck; } } }
+        public static string ChkAutoStartServer { get { switch (Lang.Code) { case "tw": return TxtTw.ChkAutoStartServer; case "en": return TxtEn.ChkAutoStartServer; case "ja": return TxtJa.ChkAutoStartServer; case "ko": return TxtKo.ChkAutoStartServer; case "es": return TxtEs.ChkAutoStartServer; case "pt": return TxtPt.ChkAutoStartServer; case "ru": return TxtRu.ChkAutoStartServer; case "de": return TxtDe.ChkAutoStartServer; case "fr": return TxtFr.ChkAutoStartServer; default: return TxtCn.ChkAutoStartServer; } } }
+        public static string AutoStartAppendState { get { switch (Lang.Code) { case "tw": return TxtTw.AutoStartAppendState; case "en": return TxtEn.AutoStartAppendState; case "ja": return TxtJa.AutoStartAppendState; case "ko": return TxtKo.AutoStartAppendState; case "es": return TxtEs.AutoStartAppendState; case "pt": return TxtPt.AutoStartAppendState; case "ru": return TxtRu.AutoStartAppendState; case "de": return TxtDe.AutoStartAppendState; case "fr": return TxtFr.AutoStartAppendState; default: return TxtCn.AutoStartAppendState; } } }
         public static string BuildBackupPanelBkCheck2 { get { switch (Lang.Code) { case "tw": return TxtTw.BuildBackupPanelBkCheck2; case "en": return TxtEn.BuildBackupPanelBkCheck2; case "ja": return TxtJa.BuildBackupPanelBkCheck2; case "ko": return TxtKo.BuildBackupPanelBkCheck2; case "es": return TxtEs.BuildBackupPanelBkCheck2; case "pt": return TxtPt.BuildBackupPanelBkCheck2; case "ru": return TxtRu.BuildBackupPanelBkCheck2; case "de": return TxtDe.BuildBackupPanelBkCheck2; case "fr": return TxtFr.BuildBackupPanelBkCheck2; default: return TxtCn.BuildBackupPanelBkCheck2; } } }
         public static string BuildBackupPanelBkCheck3 { get { switch (Lang.Code) { case "tw": return TxtTw.BuildBackupPanelBkCheck3; case "en": return TxtEn.BuildBackupPanelBkCheck3; case "ja": return TxtJa.BuildBackupPanelBkCheck3; case "ko": return TxtKo.BuildBackupPanelBkCheck3; case "es": return TxtEs.BuildBackupPanelBkCheck3; case "pt": return TxtPt.BuildBackupPanelBkCheck3; case "ru": return TxtRu.BuildBackupPanelBkCheck3; case "de": return TxtDe.BuildBackupPanelBkCheck3; case "fr": return TxtFr.BuildBackupPanelBkCheck3; default: return TxtCn.BuildBackupPanelBkCheck3; } } }
         public static string BuildBackupPanelBkLabel4 { get { switch (Lang.Code) { case "tw": return TxtTw.BuildBackupPanelBkLabel4; case "en": return TxtEn.BuildBackupPanelBkLabel4; case "ja": return TxtJa.BuildBackupPanelBkLabel4; case "ko": return TxtKo.BuildBackupPanelBkLabel4; case "es": return TxtEs.BuildBackupPanelBkLabel4; case "pt": return TxtPt.BuildBackupPanelBkLabel4; case "ru": return TxtRu.BuildBackupPanelBkLabel4; case "de": return TxtDe.BuildBackupPanelBkLabel4; case "fr": return TxtFr.BuildBackupPanelBkLabel4; default: return TxtCn.BuildBackupPanelBkLabel4; } } }
@@ -4892,6 +4914,7 @@ namespace MinecraftLauncher
         public int BackupKeep = 10;
         public bool BackupOnStart = false;
         public bool AutoRestart = true;
+        public bool AutoStartServer = false; // v6.22.6: start server + tunnels automatically when the launcher opens
         public bool DailyBackup = false;
         public string DailyBackupTime = "03:00";
         public bool TimedCmdEnabled = false;
@@ -4951,6 +4974,7 @@ namespace MinecraftLauncher
                     if (d.ContainsKey("BackupKeep")) { int bk; if (int.TryParse(d["BackupKeep"], out bk) && bk >= 1 && bk <= 99) c.BackupKeep = bk; }
                     if (d.ContainsKey("BackupOnStart")) c.BackupOnStart = d["BackupOnStart"] == "true";
                     if (d.ContainsKey("AutoRestart")) c.AutoRestart = d["AutoRestart"] != "false";
+                    if (d.ContainsKey("AutoStartServer")) c.AutoStartServer = d["AutoStartServer"] == "true";
                     if (d.ContainsKey("DailyBackup")) c.DailyBackup = d["DailyBackup"] == "true";
                     if (d.ContainsKey("DailyBackupTime")) c.DailyBackupTime = d["DailyBackupTime"];
                     if (d.ContainsKey("TimedCmdEnabled")) c.TimedCmdEnabled = d["TimedCmdEnabled"] == "true";
@@ -4996,6 +5020,7 @@ namespace MinecraftLauncher
             sb.Append("\"LastDailyBackup\":\"" + JsonEsc(LastDailyBackup) + "\",");
             sb.Append("\"LastTab\":\"" + LastTab + "\",");
             sb.Append("\"Language\":\"" + JsonEsc(Language) + "\",");
+            sb.Append("\"AutoStartServer\":\"" + (AutoStartServer ? "true" : "false") + "\",");
             sb.Append("\"LastTimedCmd\":\"" + JsonEsc(LastTimedCmd) + "\"");
             sb.Append("}");
             // v6.10: write to a temp file, then swap atomically, keeping the
@@ -5149,6 +5174,7 @@ namespace MinecraftLauncher
         private TextBox tbServerDir, tbJava, tbJar, tbMem, tbPort, tbFrpc, tbKey, tbTunnelId, tbVoiceTunnelId, tbAddr, tbPcl2;
         private ComboBox cbTunnelMode;
         private ComboBox cbLanguage;
+        private DarkCheckBox chkAutoStart;
         private Config _cfg;
         private TextLabel _errLbl;
         private int _labelW = 140;
@@ -5246,6 +5272,16 @@ namespace MinecraftLauncher
             cbLanguage.ForeColor = Color.White;
             Controls.Add(cbLanguage);
             ThemedCombo.Attach(cbLanguage);
+            y += 36;
+
+            chkAutoStart = new DarkCheckBox();
+            chkAutoStart.Text = Txt.ChkAutoStartServer;
+            chkAutoStart.Checked = cfg.AutoStartServer;
+            chkAutoStart.ForeColor = Pal.Text;
+            chkAutoStart.BackColor = Pal.Bg;
+            chkAutoStart.Font = new Font("Microsoft YaHei UI", 9f);
+            chkAutoStart.SetBounds(lx, y, formW - lx - 30, 26);
+            Controls.Add(chkAutoStart);
             y += 36;
 
             _errLbl = new TextLabel();
@@ -5384,6 +5420,7 @@ namespace MinecraftLauncher
             _cfg.PublicAddr = tbAddr.Text.Trim();
             _cfg.Pcl2Path = tbPcl2.Text.Trim();
             _cfg.TunnelMode = (cbTunnelMode.SelectedIndex == 1) ? "launcher" : "frpc";
+            _cfg.AutoStartServer = chkAutoStart.Checked;
             string newLang = Lang.CodeAt(cbLanguage.SelectedIndex);
             bool langChanged = newLang != _cfg.Language;
             if (langChanged) _cfg.Language = newLang;
@@ -7672,7 +7709,7 @@ namespace MinecraftLauncher
         {
             try { ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12; } catch { }
             var wc = new WebClient();
-            wc.Headers[HttpRequestHeader.UserAgent] = "MCLauncherApp/6.22.5";
+            wc.Headers[HttpRequestHeader.UserAgent] = "MCLauncherApp/6.22.6";
             wc.Encoding = Encoding.UTF8;
             return wc;
         }
@@ -9068,6 +9105,7 @@ namespace MinecraftLauncher
 
             KeyPreview = true;
             Shown += (s, e) => { if (string.IsNullOrEmpty(_cfg.FrpKey)) { AppendState(Txt.BuildUiAppendState); } };
+            Shown += (s, e) => { if (_cfg.AutoStartServer) { AppendState(Txt.AutoStartAppendState); Delayed(1500, () => StartAll()); } };
             Shown += (s, e) => { BeginInvoke(new Action(() => { try { OfferWizardIfNeeded(); } catch { } })); };
             // v6.6 trial: one full repaint right after the first frame settles,
             // to normalize any first-paint edge rasterization (QA measures it).

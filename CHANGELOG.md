@@ -4,6 +4,17 @@
 
 All notable changes are documented here. From v6.20 on: any change to release binaries requires a version bump, an entry in this file, and SHA256 checksums in the release notes — no more silent asset replacement under the same tag.
 
+## [v6.22.6] - 2026-11-19
+
+### 新增 / Added
+
+- **打开启动器时自动启动服务器**：设置窗口新增勾选开关（默认关）。开启后，打开启动器即以与「启动联机」按钮相同的流程自动启动服务器与隧道，并沿用开服前备份、崩溃自动重启等既有设置，无需再点按钮。配合操作系统的登录自启（如以计划任务在登录时打开本启动器），可实现登录后自动开服。
+  Start the server automatically when the launcher opens: a new checkbox in Settings (off by default). When enabled, opening the launcher starts the server and the tunnels through the same routine as the Start button, honouring existing options such as backup before start and auto-restart on crash, with no click needed. Combined with an OS logon auto-start entry (for example a scheduled task that opens this launcher at sign-in), the server comes up on its own after sign-in.
+
+### 附件 / Assets
+
+- `MCLauncherApp.exe` SHA256: `33E282BDAF7C27B27139082C35042CC04410EE2328B9FC450524EBE6B3E88FD2`
+
 ## [v6.22.5] - 2026-11-13
 
 ### 修复 / Fixed
